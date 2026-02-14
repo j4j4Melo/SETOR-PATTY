@@ -726,6 +726,30 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--dark);
         }
+
+        /* Botão de fechar para o dropdown */
+        .dropdown-close {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-top: 1px solid #e9ecef;
+            cursor: pointer;
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .dropdown-close:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+        }
+
+        .dropdown-close i {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -766,6 +790,9 @@
                         </div>
                         <div class="options-list" id="lojaOptions">
                             <!-- Será preenchido via JavaScript -->
+                        </div>
+                        <div class="dropdown-close" onclick="fecharDropdownLojas()">
+                            <i class="fas fa-times"></i> Fechar
                         </div>
                     </div>
                 </div>
@@ -1020,11 +1047,17 @@
             // Atualizar tabela de canais
             atualizarTabelaCanais();
             
-            // Fechar dropdown ao clicar fora
+            // Fechar dropdown ao clicar fora - EXCETO quando clicar dentro do dropdown
             $(document).click(function(event) {
+                // Se clicou fora do multi-select, fechar o dropdown
                 if (!$(event.target).closest('#lojaMultiSelect').length) {
                     $('#lojaDropdown').removeClass('show');
                 }
+            });
+            
+            // Impedir que cliques dentro do dropdown fechem ele (evitar propagação)
+            $('#lojaDropdown').click(function(event) {
+                event.stopPropagation();
             });
         });
 
@@ -1044,6 +1077,10 @@
             $('#lojaDropdown').toggleClass('show');
             $('#lojaSearch').val('').focus();
             filtrarLojas();
+        }
+
+        function fecharDropdownLojas() {
+            $('#lojaDropdown').removeClass('show');
         }
 
         function filtrarLojas() {
