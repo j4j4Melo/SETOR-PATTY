@@ -1120,10 +1120,6 @@
                 <label><i class="fas fa-user-tie"></i> ADM:</label>
                 <select id="admFilter" onchange="aplicarFiltros()">
                     <option value="">Todos os ADMs</option>
-                    <option value="ADM1">João Silva (ADM1)</option>
-                    <option value="ADM2">Maria Santos (ADM2)</option>
-                    <option value="ADM3">Pedro Oliveira (ADM3)</option>
-                    <option value="ADM4">Ana Costa (ADM4)</option>
                 </select>
             </div>
 
@@ -1240,6 +1236,15 @@
                     <canvas id="admRankingChart"></canvas>
                 </div>
             </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-simple" style="color: var(--secondary);"></i>Canais por Administrador</h3>
+                    <span class="badge"><i class="fas fa-store"></i> Análise de Canais</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="canaisPorAdmChart"></canvas>
+                </div>
+            </div>
         </div>
 
         <div class="tables-section">
@@ -1354,47 +1359,57 @@
             294: "SHOPPING RAPOSO"
         };
 
-        // MAPEAMENTO DE ADMs POR LOJA (TODAS AS 31 LOJAS)
+        // MAPEAMENTO DE ADMs POR LOJA (BASEADO NA IMAGEM FORNECIDA)
+        // FERNANDO SANTOS DA SILVA -> Lojas 262, 210
+        // ELVES BRANDOW AZEVEDO DOS SANTOS -> Lojas 145, 251, 294
+        // GABRIELE NEVES PAIVA SILVA -> Lojas 69, 162, 195, 133, 183, 98
         const admPorLoja = {
-            5: "ADM1",
-            10: "ADM1",
-            28: "ADM2",
-            31: "ADM2",
-            63: "ADM3",
-            69: "ADM3",
-            73: "ADM4",
-            82: "ADM4",
-            86: "ADM1",
-            90: "ADM1",
-            97: "ADM2",
-            98: "ADM2",
-            101: "ADM3",
-            118: "ADM3",
-            126: "ADM4",
-            133: "ADM4",
-            145: "ADM1",
-            157: "ADM1",
-            158: "ADM2",
-            162: "ADM2",
-            178: "ADM3",
-            183: "ADM3",
-            189: "ADM4",
-            195: "ADM4",
-            210: "ADM1",
-            247: "ADM1",
-            248: "ADM2",
-            251: "ADM2",
-            262: "ADM3",
-            285: "ADM3",
-            294: "ADM4"
+            // FERNANDO SANTOS DA SILVA
+            262: "FERNANDO",
+            210: "FERNANDO",
+            
+            // ELVES BRANDOW AZEVEDO DOS SANTOS
+            145: "ELVES",
+            251: "ELVES",
+            294: "ELVES",
+            
+            // GABRIELE NEVES PAIVA SILVA
+            69: "GABRIELE",
+            162: "GABRIELE",
+            195: "GABRIELE",
+            133: "GABRIELE",
+            183: "GABRIELE",
+            98: "GABRIELE",
+            
+            // As demais lojas (não listadas no print) serão atribuídas a "OUTROS"
+            5: "OUTROS",
+            10: "OUTROS",
+            28: "OUTROS",
+            31: "OUTROS",
+            63: "OUTROS",
+            73: "OUTROS",
+            82: "OUTROS",
+            86: "OUTROS",
+            90: "OUTROS",
+            97: "OUTROS",
+            101: "OUTROS",
+            118: "OUTROS",
+            126: "OUTROS",
+            157: "OUTROS",
+            158: "OUTROS",
+            178: "OUTROS",
+            189: "OUTROS",
+            247: "OUTROS",
+            248: "OUTROS",
+            285: "OUTROS"
         };
 
-        // Nomes dos ADMs
+        // Nomes completos dos ADMs (baseado na imagem)
         const admNomes = {
-            "ADM1": "João Silva",
-            "ADM2": "Maria Santos",
-            "ADM3": "Pedro Oliveira",
-            "ADM4": "Ana Costa"
+            "FERNANDO": "FERNANDO SANTOS DA SILVA",
+            "ELVES": "ELVES BRANDOW AZEVEDO DOS SANTOS",
+            "GABRIELE": "GABRIELE NEVES PAIVA SILVA",
+            "OUTROS": "OUTROS ADMINISTRADORES"
         };
 
         // ============================================
@@ -1502,7 +1517,7 @@
             {loja: 63, data: '2026-02-13', inicio: '2026-02-13 10:34:19', fim: '2026-02-13 21:34:04', cupons: 76, faturamento: 1111.57, meta: 2055, auto: 237.48, delivery: 0, viagem: 1111.57, balcao: 0},
             {loja: 63, data: '2026-02-14', inicio: '2026-02-14 10:36:25', fim: '2026-02-14 16:49:13', cupons: 62, faturamento: 984.35, meta: 1650, auto: 72.02, delivery: 0, viagem: 984.35, balcao: 0},
 
-            // Loja 69 - PERUS
+            // Loja 69 - PERUS (GABRIELE)
             {loja: 69, data: '2026-02-01', inicio: '2026-02-01 11:06:12', fim: '2026-02-01 19:39:56', cupons: 108, faturamento: 3860.99, meta: 4405, auto: 0, delivery: 3254.21, viagem: 525.85, balcao: 0},
             {loja: 69, data: '2026-02-02', inicio: '2026-02-02 09:28:33', fim: '2026-02-02 21:42:30', cupons: 228, faturamento: 5546.96, meta: 5495, auto: 0, delivery: 3983.44, viagem: 1539.55, balcao: 0},
             {loja: 69, data: '2026-02-03', inicio: '2026-02-03 09:31:42', fim: '2026-02-03 21:28:37', cupons: 150, faturamento: 3212.27, meta: 4265, auto: 0, delivery: 1995.65, viagem: 1216.62, balcao: 0},
@@ -1598,7 +1613,7 @@
             {loja: 97, data: '2026-02-13', inicio: '2026-02-13 10:24:02', fim: '2026-02-14 04:19:09', cupons: 155, faturamento: 4223.68, meta: 4100, auto: 2306.69, delivery: 133.1, viagem: 542.1, balcao: 1241.79},
             {loja: 97, data: '2026-02-14', inicio: '2026-02-13 19:36:37', fim: '2026-02-14 16:06:21', cupons: 105, faturamento: 2046.39, meta: 6315, auto: 996.01, delivery: 382, viagem: 342.55, balcao: 1420.77},
 
-            // Loja 98 - FRANCO DA ROCHA
+            // Loja 98 - FRANCO DA ROCHA (GABRIELE)
             {loja: 98, data: '2026-02-01', inicio: '2026-02-01 10:17:28', fim: '2026-02-01 21:31:21', cupons: 58, faturamento: 1183.14, meta: 2500, auto: 86.04, delivery: 319.1, viagem: 778, balcao: 0},
             {loja: 98, data: '2026-02-02', inicio: '2026-02-02 08:40:59', fim: '2026-02-02 22:18:52', cupons: 225, faturamento: 3871.63, meta: 3400, auto: 1084, delivery: 523.13, viagem: 2264.5, balcao: 0},
             {loja: 98, data: '2026-02-03', inicio: '2026-02-03 08:15:24', fim: '2026-02-03 22:20:17', cupons: 164, faturamento: 2390.96, meta: 3575, auto: 471.24, delivery: 539.92, viagem: 1379.8, balcao: 0},
@@ -1662,7 +1677,7 @@
             {loja: 126, data: '2026-02-13', inicio: '2026-02-13 10:15:00', fim: '2026-02-13 21:30:11', cupons: 396, faturamento: 10997.7, meta: 11555, auto: 643.84, delivery: 6195.35, viagem: 31.07, balcao: 4127.44},
             {loja: 126, data: '2026-02-14', inicio: '2026-02-14 13:14:43', fim: '2026-02-14 16:16:42', cupons: 103, faturamento: 2839.15, meta: 13025, auto: 394.59, delivery: 0, viagem: 38.37, balcao: 0},
 
-            // Loja 133 - PARQUE TIETÊ
+            // Loja 133 - PARQUE TIETÊ (GABRIELE)
             {loja: 133, data: '2026-02-01', inicio: '2026-02-01 11:02:16', fim: '2026-02-01 18:27:53', cupons: 109, faturamento: 3247.49, meta: 0, auto: 51.45, delivery: 2814.27, viagem: 381.77, balcao: 0},
             {loja: 133, data: '2026-02-02', inicio: '2026-02-02 10:34:08', fim: '2026-02-02 21:58:31', cupons: 243, faturamento: 5745.94, meta: 4635, auto: 49.7, delivery: 4844.57, viagem: 851.67, balcao: 0},
             {loja: 133, data: '2026-02-03', inicio: '2026-02-03 10:23:35', fim: '2026-02-03 22:00:20', cupons: 159, faturamento: 4246.76, meta: 4980, auto: 178.23, delivery: 2863.13, viagem: 1188.66, balcao: 0},
@@ -1678,7 +1693,7 @@
             {loja: 133, data: '2026-02-13', inicio: '2026-02-13 10:08:42', fim: '2026-02-13 21:47:58', cupons: 164, faturamento: 5198.91, meta: 5875, auto: 278.37, delivery: 4016.21, viagem: 904.33, balcao: 0},
             {loja: 133, data: '2026-02-14', inicio: '2026-02-14 10:09:38', fim: '2026-02-14 16:54:43', cupons: 87, faturamento: 2556.53, meta: 6680, auto: 131.33, delivery: 1984.64, viagem: 440.56, balcao: 0},
 
-            // Loja 145 - ITASHOPPING
+            // Loja 145 - ITASHOPPING (ELVES)
             {loja: 145, data: '2026-02-01', inicio: '2026-02-01 09:55:30', fim: '2026-02-02 09:13:20', cupons: 64, faturamento: 1967.02, meta: 3170, auto: 43.88, delivery: 1539.41, viagem: 383.73, balcao: 0},
             {loja: 145, data: '2026-02-02', inicio: '2026-02-02 09:54:59', fim: '2026-02-03 08:50:14', cupons: 127, faturamento: 2337.02, meta: 3010, auto: 504.17, delivery: 729.4, viagem: 1037.85, balcao: 0},
             {loja: 145, data: '2026-02-03', inicio: '2026-02-03 09:40:43', fim: '2026-02-05 00:26:05', cupons: 132, faturamento: 2400.01, meta: 3095, auto: 569.77, delivery: 678, viagem: 1152.24, balcao: 0},
@@ -1726,7 +1741,7 @@
             {loja: 158, data: '2026-02-13', inicio: '2026-02-13 09:50:15', fim: '2026-02-13 21:40:35', cupons: 168, faturamento: 4512.33, meta: 4425, auto: 2490.5, delivery: 1741.45, viagem: 280.38, balcao: 0},
             {loja: 158, data: '2026-02-14', inicio: '2026-02-14 09:23:03', fim: '2026-02-14 16:55:33', cupons: 82, faturamento: 1816.81, meta: 4655, auto: 1179.27, delivery: 348.5, viagem: 289.04, balcao: 0},
 
-            // Loja 162 - MARQUESA TAIPAS
+            // Loja 162 - MARQUESA TAIPAS (GABRIELE)
             {loja: 162, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 162, data: '2026-02-02', inicio: '2026-02-02 09:53:46', fim: '2026-02-02 19:51:06', cupons: 121, faturamento: 2740.74, meta: 2395, auto: 0, delivery: 0, viagem: 0, balcao: 927.67},
             {loja: 162, data: '2026-02-03', inicio: '2026-02-03 09:56:41', fim: '2026-02-03 19:52:20', cupons: 92, faturamento: 2643.99, meta: 2765, auto: 0, delivery: 0, viagem: 0, balcao: 522.83},
@@ -1758,7 +1773,7 @@
             {loja: 178, data: '2026-02-13', inicio: '2026-02-13 09:28:18', fim: '2026-02-13 22:11:29', cupons: 124, faturamento: 3964.04, meta: 2270, auto: 0, delivery: 2933.02, viagem: 0, balcao: 1015.04},
             {loja: 178, data: '2026-02-14', inicio: '2026-02-14 09:26:40', fim: '2026-02-14 16:49:36', cupons: 66, faturamento: 1449.88, meta: 2165, auto: 0, delivery: 988.86, viagem: 0, balcao: 461.02},
 
-            // Loja 183 - FRANCO DA ROCHA 2
+            // Loja 183 - FRANCO DA ROCHA 2 (GABRIELE)
             {loja: 183, data: '2026-02-01', inicio: '2026-02-01 11:18:54', fim: '2026-02-01 21:21:27', cupons: 34, faturamento: 951.44, meta: 1165, auto: 35.7, delivery: 204.7, viagem: 711.04, balcao: 0},
             {loja: 183, data: '2026-02-02', inicio: '2026-02-02 09:20:38', fim: '2026-02-02 22:10:05', cupons: 129, faturamento: 1944.59, meta: 2545, auto: 346.52, delivery: 295.3, viagem: 1302.77, balcao: 0},
             {loja: 183, data: '2026-02-03', inicio: '2026-02-03 09:51:33', fim: '2026-02-03 20:51:53', cupons: 76, faturamento: 1418.1, meta: 2480, auto: 35.7, delivery: 230.07, viagem: 1092.73, balcao: 0},
@@ -1790,7 +1805,7 @@
             {loja: 189, data: '2026-02-13', inicio: '2026-02-13 09:53:31', fim: '2026-02-13 21:54:04', cupons: 203, faturamento: 2519.29, meta: 2830, auto: 737.6, delivery: 379.76, viagem: 1401.93, balcao: 0},
             {loja: 189, data: '2026-02-14', inicio: '2026-02-14 10:06:37', fim: '2026-02-14 16:53:56', cupons: 114, faturamento: 1271.1, meta: 2665, auto: 270.11, delivery: 166.79, viagem: 834.2, balcao: 0},
 
-            // Loja 195 - EXTRA JARAGUÁ
+            // Loja 195 - EXTRA JARAGUÁ (GABRIELE)
             {loja: 195, data: '2026-02-01', inicio: '2026-02-01 11:36:07', fim: '2026-02-01 19:34:36', cupons: 131, faturamento: 4973.41, meta: 0, auto: 0, delivery: 4610.59, viagem: 362.82, balcao: 0},
             {loja: 195, data: '2026-02-02', inicio: '2026-02-02 11:05:26', fim: '2026-02-02 21:48:00', cupons: 223, faturamento: 5456.33, meta: 5920, auto: 0, delivery: 3764.65, viagem: 1691.68, balcao: 0},
             {loja: 195, data: '2026-02-03', inicio: '2026-02-03 10:48:58', fim: '2026-02-03 21:46:13', cupons: 210, faturamento: 4607.07, meta: 5325, auto: 0, delivery: 3074.6, viagem: 1532.47, balcao: 0},
@@ -1806,7 +1821,7 @@
             {loja: 195, data: '2026-02-13', inicio: '2026-02-13 10:16:42', fim: '2026-02-13 21:25:39', cupons: 256, faturamento: 6232.95, meta: 6590, auto: 0, delivery: 4180.13, viagem: 2052.82, balcao: 0},
             {loja: 195, data: '2026-02-14', inicio: '2026-02-14 09:51:55', fim: '2026-02-14 16:55:03', cupons: 120, faturamento: 2938.33, meta: 5780, auto: 0, delivery: 1691.32, viagem: 1247.01, balcao: 0},
 
-            // Loja 210 - ASSAÍ ABOLIÇÃO CAMPINAS
+            // Loja 210 - ASSAÍ ABOLIÇÃO CAMPINAS (FERNANDO)
             {loja: 210, data: '2026-02-01', inicio: '2026-02-01 13:00:48', fim: '2026-02-01 18:33:30', cupons: 63, faturamento: 1028.99, meta: 1895, auto: 0, delivery: 0, viagem: 0, balcao: 1028.99},
             {loja: 210, data: '2026-02-02', inicio: '2026-02-02 11:47:13', fim: '2026-02-02 19:47:52', cupons: 64, faturamento: 977.73, meta: 2605, auto: 0, delivery: 0, viagem: 0, balcao: 977.73},
             {loja: 210, data: '2026-02-03', inicio: '2026-02-03 10:32:34', fim: '2026-02-03 20:54:31', cupons: 159, faturamento: 3167.04, meta: 2565, auto: 0, delivery: 1202.66, viagem: 0, balcao: 1964.38},
@@ -1854,7 +1869,7 @@
             {loja: 248, data: '2026-02-13', inicio: '2026-02-13 07:34:39', fim: '2026-02-13 23:51:53', cupons: 277, faturamento: 6052.05, meta: 5735, auto: 387.87, delivery: 3040.98, viagem: 1978.3, balcao: 644.9},
             {loja: 248, data: '2026-02-14', inicio: '2026-02-14 07:13:28', fim: '2026-02-14 16:54:04', cupons: 144, faturamento: 2624.66, meta: 5725, auto: 0, delivery: 980.55, viagem: 939.33, balcao: 704.78},
 
-            // Loja 251 - SOROCABA CENTRO
+            // Loja 251 - SOROCABA CENTRO (ELVES)
             {loja: 251, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 251, data: '2026-02-02', inicio: '2026-02-02 09:32:52', fim: '2026-02-02 18:29:28', cupons: 74, faturamento: 1265.67, meta: 1360, auto: 0, delivery: 110.98, viagem: 1129.8, balcao: 0},
             {loja: 251, data: '2026-02-03', inicio: '2026-02-03 10:01:01', fim: '2026-02-03 19:03:25', cupons: 103, faturamento: 1211.09, meta: 1950, auto: 0, delivery: 178.57, viagem: 1032.52, balcao: 0},
@@ -1870,7 +1885,7 @@
             {loja: 251, data: '2026-02-13', inicio: '2026-02-13 08:37:51', fim: '2026-02-13 15:58:44', cupons: 88, faturamento: 1072.78, meta: 1935, auto: 0, delivery: 59.8, viagem: 1012.98, balcao: 0},
             {loja: 251, data: '2026-02-14', inicio: '2026-02-14 08:31:34', fim: '2026-02-14 14:43:07', cupons: 57, faturamento: 785.68, meta: 1705, auto: 0, delivery: 0, viagem: 785.68, balcao: 0},
 
-            // Loja 262 - ASSAÍ INDAIATUBA
+            // Loja 262 - ASSAÍ INDAIATUBA (FERNANDO)
             {loja: 262, data: '2026-02-01', inicio: '2026-02-01 10:37:50', fim: '2026-02-01 16:24:03', cupons: 50, faturamento: 1023.77, meta: 1205, auto: 0, delivery: 178.02, viagem: 815.83, balcao: 0},
             {loja: 262, data: '2026-02-02', inicio: '2026-02-02 08:33:25', fim: '2026-02-02 16:58:55', cupons: 91, faturamento: 1785.02, meta: 2375, auto: 0, delivery: 738.78, viagem: 960.5, balcao: 0},
             {loja: 262, data: '2026-02-03', inicio: '2026-02-03 08:21:52', fim: '2026-02-03 21:11:07', cupons: 112, faturamento: 1834.13, meta: 2240, auto: 0, delivery: 442.74, viagem: 1327.52, balcao: 0},
@@ -1902,7 +1917,7 @@
             {loja: 285, data: '2026-02-13', inicio: '2026-02-13 10:46:41', fim: '2026-02-13 21:44:59', cupons: 91, faturamento: 1741.23, meta: 3375, auto: 0, delivery: 546.45, viagem: 1194.78, balcao: 0},
             {loja: 285, data: '2026-02-14', inicio: '2026-02-14 08:38:51', fim: '2026-02-14 16:55:32', cupons: 72, faturamento: 1537.05, meta: 2585, auto: 0, delivery: 518.3, viagem: 1018.75, balcao: 0},
 
-            // Loja 294 - SHOPPING RAPOSO
+            // Loja 294 - SHOPPING RAPOSO (ELVES)
             {loja: 294, data: '2026-02-01', inicio: '2026-02-01 13:46:47', fim: '2026-02-01 19:39:13', cupons: 54, faturamento: 1540.65, meta: 1655, auto: 225.5, delivery: 1043.87, viagem: 271.28, balcao: 0},
             {loja: 294, data: '2026-02-02', inicio: '2026-02-02 16:10:26', fim: '2026-02-02 21:21:02', cupons: 42, faturamento: 990.01, meta: 1965, auto: 0, delivery: 574.52, viagem: 415.49, balcao: 0},
             {loja: 294, data: '2026-02-03', inicio: '2026-02-03 14:39:02', fim: '2026-02-03 21:22:05', cupons: 49, faturamento: 1083, meta: 2015, auto: 0, delivery: 456.95, viagem: 589.4, balcao: 0},
@@ -1970,7 +1985,7 @@
         let dataInicio = "14/02/2026";
         let dataFim = "14/02/2026";
         let periodoSelecionado = "hoje";
-        let canalPieChart, metasPieChart, admRankingChart, top10BarChart, desempenhoBarChart;
+        let canalPieChart, metasPieChart, admRankingChart, top10BarChart, desempenhoBarChart, canaisPorAdmChart;
         let lojasSelecionadas = [];
         let todasLojas = [];
 
@@ -2112,6 +2127,7 @@
             atualizarKPIs();
             atualizarTabelaCanais();
             atualizarMatrizADM(dadosPeriodo);
+            atualizarGraficosCanaisPorAdm(dadosPeriodo);
         }
 
         function destruirGraficos() {
@@ -2120,9 +2136,19 @@
             if (admRankingChart) admRankingChart.destroy();
             if (top10BarChart) top10BarChart.destroy();
             if (desempenhoBarChart) desempenhoBarChart.destroy();
+            if (canaisPorAdmChart) canaisPorAdmChart.destroy();
         }
 
         $(document).ready(function() {
+            // Preencher o select de ADMs com os nomes corretos
+            const admSelect = $('#admFilter');
+            admSelect.empty();
+            admSelect.append('<option value="">Todos os ADMs</option>');
+            admSelect.append('<option value="FERNANDO">FERNANDO SANTOS DA SILVA</option>');
+            admSelect.append('<option value="ELVES">ELVES BRANDOW AZEVEDO DOS SANTOS</option>');
+            admSelect.append('<option value="GABRIELE">GABRIELE NEVES PAIVA SILVA</option>');
+            admSelect.append('<option value="OUTROS">OUTROS ADMINISTRADORES</option>');
+            
             setPeriodo('hoje');
             
             $(document).click(function(event) {
@@ -2314,10 +2340,10 @@
         function atualizarMatrizADM(dadosPeriodo) {
             // Agrupar dados por ADM
             const dadosADM = {
-                'ADM1': { nome: 'João Silva', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
-                'ADM2': { nome: 'Maria Santos', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
-                'ADM3': { nome: 'Pedro Oliveira', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
-                'ADM4': { nome: 'Ana Costa', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 }
+                'FERNANDO': { nome: 'FERNANDO SANTOS DA SILVA', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
+                'ELVES': { nome: 'ELVES BRANDOW AZEVEDO DOS SANTOS', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
+                'GABRIELE': { nome: 'GABRIELE NEVES PAIVA SILVA', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
+                'OUTROS': { nome: 'OUTROS ADMINISTRADORES', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 }
             };
             
             const lojasPorADM = {};
@@ -2540,6 +2566,10 @@
             if (admRankingChart) {
                 atualizarGraficosADM(dadosFiltrados);
             }
+
+            if (canaisPorAdmChart) {
+                atualizarGraficosCanaisPorAdm(dadosFiltrados);
+            }
         }
 
         function atualizarGraficosADM(dadosFiltrados) {
@@ -2559,7 +2589,7 @@
             });
 
             if (admRankingChart) {
-                const admList = ['ADM1', 'ADM2', 'ADM3', 'ADM4'];
+                const admList = ['FERNANDO', 'ELVES', 'GABRIELE', 'OUTROS'];
                 const faturamentos = admList.map(adm => dadosPorADM[adm]?.faturamento || 0);
                 const metas = admList.map(adm => dadosPorADM[adm]?.meta || 0);
                 const tickets = admList.map(adm => {
@@ -2589,6 +2619,35 @@
                 ];
                 admRankingChart.update();
             }
+        }
+
+        function atualizarGraficosCanaisPorAdm(dadosFiltrados) {
+            if (!canaisPorAdmChart) return;
+            
+            // Inicializar dados por ADM e canal
+            const admCanais = {
+                'FERNANDO': { auto: 0, delivery: 0, viagem: 0, balcao: 0 },
+                'ELVES': { auto: 0, delivery: 0, viagem: 0, balcao: 0 },
+                'GABRIELE': { auto: 0, delivery: 0, viagem: 0, balcao: 0 },
+                'OUTROS': { auto: 0, delivery: 0, viagem: 0, balcao: 0 }
+            };
+            
+            // Somar valores por ADM e canal
+            dadosFiltrados.forEach(loja => {
+                if (admCanais[loja.adm]) {
+                    admCanais[loja.adm].auto += loja.canais.auto || 0;
+                    admCanais[loja.adm].delivery += loja.canais.delivery || 0;
+                    admCanais[loja.adm].viagem += loja.canais.viagem || 0;
+                    admCanais[loja.adm].balcao += loja.canais.balcao || 0;
+                }
+            });
+            
+            // Atualizar gráfico
+            canaisPorAdmChart.data.datasets[0].data = Object.values(admCanais).map(d => d.auto);
+            canaisPorAdmChart.data.datasets[1].data = Object.values(admCanais).map(d => d.delivery);
+            canaisPorAdmChart.data.datasets[2].data = Object.values(admCanais).map(d => d.viagem);
+            canaisPorAdmChart.data.datasets[3].data = Object.values(admCanais).map(d => d.balcao);
+            canaisPorAdmChart.update();
         }
 
         let ordemAtual = { coluna: -1, ascendente: true };
@@ -3082,6 +3141,84 @@
                             max: 200,
                             ticks: {
                                 callback: (value) => value + '%'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // NOVO GRÁFICO: Canais por Administrador
+            canaisPorAdmChart = new Chart(document.getElementById('canaisPorAdmChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['FERNANDO', 'ELVES', 'GABRIELE', 'OUTROS'],
+                    datasets: [
+                        {
+                            label: 'Auto-Atendimento',
+                            data: [0, 0, 0, 0],
+                            backgroundColor: '#4361ee',
+                            borderRadius: 6,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        },
+                        {
+                            label: 'Delivery',
+                            data: [0, 0, 0, 0],
+                            backgroundColor: '#f72585',
+                            borderRadius: 6,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        },
+                        {
+                            label: 'Viagem',
+                            data: [0, 0, 0, 0],
+                            backgroundColor: '#4cc9f0',
+                            borderRadius: 6,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        },
+                        {
+                            label: 'Balcão',
+                            data: [0, 0, 0, 0],
+                            backgroundColor: '#ffd166',
+                            borderRadius: 6,
+                            barPercentage: 0.8,
+                            categoryPercentage: 0.9
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 15,
+                                font: { size: 10 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => {
+                                    return `${ctx.dataset.label}: R$ ${formatMoney(ctx.raw)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: false,
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => 'R$ ' + (value/1000).toFixed(0) + 'k'
                             }
                         }
                     }
