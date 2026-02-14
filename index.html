@@ -965,6 +965,89 @@
             font-size: 12px;
             font-weight: 500;
         }
+
+        /* Estilos para a tabela de matriz de ADM */
+        .adm-matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 600px;
+        }
+
+        .adm-matrix-table th {
+            background: #f8fafc;
+            color: var(--dark);
+            padding: 12px 8px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .adm-matrix-table td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+            font-weight: 500;
+        }
+
+        .adm-matrix-table .adm-name {
+            font-weight: 700;
+            color: var(--primary);
+            text-align: left;
+        }
+
+        .heatmap-cell {
+            padding: 8px !important;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .heatmap-cell:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .heatmap-high {
+            background: linear-gradient(135deg, #06d6a020, #06d6a040);
+            color: #0a5e4a;
+            font-weight: 700;
+        }
+
+        .heatmap-medium {
+            background: linear-gradient(135deg, #ffd16620, #ffd16640);
+            color: #8b6b1f;
+            font-weight: 600;
+        }
+
+        .heatmap-low {
+            background: linear-gradient(135deg, #ef476f20, #ef476f40);
+            color: #a1304a;
+            font-weight: 600;
+        }
+
+        .valor-destaque {
+            font-size: 14px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .valor-label {
+            font-size: 10px;
+            color: var(--gray);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .matrix-wrapper {
+            max-height: 350px;
+            overflow-y: auto;
+            border-radius: 16px;
+            border: 1px solid #f1f5f9;
+        }
     </style>
 </head>
 <body>
@@ -1123,11 +1206,11 @@
             </div>
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3><i class="fas fa-chart-line" style="color: var(--warning);"></i>Evolução por ADM</h3>
-                    <span class="badge"><i class="fas fa-user-tie"></i> Performance Diária</span>
+                    <h3><i class="fas fa-table" style="color: var(--warning);"></i>Matriz de Performance por ADM</h3>
+                    <span class="badge"><i class="fas fa-user-tie"></i> Análise Comparativa</span>
                 </div>
-                <div class="chart-wrapper">
-                    <canvas id="admEvolucaoChart"></canvas>
+                <div class="matrix-wrapper" id="admMatrixContainer">
+                    <!-- A matriz será inserida aqui via JavaScript -->
                 </div>
             </div>
             <div class="chart-card">
@@ -1353,7 +1436,7 @@
             {loja: 5, data: '2026-02-11', inicio: '2026-02-11 08:59:35', fim: '2026-02-11 20:38:33', cupons: 150, faturamento: 3237.78, meta: 2355, auto: 911.46, delivery: 1847.29, viagem: 479.03, balcao: 0},
             {loja: 5, data: '2026-02-12', inicio: '2026-02-12 09:17:42', fim: '2026-02-12 20:41:08', cupons: 114, faturamento: 2986.23, meta: 3915, auto: 473.37, delivery: 2239.59, viagem: 273.27, balcao: 0},
             {loja: 5, data: '2026-02-13', inicio: '2026-02-13 09:10:14', fim: '2026-02-13 20:41:28', cupons: 117, faturamento: 3468.01, meta: 4005, auto: 916.93, delivery: 2263.16, viagem: 287.92, balcao: 0},
-            {loja: 5, data: '2026-02-14', inicio: '2026-02-14 09:24:40', fim: '2026-02-14 12:34:41', cupons: 29, faturamento: 886.93, meta: 4015, auto: 204.58, delivery: 565.12, viagem: 117.23, balcao: 0},
+            {loja: 5, data: '2026-02-14', inicio: '2026-02-14 09:24:40', fim: '2026-02-14 16:55:39', cupons: 79, faturamento: 2454.01, meta: 4015, auto: 565.75, delivery: 1701.85, viagem: 186.41, balcao: 0},
 
             // Loja 10 - OSASCO PLAZA
             {loja: 10, data: '2026-02-01', inicio: '2026-02-01 10:57:34', fim: '2026-02-01 21:28:09', cupons: 133, faturamento: 5628.37, meta: 9040, auto: 801.44, delivery: 3629.69, viagem: 51.58, balcao: 1145.66},
@@ -1369,7 +1452,7 @@
             {loja: 10, data: '2026-02-11', inicio: '2026-02-11 10:06:21', fim: '2026-02-11 21:29:38', cupons: 366, faturamento: 7748.85, meta: 9385, auto: 2835.32, delivery: 1745.46, viagem: 2227.96, balcao: 928.25},
             {loja: 10, data: '2026-02-12', inicio: '2026-02-12 10:14:51', fim: '2026-02-12 21:29:52', cupons: 371, faturamento: 6774.97, meta: 9190, auto: 2856.7, delivery: 1488.65, viagem: 903.28, balcao: 1506.44},
             {loja: 10, data: '2026-02-13', inicio: '2026-02-12 13:52:47', fim: '2026-02-13 21:32:37', cupons: 440, faturamento: 11244.67, meta: 10605, auto: 2670.74, delivery: 3526.33, viagem: 1762.66, balcao: 3179.97},
-            {loja: 10, data: '2026-02-14', inicio: '2026-02-14 12:06:52', fim: '2026-02-14 12:15:58', cupons: 15, faturamento: 367.1, meta: 12645, auto: 0, delivery: 0, viagem: 112.93, balcao: 0},
+            {loja: 10, data: '2026-02-14', inicio: '2026-02-14 12:06:52', fim: '2026-02-14 16:12:32', cupons: 175, faturamento: 4398.49, meta: 12645, auto: 1354.45, delivery: 0, viagem: 1325.79, balcao: 0},
 
             // Loja 28 - SHOPPING TAMBORÉ
             {loja: 28, data: '2026-02-01', inicio: '2026-02-01 11:03:31', fim: '2026-02-01 21:23:27', cupons: 184, faturamento: 4492.96, meta: 4505, auto: 1922.09, delivery: 2047.81, viagem: 523.06, balcao: 0},
@@ -1385,7 +1468,7 @@
             {loja: 28, data: '2026-02-11', inicio: '2026-02-11 10:24:35', fim: '2026-02-11 21:49:34', cupons: 171, faturamento: 3460.27, meta: 4355, auto: 1392.16, delivery: 1634.8, viagem: 433.31, balcao: 0},
             {loja: 28, data: '2026-02-12', inicio: '2026-02-12 10:10:09', fim: '2026-02-12 22:11:20', cupons: 202, faturamento: 3984.83, meta: 4335, auto: 1637.26, delivery: 1747.07, viagem: 600.5, balcao: 0},
             {loja: 28, data: '2026-02-13', inicio: '2026-02-13 10:16:34', fim: '2026-02-13 21:54:32', cupons: 186, faturamento: 4553.9, meta: 5215, auto: 1483.52, delivery: 2696.43, viagem: 373.95, balcao: 0},
-            {loja: 28, data: '2026-02-14', inicio: '2026-02-14 10:27:19', fim: '2026-02-14 12:32:37', cupons: 18, faturamento: 396.84, meta: 5390, auto: 218.81, delivery: 172.54, viagem: 5.49, balcao: 0},
+            {loja: 28, data: '2026-02-14', inicio: '2026-02-14 10:27:19', fim: '2026-02-14 16:54:34', cupons: 90, faturamento: 1536.83, meta: 5390, auto: 769.01, delivery: 368.36, viagem: 399.46, balcao: 0},
 
             // Loja 31 - AUGUSTA
             {loja: 31, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 1645, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1401,7 +1484,7 @@
             {loja: 31, data: '2026-02-11', inicio: '2026-02-11 09:34:16', fim: '2026-02-11 21:23:44', cupons: 190, faturamento: 3267.6, meta: 4070, auto: 0, delivery: 1551.72, viagem: 0, balcao: 1683.46},
             {loja: 31, data: '2026-02-12', inicio: '2026-02-12 09:25:22', fim: '2026-02-12 21:02:47', cupons: 175, faturamento: 2478.23, meta: 3480, auto: 0, delivery: 1025.48, viagem: 0, balcao: 1452.75},
             {loja: 31, data: '2026-02-13', inicio: '2026-02-13 09:33:13', fim: '2026-02-13 21:17:48', cupons: 173, faturamento: 3256.98, meta: 4280, auto: 0, delivery: 1171.54, viagem: 0, balcao: 2085.44},
-            {loja: 31, data: '2026-02-14', inicio: '2026-02-14 09:38:39', fim: '2026-02-14 12:36:29', cupons: 23, faturamento: 419.6, meta: 3335, auto: 0, delivery: 198.43, viagem: 0, balcao: 221.17},
+            {loja: 31, data: '2026-02-14', inicio: '2026-02-14 09:38:39', fim: '2026-02-14 16:55:11', cupons: 78, faturamento: 1092.93, meta: 3335, auto: 0, delivery: 301.76, viagem: 0, balcao: 791.17},
 
             // Loja 63 - SHOPPING ITAPECERICA
             {loja: 63, data: '2026-02-01', inicio: '2026-02-01 12:38:53', fim: '2026-02-03 00:08:12', cupons: 54, faturamento: 986.98, meta: 900, auto: 289.35, delivery: 0, viagem: 697.63, balcao: 0},
@@ -1417,7 +1500,7 @@
             {loja: 63, data: '2026-02-11', inicio: '2026-02-11 10:07:07', fim: '2026-02-13 00:10:24', cupons: 96, faturamento: 1486.37, meta: 1395, auto: 316.83, delivery: 0, viagem: 1169.54, balcao: 0},
             {loja: 63, data: '2026-02-12', inicio: '2026-02-12 10:57:04', fim: '2026-02-14 09:39:37', cupons: 89, faturamento: 1312.69, meta: 1215, auto: 32.8, delivery: 0, viagem: 1279.89, balcao: 0},
             {loja: 63, data: '2026-02-13', inicio: '2026-02-13 10:34:19', fim: '2026-02-13 21:34:04', cupons: 76, faturamento: 1111.57, meta: 2055, auto: 237.48, delivery: 0, viagem: 1111.57, balcao: 0},
-            {loja: 63, data: '2026-02-14', inicio: '2026-02-14 10:36:25', fim: '2026-02-14 12:35:23', cupons: 13, faturamento: 243.17, meta: 1650, auto: 19.9, delivery: 0, viagem: 243.17, balcao: 0},
+            {loja: 63, data: '2026-02-14', inicio: '2026-02-14 10:36:25', fim: '2026-02-14 16:49:13', cupons: 62, faturamento: 984.35, meta: 1650, auto: 72.02, delivery: 0, viagem: 984.35, balcao: 0},
 
             // Loja 69 - PERUS
             {loja: 69, data: '2026-02-01', inicio: '2026-02-01 11:06:12', fim: '2026-02-01 19:39:56', cupons: 108, faturamento: 3860.99, meta: 4405, auto: 0, delivery: 3254.21, viagem: 525.85, balcao: 0},
@@ -1433,7 +1516,7 @@
             {loja: 69, data: '2026-02-11', inicio: '2026-02-11 09:19:07', fim: '2026-02-11 21:44:17', cupons: 152, faturamento: 3059.9, meta: 3325, auto: 0, delivery: 1723.06, viagem: 1325.84, balcao: 0},
             {loja: 69, data: '2026-02-12', inicio: '2026-02-12 09:30:47', fim: '2026-02-12 21:42:04', cupons: 141, faturamento: 2807.88, meta: 4270, auto: 0, delivery: 1674.81, viagem: 1053.19, balcao: 0},
             {loja: 69, data: '2026-02-13', inicio: '2026-02-13 09:02:09', fim: '2026-02-13 21:42:18', cupons: 211, faturamento: 5193.42, meta: 4570, auto: 0, delivery: 3876.7, viagem: 1394.96, balcao: 0},
-            {loja: 69, data: '2026-02-14', inicio: '2026-02-14 09:49:52', fim: '2026-02-14 12:32:32', cupons: 19, faturamento: 460.12, meta: 5095, auto: 0, delivery: 300.25, viagem: 189.63, balcao: 0},
+            {loja: 69, data: '2026-02-14', inicio: '2026-02-14 09:49:52', fim: '2026-02-14 16:55:09', cupons: 120, faturamento: 2565.47, meta: 5095, auto: 0, delivery: 1283.24, viagem: 1283.21, balcao: 0},
 
             // Loja 73 - BRIGADEIRO JARDINS
             {loja: 73, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 830, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1449,7 +1532,7 @@
             {loja: 73, data: '2026-02-11', inicio: '2026-02-11 10:26:04', fim: '2026-02-11 18:41:10', cupons: 139, faturamento: 2429.94, meta: 3440, auto: 1432.74, delivery: 659.82, viagem: 337.38, balcao: 0},
             {loja: 73, data: '2026-02-12', inicio: '2026-02-12 09:28:32', fim: '2026-02-12 18:30:01', cupons: 128, faturamento: 2728.68, meta: 3395, auto: 772.89, delivery: 1496.77, viagem: 459.02, balcao: 0},
             {loja: 73, data: '2026-02-13', inicio: '2026-02-13 10:38:27', fim: '2026-02-13 18:28:18', cupons: 86, faturamento: 2147.35, meta: 2815, auto: 795.02, delivery: 1097.72, viagem: 254.61, balcao: 0},
-            {loja: 73, data: '2026-02-14', inicio: '2026-02-14 10:37:54', fim: '2026-02-14 12:32:40', cupons: 13, faturamento: 226.44, meta: 2285, auto: 180.75, delivery: 0, viagem: 45.69, balcao: 0},
+            {loja: 73, data: '2026-02-14', inicio: '2026-02-14 10:37:54', fim: '2026-02-14 16:53:07', cupons: 62, faturamento: 1307.81, meta: 2285, auto: 713.44, delivery: 484.91, viagem: 109.46, balcao: 0},
 
             // Loja 82 - TEODORO SAMPAIO
             {loja: 82, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1465,7 +1548,7 @@
             {loja: 82, data: '2026-02-11', inicio: '2026-02-11 09:03:46', fim: '2026-02-11 19:50:56', cupons: 165, faturamento: 3613.11, meta: 2245, auto: 0, delivery: 2859.72, viagem: 0, balcao: 753.39},
             {loja: 82, data: '2026-02-12', inicio: '2026-02-12 09:09:07', fim: '2026-02-12 19:56:07', cupons: 181, faturamento: 3517.07, meta: 3435, auto: 770.24, delivery: 2015.65, viagem: 0, balcao: 731.18},
             {loja: 82, data: '2026-02-13', inicio: '2026-02-13 09:03:37', fim: '2026-02-13 19:52:21', cupons: 177, faturamento: 3106.1, meta: 2995, auto: 421.82, delivery: 2029.92, viagem: 0, balcao: 654.36},
-            {loja: 82, data: '2026-02-14', inicio: '2026-02-14 09:03:11', fim: '2026-02-14 12:32:02', cupons: 32, faturamento: 590.89, meta: 2100, auto: 0, delivery: 409.8, viagem: 0, balcao: 181.09},
+            {loja: 82, data: '2026-02-14', inicio: '2026-02-14 09:03:11', fim: '2026-02-14 16:50:36', cupons: 97, faturamento: 2199.74, meta: 2100, auto: 262.27, delivery: 1520.82, viagem: 0, balcao: 416.65},
 
             // Loja 86 - REX RAFAEL DE BARROS
             {loja: 86, data: '2026-02-01', inicio: '2026-02-01 13:31:09', fim: '2026-02-02 12:16:50', cupons: 69, faturamento: 2678.91, meta: 4760, auto: 636.02, delivery: 653.15, viagem: 92.06, balcao: 1297.68},
@@ -1481,7 +1564,7 @@
             {loja: 86, data: '2026-02-11', inicio: '2026-02-11 09:12:36', fim: '2026-02-11 21:41:12', cupons: 147, faturamento: 3156.09, meta: 5715, auto: 1968.05, delivery: 453.43, viagem: 255.98, balcao: 478.63},
             {loja: 86, data: '2026-02-12', inicio: '2026-02-12 12:20:34', fim: '2026-02-12 21:17:38', cupons: 124, faturamento: 3056.73, meta: 5075, auto: 1924.85, delivery: 295.53, viagem: 319.02, balcao: 517.33},
             {loja: 86, data: '2026-02-13', inicio: '2026-02-13 10:06:18', fim: '2026-02-13 21:30:40', cupons: 108, faturamento: 3642.71, meta: 6405, auto: 1485.02, delivery: 641.94, viagem: 152.48, balcao: 1363.27},
-            {loja: 86, data: '2026-02-14', inicio: '2026-02-14 10:08:15', fim: '2026-02-14 12:09:56', cupons: 14, faturamento: 331.55, meta: 5635, auto: 113.49, delivery: 29.9, viagem: 28.8, balcao: 29.45},
+            {loja: 86, data: '2026-02-14', inicio: '2026-02-14 10:08:15', fim: '2026-02-14 16:15:06', cupons: 51, faturamento: 1301.29, meta: 5635, auto: 691.9, delivery: 205.5, viagem: 151.16, balcao: 118.78},
 
             // Loja 90 - SHOPPING PARQUE BARUERI
             {loja: 90, data: '2026-02-01', inicio: '2026-02-01 10:47:52', fim: '2026-02-01 21:46:17', cupons: 224, faturamento: 5436.43, meta: 4415, auto: 1962.1, delivery: 403.45, viagem: 636.77, balcao: 0},
@@ -1497,7 +1580,7 @@
             {loja: 90, data: '2026-02-11', inicio: '2026-02-11 10:31:14', fim: '2026-02-11 22:12:38', cupons: 166, faturamento: 3875.82, meta: 4420, auto: 1901.1, delivery: 229.51, viagem: 688.12, balcao: 0},
             {loja: 90, data: '2026-02-12', inicio: '2026-02-12 13:44:37', fim: '2026-02-12 21:47:36', cupons: 126, faturamento: 2547.23, meta: 3370, auto: 1429.24, delivery: 80.79, viagem: 192.24, balcao: 0},
             {loja: 90, data: '2026-02-13', inicio: '2026-02-13 10:25:47', fim: '2026-02-13 22:02:20', cupons: 198, faturamento: 4673.55, meta: 4345, auto: 1752.34, delivery: 217.27, viagem: 746.4, balcao: 0},
-            {loja: 90, data: '2026-02-14', inicio: '2026-02-14 10:47:06', fim: '2026-02-14 12:21:13', cupons: 7, faturamento: 237.3, meta: 4955, auto: 129.04, delivery: 0, viagem: 0, balcao: 0},
+            {loja: 90, data: '2026-02-14', inicio: '2026-02-14 10:47:06', fim: '2026-02-14 16:51:02', cupons: 93, faturamento: 1926.52, meta: 4955, auto: 1076.89, delivery: 29.5, viagem: 134.72, balcao: 0},
 
             // Loja 97 - ASSAÍ JOÃO DIAS
             {loja: 97, data: '2026-02-01', inicio: '2026-02-01 10:15:31', fim: '2026-02-01 19:40:14', cupons: 108, faturamento: 2285.08, meta: 3125, auto: 1728.49, delivery: 60.09, viagem: 283.79, balcao: 212.71},
@@ -1513,7 +1596,7 @@
             {loja: 97, data: '2026-02-11', inicio: '2026-02-11 10:22:21', fim: '2026-02-11 21:26:07', cupons: 162, faturamento: 3802.35, meta: 4485, auto: 2165.12, delivery: 582.84, viagem: 499.59, balcao: 554.8},
             {loja: 97, data: '2026-02-12', inicio: '2026-02-12 10:18:31', fim: '2026-02-12 21:42:21', cupons: 115, faturamento: 2515.55, meta: 3670, auto: 1323.7, delivery: 388, viagem: 458.21, balcao: 333.7},
             {loja: 97, data: '2026-02-13', inicio: '2026-02-13 10:24:02', fim: '2026-02-14 04:19:09', cupons: 155, faturamento: 4223.68, meta: 4100, auto: 2306.69, delivery: 133.1, viagem: 542.1, balcao: 1241.79},
-            {loja: 97, data: '2026-02-14', inicio: '2026-02-13 19:36:37', fim: '2026-02-14 12:09:27', cupons: 28, faturamento: 631.59, meta: 6315, auto: 346.75, delivery: 259.16, viagem: 37.84, balcao: 1332.42},
+            {loja: 97, data: '2026-02-14', inicio: '2026-02-13 19:36:37', fim: '2026-02-14 16:06:21', cupons: 105, faturamento: 2046.39, meta: 6315, auto: 996.01, delivery: 382, viagem: 342.55, balcao: 1420.77},
 
             // Loja 98 - FRANCO DA ROCHA
             {loja: 98, data: '2026-02-01', inicio: '2026-02-01 10:17:28', fim: '2026-02-01 21:31:21', cupons: 58, faturamento: 1183.14, meta: 2500, auto: 86.04, delivery: 319.1, viagem: 778, balcao: 0},
@@ -1529,7 +1612,7 @@
             {loja: 98, data: '2026-02-11', inicio: '2026-02-11 09:40:26', fim: '2026-02-11 22:19:56', cupons: 222, faturamento: 3688.13, meta: 3600, auto: 1026.4, delivery: 606.08, viagem: 2055.65, balcao: 0},
             {loja: 98, data: '2026-02-12', inicio: '2026-02-12 08:48:37', fim: '2026-02-12 21:56:25', cupons: 208, faturamento: 3144.64, meta: 3970, auto: 999.72, delivery: 608.02, viagem: 1536.9, balcao: 0},
             {loja: 98, data: '2026-02-13', inicio: '2026-02-13 08:41:38', fim: '2026-02-13 19:26:46', cupons: 258, faturamento: 3493.53, meta: 4245, auto: 532.17, delivery: 586.56, viagem: 2374.8, balcao: 0},
-            {loja: 98, data: '2026-02-14', inicio: '2026-02-14 09:55:16', fim: '2026-02-14 12:34:38', cupons: 33, faturamento: 606.66, meta: 3780, auto: 0, delivery: 154.54, viagem: 452.12, balcao: 0},
+            {loja: 98, data: '2026-02-14', inicio: '2026-02-14 09:55:16', fim: '2026-02-14 16:53:43', cupons: 124, faturamento: 1893.14, meta: 3780, auto: 0, delivery: 269.39, viagem: 1623.75, balcao: 0},
 
             // Loja 101 - CARREFOUR RAPOSO TAVARES
             {loja: 101, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 2140, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1545,7 +1628,7 @@
             {loja: 101, data: '2026-02-11', inicio: '2026-02-11 10:23:13', fim: '2026-02-11 21:17:43', cupons: 130, faturamento: 2461.34, meta: 1900, auto: 0, delivery: 978.83, viagem: 1482.51, balcao: 0},
             {loja: 101, data: '2026-02-12', inicio: '2026-02-12 11:16:55', fim: '2026-02-12 21:42:55', cupons: 136, faturamento: 2696.94, meta: 1820, auto: 0, delivery: 1317.84, viagem: 1379.1, balcao: 0},
             {loja: 101, data: '2026-02-13', inicio: '2026-02-13 10:39:00', fim: '2026-02-13 20:53:41', cupons: 116, faturamento: 2575.19, meta: 2450, auto: 0, delivery: 1489.73, viagem: 1085.46, balcao: 0},
-            {loja: 101, data: '2026-02-14', inicio: '2026-02-14 10:05:39', fim: '2026-02-14 12:34:51', cupons: 11, faturamento: 262.79, meta: 2980, auto: 0, delivery: 130.57, viagem: 132.22, balcao: 0},
+            {loja: 101, data: '2026-02-14', inicio: '2026-02-14 10:05:39', fim: '2026-02-14 16:44:57', cupons: 88, faturamento: 2063.23, meta: 2980, auto: 351.1, delivery: 831.72, viagem: 880.41, balcao: 0},
 
             // Loja 118 - SHOPPING ITAPECERICA II
             {loja: 118, data: '2026-02-01', inicio: '2026-02-01 11:12:56', fim: '2026-02-01 21:48:59', cupons: 119, faturamento: 2521.98, meta: 2680, auto: 1214.88, delivery: 806.27, viagem: 500.83, balcao: 0},
@@ -1561,7 +1644,7 @@
             {loja: 118, data: '2026-02-11', inicio: '2026-02-11 10:16:33', fim: '2026-02-11 21:39:19', cupons: 87, faturamento: 1700.14, meta: 2445, auto: 675.48, delivery: 496.99, viagem: 527.67, balcao: 0},
             {loja: 118, data: '2026-02-12', inicio: '2026-02-12 11:13:01', fim: '2026-02-12 21:34:00', cupons: 88, faturamento: 1911.59, meta: 2890, auto: 964.99, delivery: 439.15, viagem: 507.45, balcao: 0},
             {loja: 118, data: '2026-02-13', inicio: '2026-02-13 10:21:39', fim: '2026-02-13 21:58:28', cupons: 103, faturamento: 2239.19, meta: 2920, auto: 932.34, delivery: 540.76, viagem: 766.09, balcao: 0},
-            {loja: 118, data: '2026-02-14', inicio: '2026-02-14 10:34:34', fim: '2026-02-14 12:22:26', cupons: 10, faturamento: 295.4, meta: 3870, auto: 205.63, delivery: 82.8, viagem: 6.97, balcao: 0},
+            {loja: 118, data: '2026-02-14', inicio: '2026-02-14 10:34:34', fim: '2026-02-14 16:53:33', cupons: 40, faturamento: 946.35, meta: 3870, auto: 520.09, delivery: 195.91, viagem: 230.35, balcao: 0},
 
             // Loja 126 - OSASCO JOÃO DE ANDRADE
             {loja: 126, data: '2026-02-01', inicio: '2026-02-01 14:44:39', fim: '2026-02-01 21:08:09', cupons: 11, faturamento: 318.83, meta: 8370, auto: 0, delivery: 0, viagem: 318.83, balcao: 0},
@@ -1577,7 +1660,7 @@
             {loja: 126, data: '2026-02-11', inicio: '2026-02-11 10:04:20', fim: '2026-02-11 21:32:40', cupons: 208, faturamento: 6573.07, meta: 8045, auto: 554.69, delivery: 3836.18, viagem: 40.32, balcao: 2141.88},
             {loja: 126, data: '2026-02-12', inicio: '2026-02-12 10:25:45', fim: '2026-02-12 21:24:18', cupons: 293, faturamento: 5778.66, meta: 8990, auto: 327.02, delivery: 3312.49, viagem: 10.47, balcao: 2128.68},
             {loja: 126, data: '2026-02-13', inicio: '2026-02-13 10:15:00', fim: '2026-02-13 21:30:11', cupons: 396, faturamento: 10997.7, meta: 11555, auto: 643.84, delivery: 6195.35, viagem: 31.07, balcao: 4127.44},
-            {loja: 126, data: '2026-02-14', inicio: null, fim: null, cupons: 10, faturamento: 406.17, meta: 13025, auto: 0, delivery: 0, viagem: 0, balcao: 0},
+            {loja: 126, data: '2026-02-14', inicio: '2026-02-14 13:14:43', fim: '2026-02-14 16:16:42', cupons: 103, faturamento: 2839.15, meta: 13025, auto: 394.59, delivery: 0, viagem: 38.37, balcao: 0},
 
             // Loja 133 - PARQUE TIETÊ
             {loja: 133, data: '2026-02-01', inicio: '2026-02-01 11:02:16', fim: '2026-02-01 18:27:53', cupons: 109, faturamento: 3247.49, meta: 0, auto: 51.45, delivery: 2814.27, viagem: 381.77, balcao: 0},
@@ -1593,7 +1676,7 @@
             {loja: 133, data: '2026-02-11', inicio: '2026-02-11 10:22:14', fim: '2026-02-11 22:40:48', cupons: 175, faturamento: 4698.39, meta: 5585, auto: 183.94, delivery: 3489.38, viagem: 1025.07, balcao: 0},
             {loja: 133, data: '2026-02-12', inicio: '2026-02-12 10:04:20', fim: '2026-02-12 22:31:44', cupons: 196, faturamento: 4821.72, meta: 5140, auto: 0, delivery: 3674.77, viagem: 1146.95, balcao: 0},
             {loja: 133, data: '2026-02-13', inicio: '2026-02-13 10:08:42', fim: '2026-02-13 21:47:58', cupons: 164, faturamento: 5198.91, meta: 5875, auto: 278.37, delivery: 4016.21, viagem: 904.33, balcao: 0},
-            {loja: 133, data: '2026-02-14', inicio: '2026-02-14 10:09:38', fim: '2026-02-14 12:25:39', cupons: 21, faturamento: 534.99, meta: 6680, auto: 0, delivery: 409.63, viagem: 125.36, balcao: 0},
+            {loja: 133, data: '2026-02-14', inicio: '2026-02-14 10:09:38', fim: '2026-02-14 16:54:43', cupons: 87, faturamento: 2556.53, meta: 6680, auto: 131.33, delivery: 1984.64, viagem: 440.56, balcao: 0},
 
             // Loja 145 - ITASHOPPING
             {loja: 145, data: '2026-02-01', inicio: '2026-02-01 09:55:30', fim: '2026-02-02 09:13:20', cupons: 64, faturamento: 1967.02, meta: 3170, auto: 43.88, delivery: 1539.41, viagem: 383.73, balcao: 0},
@@ -1609,7 +1692,7 @@
             {loja: 145, data: '2026-02-11', inicio: '2026-02-11 08:47:30', fim: '2026-02-13 08:28:42', cupons: 181, faturamento: 3060.92, meta: 3345, auto: 1494.1, delivery: 946.15, viagem: 620.67, balcao: 0},
             {loja: 145, data: '2026-02-12', inicio: '2026-02-12 10:16:14', fim: '2026-02-13 08:33:19', cupons: 155, faturamento: 2427.45, meta: 3315, auto: 432.54, delivery: 740.65, viagem: 1247.28, balcao: 0},
             {loja: 145, data: '2026-02-13', inicio: '2026-02-13 09:05:30', fim: '2026-02-14 09:19:24', cupons: 142, faturamento: 2451.98, meta: 4270, auto: 732, delivery: 736.95, viagem: 979.54, balcao: 0},
-            {loja: 145, data: '2026-02-14', inicio: '2026-02-14 09:28:50', fim: '2026-02-14 12:25:22', cupons: 14, faturamento: 232.3, meta: 4375, auto: 74.3, delivery: 119.44, viagem: 112.86, balcao: 0},
+            {loja: 145, data: '2026-02-14', inicio: '2026-02-14 09:28:50', fim: '2026-02-14 16:51:02', cupons: 76, faturamento: 1052.12, meta: 4375, auto: 321.26, delivery: 246.09, viagem: 790.23, balcao: 0},
 
             // Loja 157 - JARDIM SÃO LUIZ
             {loja: 157, data: '2026-02-01', inicio: '2026-02-01 10:24:08', fim: '2026-02-01 20:31:21', cupons: 91, faturamento: 2497.37, meta: 0, auto: 0, delivery: 1797.97, viagem: 699.4, balcao: 0},
@@ -1625,7 +1708,7 @@
             {loja: 157, data: '2026-02-11', inicio: '2026-02-11 09:29:59', fim: '2026-02-11 21:35:16', cupons: 117, faturamento: 2539.06, meta: 3225, auto: 0, delivery: 1718.99, viagem: 820.07, balcao: 0},
             {loja: 157, data: '2026-02-12', inicio: '2026-02-12 09:43:50', fim: '2026-02-12 21:36:33', cupons: 120, faturamento: 2199.54, meta: 3405, auto: 0, delivery: 1018.34, viagem: 1181.2, balcao: 0},
             {loja: 157, data: '2026-02-13', inicio: '2026-02-13 10:22:28', fim: '2026-02-13 21:20:26', cupons: 107, faturamento: 2516.24, meta: 3405, auto: 0, delivery: 1644.09, viagem: 872.15, balcao: 0},
-            {loja: 157, data: '2026-02-14', inicio: '2026-02-14 10:28:40', fim: '2026-02-14 12:29:19', cupons: 13, faturamento: 440.71, meta: 3365, auto: 0, delivery: 311.77, viagem: 128.94, balcao: 0},
+            {loja: 157, data: '2026-02-14', inicio: '2026-02-14 10:28:40', fim: '2026-02-14 16:52:14', cupons: 55, faturamento: 1230.79, meta: 3365, auto: 0, delivery: 719.57, viagem: 511.22, balcao: 0},
 
             // Loja 158 - ASSAÍ CARAPICUÍBA
             {loja: 158, data: '2026-02-01', inicio: '2026-02-01 09:10:23', fim: '2026-02-01 21:04:06', cupons: 192, faturamento: 5708, meta: 4900, auto: 2919.55, delivery: 2453.57, viagem: 334.88, balcao: 0},
@@ -1641,7 +1724,7 @@
             {loja: 158, data: '2026-02-11', inicio: '2026-02-11 09:42:58', fim: '2026-02-11 21:32:49', cupons: 122, faturamento: 2463.76, meta: 3930, auto: 1933.42, delivery: 94.19, viagem: 436.15, balcao: 0},
             {loja: 158, data: '2026-02-12', inicio: '2026-02-12 09:48:26', fim: '2026-02-12 19:25:45', cupons: 69, faturamento: 1278.61, meta: 3490, auto: 1019.94, delivery: 11.45, viagem: 247.22, balcao: 0},
             {loja: 158, data: '2026-02-13', inicio: '2026-02-13 09:50:15', fim: '2026-02-13 21:40:35', cupons: 168, faturamento: 4512.33, meta: 4425, auto: 2490.5, delivery: 1741.45, viagem: 280.38, balcao: 0},
-            {loja: 158, data: '2026-02-14', inicio: '2026-02-14 09:23:03', fim: '2026-02-14 12:37:00', cupons: 21, faturamento: 580.7, meta: 4655, auto: 322.01, delivery: 258.69, viagem: 0, balcao: 0},
+            {loja: 158, data: '2026-02-14', inicio: '2026-02-14 09:23:03', fim: '2026-02-14 16:55:33', cupons: 82, faturamento: 1816.81, meta: 4655, auto: 1179.27, delivery: 348.5, viagem: 289.04, balcao: 0},
 
             // Loja 162 - MARQUESA TAIPAS
             {loja: 162, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1657,7 +1740,7 @@
             {loja: 162, data: '2026-02-11', inicio: '2026-02-11 09:21:10', fim: '2026-02-11 20:33:41', cupons: 129, faturamento: 2606.87, meta: 3335, auto: 0, delivery: 0, viagem: 0, balcao: 1244.5},
             {loja: 162, data: '2026-02-12', inicio: '2026-02-12 09:41:17', fim: '2026-02-12 20:48:21', cupons: 124, faturamento: 2476.76, meta: 2905, auto: 0, delivery: 0, viagem: 0, balcao: 1155.83},
             {loja: 162, data: '2026-02-13', inicio: '2026-02-13 09:23:08', fim: '2026-02-13 20:42:18', cupons: 91, faturamento: 2951.27, meta: 3090, auto: 0, delivery: 0, viagem: 0, balcao: 693.02},
-            {loja: 162, data: '2026-02-14', inicio: '2026-02-14 09:42:12', fim: '2026-02-14 12:23:46', cupons: 26, faturamento: 381.51, meta: 2985, auto: 0, delivery: 0, viagem: 0, balcao: 240.66},
+            {loja: 162, data: '2026-02-14', inicio: '2026-02-14 09:42:12', fim: '2026-02-14 16:53:04', cupons: 60, faturamento: 1427.82, meta: 2985, auto: 0, delivery: 0, viagem: 0, balcao: 532.89},
 
             // Loja 178 - EXTRA CARAPICUÍBA
             {loja: 178, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 800, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1673,7 +1756,7 @@
             {loja: 178, data: '2026-02-11', inicio: '2026-02-11 12:22:53', fim: '2026-02-11 21:34:32', cupons: 113, faturamento: 2598.1, meta: 1565, auto: 0, delivery: 1625.2, viagem: 0, balcao: 972.9},
             {loja: 178, data: '2026-02-12', inicio: '2026-02-12 09:18:13', fim: '2026-02-12 21:48:53', cupons: 154, faturamento: 3808.91, meta: 1785, auto: 0, delivery: 2774.94, viagem: 0, balcao: 838.84},
             {loja: 178, data: '2026-02-13', inicio: '2026-02-13 09:28:18', fim: '2026-02-13 22:11:29', cupons: 124, faturamento: 3964.04, meta: 2270, auto: 0, delivery: 2933.02, viagem: 0, balcao: 1015.04},
-            {loja: 178, data: '2026-02-14', inicio: '2026-02-14 09:26:40', fim: '2026-02-14 12:24:33', cupons: 13, faturamento: 361.86, meta: 2165, auto: 0, delivery: 289.9, viagem: 0, balcao: 71.96},
+            {loja: 178, data: '2026-02-14', inicio: '2026-02-14 09:26:40', fim: '2026-02-14 16:49:36', cupons: 66, faturamento: 1449.88, meta: 2165, auto: 0, delivery: 988.86, viagem: 0, balcao: 461.02},
 
             // Loja 183 - FRANCO DA ROCHA 2
             {loja: 183, data: '2026-02-01', inicio: '2026-02-01 11:18:54', fim: '2026-02-01 21:21:27', cupons: 34, faturamento: 951.44, meta: 1165, auto: 35.7, delivery: 204.7, viagem: 711.04, balcao: 0},
@@ -1689,7 +1772,7 @@
             {loja: 183, data: '2026-02-11', inicio: '2026-02-11 10:09:50', fim: '2026-02-11 22:00:37', cupons: 120, faturamento: 1736.86, meta: 2540, auto: 522.49, delivery: 178.83, viagem: 999.6, balcao: 0},
             {loja: 183, data: '2026-02-12', inicio: '2026-02-12 09:44:42', fim: '2026-02-12 21:44:54', cupons: 129, faturamento: 1808.69, meta: 2480, auto: 617.94, delivery: 115.14, viagem: 1067.61, balcao: 0},
             {loja: 183, data: '2026-02-13', inicio: '2026-02-13 09:36:54', fim: '2026-02-13 19:26:13', cupons: 126, faturamento: 2092.38, meta: 3020, auto: 912.16, delivery: 542.95, viagem: 629.27, balcao: 0},
-            {loja: 183, data: '2026-02-14', inicio: '2026-02-14 10:54:40', fim: '2026-02-14 12:35:11', cupons: 14, faturamento: 219.33, meta: 2540, auto: 0, delivery: 0, viagem: 219.33, balcao: 0},
+            {loja: 183, data: '2026-02-14', inicio: '2026-02-14 10:54:40', fim: '2026-02-14 16:43:55', cupons: 40, faturamento: 670.8, meta: 2540, auto: 0, delivery: 88.33, viagem: 582.47, balcao: 0},
 
             // Loja 189 - SHOPPING PATIO CIANÊ
             {loja: 189, data: '2026-02-01', inicio: '2026-02-01 12:06:52', fim: '2026-02-01 20:48:10', cupons: 102, faturamento: 1707.46, meta: 1330, auto: 466.58, delivery: 292.68, viagem: 948.2, balcao: 0},
@@ -1705,7 +1788,7 @@
             {loja: 189, data: '2026-02-11', inicio: '2026-02-11 09:10:09', fim: '2026-02-11 21:11:40', cupons: 174, faturamento: 2076.87, meta: 2495, auto: 749.33, delivery: 200.04, viagem: 1127.5, balcao: 0},
             {loja: 189, data: '2026-02-12', inicio: '2026-02-12 10:05:08', fim: '2026-02-12 21:51:06', cupons: 192, faturamento: 2564.1, meta: 2670, auto: 718, delivery: 240.47, viagem: 1596.72, balcao: 0},
             {loja: 189, data: '2026-02-13', inicio: '2026-02-13 09:53:31', fim: '2026-02-13 21:54:04', cupons: 203, faturamento: 2519.29, meta: 2830, auto: 737.6, delivery: 379.76, viagem: 1401.93, balcao: 0},
-            {loja: 189, data: '2026-02-14', inicio: '2026-02-14 10:06:37', fim: '2026-02-14 12:32:04', cupons: 29, faturamento: 327.98, meta: 2665, auto: 10.88, delivery: 75.88, viagem: 241.22, balcao: 0},
+            {loja: 189, data: '2026-02-14', inicio: '2026-02-14 10:06:37', fim: '2026-02-14 16:53:56', cupons: 114, faturamento: 1271.1, meta: 2665, auto: 270.11, delivery: 166.79, viagem: 834.2, balcao: 0},
 
             // Loja 195 - EXTRA JARAGUÁ
             {loja: 195, data: '2026-02-01', inicio: '2026-02-01 11:36:07', fim: '2026-02-01 19:34:36', cupons: 131, faturamento: 4973.41, meta: 0, auto: 0, delivery: 4610.59, viagem: 362.82, balcao: 0},
@@ -1721,7 +1804,7 @@
             {loja: 195, data: '2026-02-11', inicio: '2026-02-11 10:15:02', fim: '2026-02-11 21:43:28', cupons: 230, faturamento: 4579.81, meta: 5325, auto: 0, delivery: 2729.09, viagem: 1850.72, balcao: 0},
             {loja: 195, data: '2026-02-12', inicio: '2026-02-12 09:49:22', fim: '2026-02-12 21:43:27', cupons: 265, faturamento: 5162.11, meta: 5470, auto: 0, delivery: 2873.42, viagem: 2288.69, balcao: 0},
             {loja: 195, data: '2026-02-13', inicio: '2026-02-13 10:16:42', fim: '2026-02-13 21:25:39', cupons: 256, faturamento: 6232.95, meta: 6590, auto: 0, delivery: 4180.13, viagem: 2052.82, balcao: 0},
-            {loja: 195, data: '2026-02-14', inicio: '2026-02-14 09:51:55', fim: '2026-02-14 12:30:36', cupons: 32, faturamento: 604.97, meta: 5780, auto: 0, delivery: 267.55, viagem: 337.42, balcao: 0},
+            {loja: 195, data: '2026-02-14', inicio: '2026-02-14 09:51:55', fim: '2026-02-14 16:55:03', cupons: 120, faturamento: 2938.33, meta: 5780, auto: 0, delivery: 1691.32, viagem: 1247.01, balcao: 0},
 
             // Loja 210 - ASSAÍ ABOLIÇÃO CAMPINAS
             {loja: 210, data: '2026-02-01', inicio: '2026-02-01 13:00:48', fim: '2026-02-01 18:33:30', cupons: 63, faturamento: 1028.99, meta: 1895, auto: 0, delivery: 0, viagem: 0, balcao: 1028.99},
@@ -1737,7 +1820,7 @@
             {loja: 210, data: '2026-02-11', inicio: '2026-02-11 00:00:00', fim: '2026-02-11 20:36:08', cupons: 160, faturamento: 2840.45, meta: 3490, auto: 0, delivery: 1279.57, viagem: 0, balcao: 1545},
             {loja: 210, data: '2026-02-12', inicio: '2026-02-12 08:16:05', fim: '2026-02-12 21:19:27', cupons: 188, faturamento: 3774.26, meta: 3715, auto: 0, delivery: 1360.56, viagem: 0, balcao: 2413.7},
             {loja: 210, data: '2026-02-13', inicio: '2026-02-13 08:45:43', fim: '2026-02-13 20:49:28', cupons: 128, faturamento: 2899.39, meta: 3815, auto: 0, delivery: 1176.61, viagem: 0, balcao: 1722.78},
-            {loja: 210, data: '2026-02-14', inicio: '2026-02-14 08:31:14', fim: '2026-02-14 12:33:17', cupons: 57, faturamento: 1032.05, meta: 4025, auto: 0, delivery: 344.01, viagem: 0, balcao: 668.24},
+            {loja: 210, data: '2026-02-14', inicio: '2026-02-14 08:31:14', fim: '2026-02-14 16:55:20', cupons: 125, faturamento: 2483.99, meta: 4025, auto: 0, delivery: 827.3, viagem: 0, balcao: 1636.89},
 
             // Loja 247 - METRÔ CCR VILA DAS BELEZAS
             {loja: 247, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1753,7 +1836,7 @@
             {loja: 247, data: '2026-02-11', inicio: '2026-02-11 00:00:00', fim: '2026-02-11 20:12:04', cupons: 186, faturamento: 2309.18, meta: 1505, auto: 0, delivery: 341.55, viagem: 1949.72, balcao: 0},
             {loja: 247, data: '2026-02-12', inicio: '2026-02-12 08:33:11', fim: '2026-02-12 20:41:22', cupons: 127, faturamento: 1716.16, meta: 1755, auto: 0, delivery: 418.56, viagem: 1297.6, balcao: 0},
             {loja: 247, data: '2026-02-13', inicio: '2026-02-13 08:46:09', fim: '2026-02-13 20:31:57', cupons: 112, faturamento: 1768.7, meta: 2050, auto: 0, delivery: 632.17, viagem: 1136.53, balcao: 0},
-            {loja: 247, data: '2026-02-14', inicio: '2026-02-14 08:26:49', fim: '2026-02-14 12:23:53', cupons: 27, faturamento: 338.39, meta: 1700, auto: 0, delivery: 55.17, viagem: 283.22, balcao: 0},
+            {loja: 247, data: '2026-02-14', inicio: '2026-02-14 08:26:49', fim: '2026-02-14 16:51:54', cupons: 73, faturamento: 986.61, meta: 1700, auto: 0, delivery: 78.76, viagem: 907.85, balcao: 0},
 
             // Loja 248 - METRÔ CCR CAPÃO REDONDO
             {loja: 248, data: '2026-02-01', inicio: '2026-02-01 07:38:49', fim: '2026-02-01 19:29:22', cupons: 163, faturamento: 4447.69, meta: 3975, auto: 312.28, delivery: 2905.07, viagem: 999.75, balcao: 230.59},
@@ -1769,7 +1852,7 @@
             {loja: 248, data: '2026-02-11', inicio: '2026-02-11 07:41:10', fim: '2026-02-11 23:22:44', cupons: 297, faturamento: 5632.03, meta: 4920, auto: 448.07, delivery: 2928.1, viagem: 1581.37, balcao: 674.49},
             {loja: 248, data: '2026-02-12', inicio: '2026-02-12 07:27:51', fim: '2026-02-12 23:44:37', cupons: 312, faturamento: 5481.55, meta: 5175, auto: 684.93, delivery: 2347.62, viagem: 1842.88, balcao: 606.12},
             {loja: 248, data: '2026-02-13', inicio: '2026-02-13 07:34:39', fim: '2026-02-13 23:51:53', cupons: 277, faturamento: 6052.05, meta: 5735, auto: 387.87, delivery: 3040.98, viagem: 1978.3, balcao: 644.9},
-            {loja: 248, data: '2026-02-14', inicio: '2026-02-14 07:13:28', fim: '2026-02-14 12:35:11', cupons: 59, faturamento: 1009.95, meta: 5725, auto: 0, delivery: 357.27, viagem: 403.2, balcao: 249.48},
+            {loja: 248, data: '2026-02-14', inicio: '2026-02-14 07:13:28', fim: '2026-02-14 16:54:04', cupons: 144, faturamento: 2624.66, meta: 5725, auto: 0, delivery: 980.55, viagem: 939.33, balcao: 704.78},
 
             // Loja 251 - SOROCABA CENTRO
             {loja: 251, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
@@ -1785,7 +1868,7 @@
             {loja: 251, data: '2026-02-11', inicio: '2026-02-11 08:20:24', fim: '2026-02-11 16:54:47', cupons: 68, faturamento: 763.76, meta: 1530, auto: 0, delivery: 99.84, viagem: 663.92, balcao: 0},
             {loja: 251, data: '2026-02-12', inicio: '2026-02-12 09:16:02', fim: '2026-02-12 19:59:17', cupons: 74, faturamento: 874.23, meta: 1865, auto: 0, delivery: 55.72, viagem: 818.51, balcao: 0},
             {loja: 251, data: '2026-02-13', inicio: '2026-02-13 08:37:51', fim: '2026-02-13 15:58:44', cupons: 88, faturamento: 1072.78, meta: 1935, auto: 0, delivery: 59.8, viagem: 1012.98, balcao: 0},
-            {loja: 251, data: '2026-02-14', inicio: '2026-02-14 08:31:34', fim: '2026-02-14 12:36:24', cupons: 33, faturamento: 405, meta: 1705, auto: 0, delivery: 0, viagem: 405, balcao: 0},
+            {loja: 251, data: '2026-02-14', inicio: '2026-02-14 08:31:34', fim: '2026-02-14 14:43:07', cupons: 57, faturamento: 785.68, meta: 1705, auto: 0, delivery: 0, viagem: 785.68, balcao: 0},
 
             // Loja 262 - ASSAÍ INDAIATUBA
             {loja: 262, data: '2026-02-01', inicio: '2026-02-01 10:37:50', fim: '2026-02-01 16:24:03', cupons: 50, faturamento: 1023.77, meta: 1205, auto: 0, delivery: 178.02, viagem: 815.83, balcao: 0},
@@ -1801,7 +1884,7 @@
             {loja: 262, data: '2026-02-11', inicio: '2026-02-11 08:31:18', fim: '2026-02-11 21:30:25', cupons: 111, faturamento: 1951.63, meta: 1950, auto: 0, delivery: 992.95, viagem: 947.23, balcao: 0},
             {loja: 262, data: '2026-02-12', inicio: '2026-02-12 08:16:08', fim: '2026-02-12 21:33:51', cupons: 111, faturamento: 2244.44, meta: 2480, auto: 0, delivery: 1177.77, viagem: 1055.22, balcao: 0},
             {loja: 262, data: '2026-02-13', inicio: '2026-02-13 08:31:08', fim: '2026-02-13 21:17:39', cupons: 96, faturamento: 2489.25, meta: 2355, auto: 0, delivery: 1262.64, viagem: 1099.12, balcao: 0},
-            {loja: 262, data: '2026-02-14', inicio: '2026-02-14 08:28:24', fim: '2026-02-14 12:34:36', cupons: 31, faturamento: 505.79, meta: 2615, auto: 0, delivery: 168.13, viagem: 337.66, balcao: 0},
+            {loja: 262, data: '2026-02-14', inicio: '2026-02-14 08:28:24', fim: '2026-02-14 16:51:57', cupons: 75, faturamento: 1496.3, meta: 2615, auto: 0, delivery: 609.78, viagem: 878.52, balcao: 0},
 
             // Loja 285 - EXTRA JARDIM ÂNGELA
             {loja: 285, data: '2026-02-01', inicio: '2026-02-01 16:28:49', fim: '2026-02-01 21:08:47', cupons: 45, faturamento: 1210.16, meta: 2525, auto: 0, delivery: 473.44, viagem: 736.72, balcao: 0},
@@ -1817,7 +1900,7 @@
             {loja: 285, data: '2026-02-11', inicio: '2026-02-11 09:27:22', fim: '2026-02-11 21:51:39', cupons: 141, faturamento: 2743.92, meta: 2505, auto: 0, delivery: 1083.77, viagem: 1660.15, balcao: 0},
             {loja: 285, data: '2026-02-12', inicio: '2026-02-12 09:46:48', fim: '2026-02-12 21:49:16', cupons: 144, faturamento: 2975.66, meta: 2280, auto: 0, delivery: 1471.84, viagem: 1503.82, balcao: 0},
             {loja: 285, data: '2026-02-13', inicio: '2026-02-13 10:46:41', fim: '2026-02-13 21:44:59', cupons: 91, faturamento: 1741.23, meta: 3375, auto: 0, delivery: 546.45, viagem: 1194.78, balcao: 0},
-            {loja: 285, data: '2026-02-14', inicio: '2026-02-14 08:38:51', fim: '2026-02-14 12:24:08', cupons: 20, faturamento: 422.86, meta: 2585, auto: 0, delivery: 61.58, viagem: 361.28, balcao: 0},
+            {loja: 285, data: '2026-02-14', inicio: '2026-02-14 08:38:51', fim: '2026-02-14 16:55:32', cupons: 72, faturamento: 1537.05, meta: 2585, auto: 0, delivery: 518.3, viagem: 1018.75, balcao: 0},
 
             // Loja 294 - SHOPPING RAPOSO
             {loja: 294, data: '2026-02-01', inicio: '2026-02-01 13:46:47', fim: '2026-02-01 19:39:13', cupons: 54, faturamento: 1540.65, meta: 1655, auto: 225.5, delivery: 1043.87, viagem: 271.28, balcao: 0},
@@ -1833,7 +1916,7 @@
             {loja: 294, data: '2026-02-11', inicio: '2026-02-11 11:03:32', fim: '2026-02-11 21:42:36', cupons: 102, faturamento: 1459.64, meta: 1620, auto: 463.21, delivery: 228.83, viagem: 767.6, balcao: 0},
             {loja: 294, data: '2026-02-12', inicio: '2026-02-12 11:58:13', fim: '2026-02-12 21:41:44', cupons: 115, faturamento: 1823.93, meta: 1690, auto: 335.78, delivery: 705.42, viagem: 782.73, balcao: 0},
             {loja: 294, data: '2026-02-13', inicio: '2026-02-13 10:34:01', fim: '2026-02-13 21:31:55', cupons: 120, faturamento: 2254.62, meta: 1990, auto: 360.98, delivery: 792.59, viagem: 1101.05, balcao: 0},
-            {loja: 294, data: '2026-02-14', inicio: '2026-02-14 11:50:21', fim: '2026-02-14 12:14:19', cupons: 4, faturamento: 153.47, meta: 2390, auto: 0, delivery: 113.67, viagem: 39.8, balcao: 0}
+            {loja: 294, data: '2026-02-14', inicio: '2026-02-14 11:50:21', fim: '2026-02-14 16:55:04', cupons: 52, faturamento: 972.08, meta: 2390, auto: 53.85, delivery: 390.89, viagem: 527.34, balcao: 0}
         ];
 
         // Função para processar todos os registros e organizar por data
@@ -1887,7 +1970,7 @@
         let dataInicio = "14/02/2026";
         let dataFim = "14/02/2026";
         let periodoSelecionado = "hoje";
-        let canalPieChart, metasPieChart, admEvolucaoChart, admRankingChart, top10BarChart, desempenhoBarChart;
+        let canalPieChart, metasPieChart, admRankingChart, top10BarChart, desempenhoBarChart;
         let lojasSelecionadas = [];
         let todasLojas = [];
 
@@ -2028,12 +2111,12 @@
             inicializarGraficos();
             atualizarKPIs();
             atualizarTabelaCanais();
+            atualizarMatrizADM(dadosPeriodo);
         }
 
         function destruirGraficos() {
             if (canalPieChart) canalPieChart.destroy();
             if (metasPieChart) metasPieChart.destroy();
-            if (admEvolucaoChart) admEvolucaoChart.destroy();
             if (admRankingChart) admRankingChart.destroy();
             if (top10BarChart) top10BarChart.destroy();
             if (desempenhoBarChart) desempenhoBarChart.destroy();
@@ -2228,6 +2311,87 @@
             $('#canaisTableBody').html(html);
         }
 
+        function atualizarMatrizADM(dadosPeriodo) {
+            // Agrupar dados por ADM
+            const dadosADM = {
+                'ADM1': { nome: 'João Silva', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
+                'ADM2': { nome: 'Maria Santos', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
+                'ADM3': { nome: 'Pedro Oliveira', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 },
+                'ADM4': { nome: 'Ana Costa', lojas: 0, faturamento: 0, meta: 0, cupons: 0, dias: 0 }
+            };
+            
+            const lojasPorADM = {};
+            const diasNoPeriodo = [...new Set(dadosPeriodo.map(l => l.data))].length;
+            
+            dadosPeriodo.forEach(loja => {
+                dadosADM[loja.adm].faturamento += loja.faturamento;
+                dadosADM[loja.adm].meta += loja.meta;
+                dadosADM[loja.adm].cupons += loja.cupons;
+                dadosADM[loja.adm].dias = diasNoPeriodo;
+                
+                if (!lojasPorADM[loja.adm]) {
+                    lojasPorADM[loja.adm] = new Set();
+                }
+                lojasPorADM[loja.adm].add(loja.loja);
+            });
+            
+            // Calcular número de lojas por ADM
+            Object.keys(lojasPorADM).forEach(adm => {
+                dadosADM[adm].lojas = lojasPorADM[adm].size;
+            });
+            
+            // Encontrar valores máximos para escala de cores
+            const maxFaturamento = Math.max(...Object.values(dadosADM).map(d => d.faturamento));
+            const maxTicket = Math.max(...Object.values(dadosADM).map(d => d.cupons > 0 ? d.faturamento / d.cupons : 0));
+            const maxAtingimento = Math.max(...Object.values(dadosADM).map(d => d.meta > 0 ? (d.faturamento / d.meta) * 100 : 0));
+            
+            // Função para determinar classe de heatmap baseada em percentual
+            function getHeatmapClass(valor, max, invert = false) {
+                const percentual = max > 0 ? (valor / max) * 100 : 0;
+                if (invert) {
+                    if (percentual <= 33) return 'heatmap-high';
+                    if (percentual <= 66) return 'heatmap-medium';
+                    return 'heatmap-low';
+                } else {
+                    if (percentual >= 66) return 'heatmap-high';
+                    if (percentual >= 33) return 'heatmap-medium';
+                    return 'heatmap-low';
+                }
+            }
+            
+            let html = '<table class="adm-matrix-table">';
+            html += '<thead><tr><th>ADM</th><th>Lojas</th><th>Faturamento</th><th>Meta</th><th>Atingimento</th><th>Ticket Médio</th></tr></thead><tbody>';
+            
+            Object.entries(dadosADM).forEach(([cod, adm]) => {
+                const atingimento = adm.meta > 0 ? (adm.faturamento / adm.meta) * 100 : 0;
+                const ticketMedio = adm.cupons > 0 ? adm.faturamento / adm.cupons : 0;
+                
+                html += `<tr>
+                    <td class="adm-name">${adm.nome}</td>
+                    <td><span class="valor-destaque">${adm.lojas}</span><span class="valor-label">lojas</span></td>
+                    <td class="heatmap-cell ${getHeatmapClass(adm.faturamento, maxFaturamento)}">
+                        <span class="valor-destaque">R$ ${formatMoney(adm.faturamento)}</span>
+                        <span class="valor-label">faturamento</span>
+                    </td>
+                    <td class="heatmap-cell ${getHeatmapClass(adm.meta, maxFaturamento)}">
+                        <span class="valor-destaque">R$ ${formatMoney(adm.meta)}</span>
+                        <span class="valor-label">meta</span>
+                    </td>
+                    <td class="heatmap-cell ${getHeatmapClass(atingimento, maxAtingimento)}">
+                        <span class="valor-destaque">${atingimento.toFixed(1)}%</span>
+                        <span class="valor-label">${atingimento >= 100 ? '✓ meta' : '▼ abaixo'}</span>
+                    </td>
+                    <td class="heatmap-cell ${getHeatmapClass(ticketMedio, maxTicket)}">
+                        <span class="valor-destaque">R$ ${formatMoney(ticketMedio)}</span>
+                        <span class="valor-label">por cupom</span>
+                    </td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table>';
+            $('#admMatrixContainer').html(html);
+        }
+
         function atualizarKPIs(dadosFiltrados = null) {
             const statusFiltro = $('#statusFilter').val();
             const admFiltro = $('#admFilter').val();
@@ -2310,9 +2474,6 @@
         }
 
         function aplicarFiltros() {
-            carregarTabela();
-            atualizarTabelaCanais();
-            
             const statusFiltro = $('#statusFilter').val();
             const admFiltro = $('#admFilter').val();
             const dadosPeriodo = getDadosPeriodo();
@@ -2323,6 +2484,10 @@
                 if (admFiltro && loja.adm != admFiltro) return false;
                 return true;
             });
+            
+            carregarTabela();
+            atualizarTabelaCanais();
+            atualizarMatrizADM(dadosFiltrados);
             
             const dadosPorLoja = {};
             dadosFiltrados.forEach(loja => {
@@ -2372,25 +2537,15 @@
                 top10BarChart.update();
             }
 
-            if (admEvolucaoChart || admRankingChart) {
+            if (admRankingChart) {
                 atualizarGraficosADM(dadosFiltrados);
             }
         }
 
         function atualizarGraficosADM(dadosFiltrados) {
-            const dadosPorData = {};
             const dadosPorADM = {};
             
-            // Agrupar dados por data e ADM
             dadosFiltrados.forEach(loja => {
-                if (!dadosPorData[loja.data]) {
-                    dadosPorData[loja.data] = {};
-                }
-                if (!dadosPorData[loja.data][loja.adm]) {
-                    dadosPorData[loja.data][loja.adm] = 0;
-                }
-                dadosPorData[loja.data][loja.adm] += loja.faturamento;
-                
                 if (!dadosPorADM[loja.adm]) {
                     dadosPorADM[loja.adm] = {
                         faturamento: 0,
@@ -2402,41 +2557,7 @@
                 dadosPorADM[loja.adm].meta += loja.meta;
                 dadosPorADM[loja.adm].cupons += loja.cupons;
             });
-            
-            const datasOrdenadas = Object.keys(dadosPorData).sort((a, b) => {
-                const [diaA, mesA, anoA] = a.split('/').map(Number);
-                const [diaB, mesB, anoB] = b.split('/').map(Number);
-                return new Date(anoA, mesA-1, diaA) - new Date(anoB, mesB-1, diaB);
-            });
 
-            // Atualizar gráfico de evolução por ADM
-            if (admEvolucaoChart) {
-                const admList = ['ADM1', 'ADM2', 'ADM3', 'ADM4'];
-                const datasets = admList.map(adm => {
-                    const data = datasOrdenadas.map(data => dadosPorData[data][adm] || 0);
-                    return {
-                        label: admNomes[adm],
-                        data: data,
-                        borderColor: adm === 'ADM1' ? '#4361ee' : 
-                                    adm === 'ADM2' ? '#f72585' : 
-                                    adm === 'ADM3' ? '#06d6a0' : '#ffd166',
-                        backgroundColor: 'transparent',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    };
-                });
-
-                admEvolucaoChart.data.labels = datasOrdenadas.map(d => {
-                    const [dia, mes] = d.split('/');
-                    return `${dia}/${mes}`;
-                });
-                admEvolucaoChart.data.datasets = datasets;
-                admEvolucaoChart.update();
-            }
-
-            // Atualizar gráfico de ranking por ADM
             if (admRankingChart) {
                 const admList = ['ADM1', 'ADM2', 'ADM3', 'ADM4'];
                 const faturamentos = admList.map(adm => dadosPorADM[adm]?.faturamento || 0);
@@ -2790,45 +2911,6 @@
                                     const percent = ((ctx.raw / total) * 100).toFixed(1);
                                     return `${ctx.label}: ${ctx.raw} lojas (${percent}%)`;
                                 }
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Gráfico de evolução por ADM
-            admEvolucaoChart = new Chart(document.getElementById('admEvolucaoChart'), {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: []
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                usePointStyle: true,
-                                pointStyle: 'circle',
-                                padding: 15,
-                                font: { size: 10 }
-                            }
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: (ctx) => {
-                                    return `${ctx.dataset.label}: R$ ${formatMoney(ctx.raw)}`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: (value) => 'R$ ' + (value/1000).toFixed(0) + 'k'
                             }
                         }
                     }
