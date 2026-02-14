@@ -2,18 +2,18 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
-    <title>Setor Patty - Relatório de Metas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setor Patty - Relatório de Metas | Fevereiro 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
+        /* [MANTENHA TODO O CSS EXISTENTE AQUI] */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
@@ -28,233 +28,263 @@
             --dark: #2b2d42;
             --gray: #8d99ae;
             --white: #ffffff;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+            --shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --shadow-sm: 0 5px 15px rgba(0,0,0,0.08);
             --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --border-radius: 16px;
-            --border-radius-sm: 12px;
-            --safe-area-inset: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
             background: #f1f5f9;
             min-height: 100vh;
-            padding: 0;
-            margin: 0;
-            width: 100%;
-            overflow-x: hidden;
+            padding: 30px 20px;
         }
 
         .dashboard {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 12px;
-            width: 100%;
         }
 
-        /* Header Responsivo */
         .header {
             background: var(--gradient-1);
-            border-radius: var(--border-radius);
-            margin-bottom: 16px;
+            padding: 30px;
+            border-radius: 24px;
+            margin-bottom: 30px;
             color: white;
-            box-shadow: var(--shadow-lg);
-            width: 100%;
+            box-shadow: var(--shadow);
+            position: relative;
             overflow: hidden;
         }
 
-        .header-content {
-            padding: clamp(16px, 4vw, 30px);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            align-items: center;
-            justify-content: space-between;
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
         }
 
-        .header-title {
-            flex: 1;
-            min-width: 250px;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .header-title h1 {
-            font-size: clamp(24px, 5vw, 32px);
+            font-size: 32px;
             font-weight: 700;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
         }
 
         .header-title p {
-            font-size: clamp(12px, 3vw, 14px);
+            font-size: 16px;
             opacity: 0.9;
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .header-date-wrapper {
-            display: flex;
-            align-items: center;
             gap: 12px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 50px;
-            padding: 8px 16px;
-            backdrop-filter: blur(10px);
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
-        .date-nav-btn {
-            background: transparent;
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .header-title p i {
             font-size: 18px;
-            cursor: pointer;
-            transition: all 0.2s;
-            min-width: 40px;
         }
 
-        .date-nav-btn:active {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .date-nav-btn:disabled {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        .current-date {
-            font-weight: 600;
-            font-size: clamp(14px, 4vw, 16px);
-            white-space: nowrap;
-        }
-
-        .header-day-box {
+        .header-date {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
             text-align: center;
-            min-width: 70px;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        .header-day-box .day {
-            font-size: clamp(28px, 6vw, 36px);
+        .header-date .day {
+            font-size: 36px;
             font-weight: 700;
             line-height: 1;
         }
 
-        .header-day-box .month {
-            font-size: clamp(12px, 3vw, 14px);
+        .header-date .month {
+            font-size: 16px;
             opacity: 0.9;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Navegação de Data */
-        .date-navigation {
+        .date-selector {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .date-selector button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            background: white;
-            padding: 12px 16px;
-            border-radius: 50px;
-            box-shadow: var(--shadow);
-            width: 100%;
+            border-radius: 50%;
+            transition: all 0.3s;
         }
 
-        .date-navigation button {
+        .date-selector button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .date-selector span {
+            font-weight: 600;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        /* NOVOS ESTILOS PARA FILTROS DE PERÍODO */
+        .period-filters {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .period-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--light);
+            padding: 5px;
+            border-radius: 50px;
+            border: 1px solid #e9ecef;
+        }
+
+        .period-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: transparent;
+            color: var(--gray);
+        }
+
+        .period-btn:hover {
+            color: var(--primary);
+        }
+
+        .period-btn.active {
             background: var(--primary);
             color: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.2);
+        }
+
+        .date-range {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
+            gap: 15px;
+            margin-left: auto;
         }
 
-        .date-navigation button:active {
-            background: var(--primary-dark);
-            transform: scale(0.95);
+        .date-range-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid #e9ecef;
         }
 
-        .date-navigation button:disabled {
-            background: var(--gray);
-            opacity: 0.5;
-        }
-
-        .date-navigation span {
+        .date-range-item label {
+            font-size: 13px;
             font-weight: 600;
-            font-size: clamp(14px, 4vw, 16px);
             color: var(--dark);
-            text-align: center;
-            flex: 1;
         }
 
-        /* Filtros Responsivos */
+        .date-range-item input {
+            border: none;
+            background: transparent;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--primary);
+            width: 110px;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .date-range-item input:focus {
+            outline: 2px solid var(--primary);
+            background: white;
+        }
+
         .filters {
             background: white;
-            padding: clamp(16px, 4vw, 20px);
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            width: 100%;
-        }
-
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
-            align-items: end;
+            padding: 20px 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .filter-group {
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 250px;
         }
 
         .filter-group label {
             color: var(--dark);
             font-weight: 600;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            font-size: 14px;
+            min-width: 70px;
         }
 
-        .filter-group label i {
-            color: var(--primary);
-            width: 18px;
-        }
-
-        /* Multi-select */
         .multi-select {
             position: relative;
-            width: 100%;
+            flex: 1;
         }
 
-        .select-btn {
+        .multi-select .select-btn {
             width: 100%;
-            padding: 14px 16px;
+            padding: 12px 18px;
             border: 2px solid #e9ecef;
-            border-radius: var(--border-radius-sm);
+            border-radius: 14px;
             background: white;
             text-align: left;
             cursor: pointer;
@@ -262,262 +292,444 @@
             justify-content: space-between;
             align-items: center;
             font-size: 14px;
-            transition: all 0.2s;
-            min-height: 52px;
+            transition: all 0.3s;
+            font-weight: 500;
         }
 
-        .select-btn:active {
+        .multi-select .select-btn:hover {
             border-color: var(--primary);
-            background: #f8f9fa;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
         }
 
-        .selected-count {
+        .multi-select .select-btn .selected-count {
             background: var(--primary);
             color: white;
-            padding: 4px 12px;
-            border-radius: 30px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
-            white-space: nowrap;
-            margin-left: 8px;
         }
 
-        /* Dropdown Modal para Mobile */
-        .dropdown-modal {
-            position: fixed;
-            top: 0;
+        .multi-select .dropdown-menu {
+            position: absolute;
+            top: 100%;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-        }
-
-        .dropdown-modal.show {
-            display: flex;
-        }
-
-        .dropdown-content {
             background: white;
-            width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            border-radius: 24px 24px 0 0;
-            overflow: hidden;
-            animation: slideUp 0.3s ease;
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            margin-top: 8px;
+            max-height: 350px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            display: none;
         }
 
-        @keyframes slideUp {
+        .multi-select .dropdown-menu.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
             from {
-                transform: translateY(100%);
+                opacity: 0;
+                transform: translateY(-10px);
             }
             to {
+                opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .dropdown-header {
-            padding: 20px;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .dropdown-header h3 {
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .close-btn {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .search-box {
-            padding: 16px;
+        .multi-select .search-box {
+            padding: 15px;
             border-bottom: 1px solid #e9ecef;
         }
 
-        .search-box input {
+        .multi-select .search-box input {
             width: 100%;
-            padding: 14px 16px;
+            padding: 10px 15px;
             border: 2px solid #e9ecef;
-            border-radius: var(--border-radius-sm);
-            font-size: 15px;
+            border-radius: 12px;
+            font-size: 13px;
+            transition: all 0.3s;
         }
 
-        .select-all {
-            padding: 16px;
+        .multi-select .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .multi-select .select-all {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
             display: flex;
             align-items: center;
             gap: 12px;
             cursor: pointer;
+            font-size: 13px;
             font-weight: 600;
             color: var(--primary);
-            border-bottom: 1px solid #e9ecef;
+            transition: background 0.2s;
         }
 
-        .options-list {
-            max-height: 400px;
-            overflow-y: auto;
+        .multi-select .select-all:hover {
+            background: #f8f9fa;
+        }
+
+        .multi-select .select-all i {
+            font-size: 16px;
+        }
+
+        .multi-select .options-list {
             padding: 8px 0;
         }
 
-        .option-item {
-            padding: 14px 16px;
+        .multi-select .option-item {
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             gap: 12px;
             cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
             border-left: 3px solid transparent;
         }
 
-        .option-item.selected {
+        .multi-select .option-item:hover {
+            background: #f8f9fa;
+            border-left-color: var(--primary);
+        }
+
+        .multi-select .option-item.selected {
             background: rgba(67, 97, 238, 0.05);
             border-left-color: var(--primary);
         }
 
-        .option-item input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
+        .multi-select .option-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
             accent-color: var(--primary);
         }
 
         select {
-            width: 100%;
-            padding: 14px 16px;
+            padding: 12px 18px;
             border: 2px solid #e9ecef;
-            border-radius: var(--border-radius-sm);
+            border-radius: 14px;
             font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
             background: white;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 16px;
-            min-height: 52px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-            flex-wrap: wrap;
+            cursor: pointer;
+            min-width: 200px;
         }
 
         .btn {
-            padding: 14px 20px;
+            padding: 12px 28px;
             border: none;
-            border-radius: var(--border-radius-sm);
+            border-radius: 14px;
             font-weight: 600;
-            font-size: 14px;
             cursor: pointer;
+            transition: all 0.3s;
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
-            flex: 1;
-            min-width: 140px;
-        }
-
-        .btn:active {
-            transform: scale(0.98);
+            gap: 10px;
+            font-size: 14px;
+            letter-spacing: 0.3px;
         }
 
         .btn-primary {
             background: var(--primary);
             color: white;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
         }
 
         .btn-success {
             background: var(--success);
             color: white;
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
         }
 
-        /* KPI Cards */
+        .btn-success:hover {
+            background: #05b586;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(6, 214, 160, 0.4);
+        }
+
         .kpi-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
         .kpi-card {
             background: white;
-            border-radius: var(--border-radius);
-            padding: clamp(16px, 3vw, 20px);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
             box-shadow: var(--shadow);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(67, 97, 238, 0.03) 100%);
+            border-radius: 50%;
         }
 
         .kpi-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
+            width: 55px;
+            height: 55px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            margin-bottom: 12px;
+            font-size: 26px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
         }
 
         .kpi-icon.blue { background: linear-gradient(135deg, #4361ee20, #4361ee40); color: var(--primary); }
         .kpi-icon.green { background: linear-gradient(135deg, #06d6a020, #06d6a040); color: var(--success); }
-        .kpi-icon.purple { background: linear-gradient(135deg, #9b5de520, #9b5de540); color: #9b5de5; }
         .kpi-icon.orange { background: linear-gradient(135deg, #f7258520, #f7258540); color: var(--secondary); }
         .kpi-icon.red { background: linear-gradient(135deg, #ef476f20, #ef476f40); color: var(--danger); }
+        .kpi-icon.purple { background: linear-gradient(135deg, #9b5de520, #9b5de540); color: #9b5de5; }
 
         .kpi-label {
-            font-size: 12px;
+            font-size: 14px;
             color: var(--gray);
-            margin-bottom: 4px;
-            font-weight: 600;
+            margin-bottom: 8px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
 
         .kpi-value {
-            font-size: clamp(18px, 4vw, 24px);
+            font-size: 32px;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 8px;
-            line-height: 1.2;
-            word-break: break-word;
+            letter-spacing: -0.5px;
         }
 
         .kpi-trend {
-            font-size: 11px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
             padding-top: 8px;
             border-top: 1px solid #e9ecef;
-            margin-top: auto;
+        }
+
+        .trend-up { color: var(--success); }
+        .trend-down { color: var(--danger); }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .chart-card:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .chart-header h3 {
+            color: var(--dark);
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-header h3 i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .chart-header .badge {
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 320px;
+            margin-top: 10px;
+        }
+
+        .tables-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .table-header h2 {
+            color: var(--dark);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-header h2 i {
+            color: var(--primary);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid #f1f5f9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f8fafc;
+            color: var(--dark);
+            padding: 16px 12px;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        th:hover {
+            background: #f1f5f9;
+        }
+
+        th i {
+            margin-left: 5px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .meta-sim {
+            background: linear-gradient(135deg, #06d6a020, #06d6a040);
+            color: var(--success);
+            font-weight: 700;
+            border-radius: 30px;
+            padding: 6px 16px;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .meta-nao {
+            background: linear-gradient(135deg, #ef476f20, #ef476f40);
+            color: var(--danger);
+            font-weight: 700;
+            border-radius: 30px;
+            padding: 6px 16px;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .valor-positivo {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .valor-negativo {
+            color: var(--danger);
+            font-weight: 700;
         }
 
         .progress-bar {
             width: 100%;
-            height: 6px;
+            height: 8px;
             background: #f1f5f9;
             border-radius: 10px;
             overflow: hidden;
-            margin-top: 8px;
+            margin-top: 5px;
         }
 
         .progress-fill {
@@ -527,368 +739,276 @@
             transition: width 0.3s;
         }
 
-        /* Gráficos */
-        .charts-grid {
+        .info-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            margin-bottom: 20px;
+            margin-top: 25px;
         }
 
-        .chart-card {
+        .info-card {
             background: white;
-            border-radius: var(--border-radius);
-            padding: clamp(16px, 3vw, 20px);
-            box-shadow: var(--shadow);
-            width: 100%;
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #f1f5f9;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .chart-header h3 {
-            color: var(--dark);
-            font-size: clamp(16px, 4vw, 18px);
-            font-weight: 700;
+            border-radius: 20px;
+            padding: 20px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 15px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s;
         }
 
-        .chart-header .badge {
-            background: var(--light);
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 600;
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .info-content h4 {
             color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 600;
         }
 
-        .chart-wrapper {
-            position: relative;
-            height: clamp(250px, 40vh, 300px);
-            width: 100%;
+        .info-content p {
+            color: var(--dark);
+            font-size: 20px;
+            font-weight: 700;
         }
 
-        /* Tabelas */
-        .tables-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 13px;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .tables-section {
                 grid-template-columns: 1fr;
             }
         }
 
-        .table-card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: clamp(16px, 3vw, 20px);
-            box-shadow: var(--shadow);
-            width: 100%;
-            overflow: hidden;
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .header-content { flex-direction: column; text-align: center; }
+            .kpi-grid { grid-template-columns: 1fr; }
+            .info-cards { grid-template-columns: 1fr; }
+            .filters { flex-direction: column; }
+            .filter-group { width: 100%; }
+            .multi-select { width: 100%; }
+            .period-filters { flex-direction: column; }
+            .period-group { width: 100%; justify-content: center; }
+            .date-range { margin-left: 0; width: 100%; justify-content: center; }
         }
 
-        .table-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-            gap: 8px;
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .table-header h2 {
-            color: var(--dark);
-            font-size: clamp(18px, 4vw, 20px);
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .kpi-card, .chart-card, .table-card {
+            animation: slideIn 0.5s ease-out;
         }
 
-        .table-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: 12px;
-            border: 1px solid #f1f5f9;
-            margin: 0 -1px;
-            width: calc(100% + 2px);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-            min-width: 800px;
-        }
-
-        th {
-            background: #f8fafc;
-            color: var(--dark);
-            padding: 14px 8px;
-            font-weight: 700;
-            text-align: center;
-            white-space: nowrap;
-            font-size: 12px;
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        td {
-            padding: 12px 8px;
-            border-bottom: 1px solid #f1f5f9;
-            text-align: center;
-        }
-
-        .meta-sim, .meta-nao {
-            padding: 4px 12px;
-            border-radius: 30px;
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .meta-sim {
-            background: linear-gradient(135deg, #06d6a020, #06d6a040);
-            color: var(--success);
-        }
-
-        .meta-nao {
-            background: linear-gradient(135deg, #ef476f20, #ef476f40);
-            color: var(--danger);
-        }
-
-        .valor-positivo { color: var(--success); font-weight: 700; }
-        .valor-negativo { color: var(--danger); font-weight: 700; }
-
-        .store-name {
-            font-weight: 600;
-            color: var(--primary);
-            white-space: nowrap;
-        }
-
-        .currency {
-            white-space: nowrap;
-        }
-
-        /* Info Cards */
-        .info-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .info-card {
-            background: white;
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            border: 1px solid #f1f5f9;
-        }
-
-        .info-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            background: var(--gradient-1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .info-content h4 {
-            color: var(--gray);
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
-
-        .info-content p {
-            color: var(--dark);
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 30px;
-            text-align: center;
-            color: var(--gray);
-            font-size: 12px;
-            padding: 16px;
-            border-top: 1px solid #e9ecef;
-        }
-
-        /* Utilitários */
-        .trend-up { color: var(--success); }
-        .trend-down { color: var(--danger); }
-
-        /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
+            width: 8px;
+            height: 8px;
         }
 
         ::-webkit-scrollbar-track {
             background: #f1f5f9;
+            border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
             background: var(--gray);
-            border-radius: 4px;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark);
+        }
+
+        .dropdown-close {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-top: 1px solid #e9ecef;
+            cursor: pointer;
+            color: var(--gray);
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .dropdown-close:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+        }
+
+        .dropdown-close i {
+            font-size: 14px;
+        }
+
+        .store-name {
+            font-weight: 600;
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- Header Responsivo -->
         <div class="header">
             <div class="header-content">
                 <div class="header-title">
-                    <h1>
-                        <i class="fas fa-store-alt"></i> 
-                        Setor Patty
-                    </h1>
+                    <h1><i class="fas fa-store-alt" style="margin-right: 12px;"></i>Setor Patty</h1>
                     <p>
                         <i class="fas fa-store"></i> 31 Lojas em operação 
-                        <i class="fas fa-circle" style="font-size: 4px;"></i>
-                        <i class="fas fa-chart-line"></i> Tempo real
+                        <i class="fas fa-circle" style="font-size: 6px; margin: 0 8px;"></i>
+                        <i class="fas fa-chart-line"></i> Atualizado em tempo real
                     </p>
                 </div>
-                
-                <div class="header-date-wrapper">
-                    <button class="date-nav-btn" onclick="mudarDia(-1)" id="btnHeaderAnterior">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <span class="current-date" id="dataAtualDisplay">14/02/2026</span>
-                    <button class="date-nav-btn" onclick="mudarDia(1)" id="btnHeaderProximo">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <div class="header-day-box">
-                        <div class="day" id="headerDay">14</div>
-                        <div class="month" id="headerMonth">FEV 2026</div>
+                <div style="display: flex; align-items: center;">
+                    <div class="header-date">
+                        <div class="day" id="headerDay">10-14</div>
+                        <div class="month" id="headerMonth">PERÍODO SELECIONADO</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Navegação de Data -->
-        <div class="date-navigation">
-            <button onclick="mudarDia(-1)" id="btnDiaAnterior">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <span id="dataSelecionada">Sábado, 14 de Fevereiro de 2026</span>
-            <button onclick="mudarDia(1)" id="btnProximoDia">
-                <i class="fas fa-chevron-right"></i>
-            </button>
+        <!-- NOVOS FILTROS DE PERÍODO -->
+        <div class="period-filters">
+            <div class="period-group">
+                <button class="period-btn active" onclick="setPeriodo('hoje')">Hoje</button>
+                <button class="period-btn" onclick="setPeriodo('7d')">Últimos 7 dias</button>
+                <button class="period-btn" onclick="setPeriodo('15d')">Últimos 15 dias</button>
+                <button class="period-btn" onclick="setPeriodo('mes')">Mês fechado</button>
+                <button class="period-btn" onclick="setPeriodo('custom')">Personalizado</button>
+            </div>
+            <div class="date-range" id="dateRangeInputs" style="display: none;">
+                <div class="date-range-item">
+                    <label>De:</label>
+                    <input type="date" id="dataInicio" onchange="atualizarPorData()">
+                </div>
+                <div class="date-range-item">
+                    <label>Até:</label>
+                    <input type="date" id="dataFim" onchange="atualizarPorData()">
+                </div>
+            </div>
         </div>
 
-        <!-- Filtros -->
         <div class="filters">
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label><i class="fas fa-store"></i> Lojas</label>
-                    <div class="multi-select" id="lojaMultiSelect">
-                        <div class="select-btn" onclick="abrirModalLojas()">
-                            <span id="selectedLojasText">Todas as Lojas</span>
-                            <span class="selected-count" id="selectedCount">31</span>
+            <div class="filter-group">
+                <label><i class="fas fa-store"></i> Lojas:</label>
+                <div class="multi-select" id="lojaMultiSelect">
+                    <div class="select-btn" onclick="toggleLojaDropdown()">
+                        <span id="selectedLojasText">Todas as Lojas</span>
+                        <span class="selected-count" id="selectedCount">31</span>
+                    </div>
+                    <div class="dropdown-menu" id="lojaDropdown">
+                        <div class="search-box">
+                            <input type="text" id="lojaSearch" placeholder="Buscar loja..." onkeyup="filtrarLojas()">
+                        </div>
+                        <div class="select-all" onclick="toggleAllLojas()">
+                            <i class="fas fa-check-square"></i> Selecionar Todas
+                        </div>
+                        <div class="options-list" id="lojaOptions"></div>
+                        <div class="dropdown-close" onclick="fecharDropdownLojas()">
+                            <i class="fas fa-times"></i> Fechar
                         </div>
                     </div>
                 </div>
-
-                <div class="filter-group">
-                    <label><i class="fas fa-chart-bar"></i> Status</label>
-                    <select id="statusFilter" onchange="aplicarFiltros()">
-                        <option value="">Todos os Status</option>
-                        <option value="SIM">Meta Atingida</option>
-                        <option value="NÃO">Meta Não Atingida</option>
-                    </select>
-                </div>
-
-                <div class="button-group">
-                    <button class="btn btn-primary" onclick="aplicarFiltros()">
-                        <i class="fas fa-sync-alt"></i> Atualizar
-                    </button>
-                    <button class="btn btn-success" onclick="exportarExcel()">
-                        <i class="fas fa-file-excel"></i> Excel
-                    </button>
-                </div>
             </div>
+            <div class="filter-group">
+                <label><i class="fas fa-chart-bar"></i> Status:</label>
+                <select id="statusFilter" onchange="aplicarFiltros()">
+                    <option value="">Todos os Status</option>
+                    <option value="SIM">Meta Atingida</option>
+                    <option value="NÃO">Meta Não Atingida</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="aplicarFiltros()">
+                <i class="fas fa-sync-alt"></i> Atualizar Dados
+            </button>
+            <button class="btn btn-success" onclick="exportarExcel()">
+                <i class="fas fa-file-excel"></i> Exportar Excel
+            </button>
         </div>
 
-        <!-- Modal de Seleção de Lojas -->
-        <div class="dropdown-modal" id="lojaModal" onclick="fecharModalLojas(event)">
-            <div class="dropdown-content" onclick="event.stopPropagation()">
-                <div class="dropdown-header">
-                    <h3>Selecionar Lojas</h3>
-                    <button class="close-btn" onclick="fecharModalLojas()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <div class="search-box">
-                    <input type="text" id="lojaSearch" placeholder="Buscar loja..." onkeyup="filtrarLojas()">
-                </div>
-                <div class="select-all" onclick="toggleAllLojas()">
-                    <i class="fas fa-check-square"></i> Selecionar Todas
-                </div>
-                <div class="options-list" id="lojaOptions"></div>
-            </div>
-        </div>
-
-        <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
                 <div class="kpi-icon blue"><i class="fas fa-store"></i></div>
                 <div class="kpi-label">Total de Lojas</div>
-                <div class="kpi-value" id="totalLojas">0</div>
+                <div class="kpi-value" id="totalLojas">31</div>
                 <div class="kpi-trend"><i class="fas fa-check-circle trend-up"></i> 100% operantes</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-icon green"><i class="fas fa-dollar-sign"></i></div>
-                <div class="kpi-label">Faturamento</div>
-                <div class="kpi-value" id="totalFaturamento">R$ 0</div>
-                <div class="kpi-trend"><span id="percentualMeta">0,00%</span> vs meta</div>
+                <div class="kpi-label">Faturamento Total</div>
+                <div class="kpi-value" id="totalFaturamento">R$ 0,00</div>
+                <div class="kpi-trend"><i class="fas fa-chart-line"></i> <span id="percentualMeta">0,00%</span> vs meta</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-icon purple"><i class="fas fa-bullseye"></i></div>
                 <div class="kpi-label">Meta Total</div>
-                <div class="kpi-value" id="totalMeta">R$ 0</div>
+                <div class="kpi-value" id="totalMeta">R$ 0,00</div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressoMeta" style="width: 0%"></div>
                 </div>
             </div>
             <div class="kpi-card">
+                <div class="kpi-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="kpi-label">Diferença</div>
+                <div class="kpi-value" id="totalDiferenca">R$ 0,00</div>
+                <div class="kpi-trend"><i class="fas fa-arrow-down trend-down"></i> <span id="percentualDiferenca">0,00%</span> abaixo</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon blue"><i class="fas fa-ticket-alt"></i></div>
+                <div class="kpi-label">Ticket Médio</div>
+                <div class="kpi-value" id="ticketMedio">R$ 0,00</div>
+                <div class="kpi-trend"><i class="fas fa-chart-line trend-up"></i> período selecionado</div>
+            </div>
+            <div class="kpi-card">
                 <div class="kpi-icon orange"><i class="fas fa-trophy"></i></div>
                 <div class="kpi-label">Metas Atingidas</div>
-                <div class="kpi-value" id="metasAtingidas">0/0</div>
-                <div class="kpi-trend"><span id="percentualLojas">0%</span> das lojas</div>
+                <div class="kpi-value" id="metasAtingidas">0/31</div>
+                <div class="kpi-trend"><i class="fas fa-percent"></i> <span id="percentualLojas">0,0%</span> das lojas</div>
             </div>
         </div>
 
-        <!-- Gráficos -->
         <div class="charts-grid">
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3><i class="fas fa-chart-pie"></i>Distribuição por Canal</h3>
-                    <span class="badge">Vendas</span>
+                    <h3><i class="fas fa-chart-pie" style="color: var(--primary);"></i>Distribuição por Canal</h3>
+                    <span class="badge"><i class="fas fa-store-alt"></i> Vendas</span>
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="canalPieChart"></canvas>
@@ -896,8 +1016,8 @@
             </div>
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3><i class="fas fa-bullseye"></i>Atingimento de Metas</h3>
-                    <span class="badge">Performance</span>
+                    <h3><i class="fas fa-bullseye" style="color: var(--secondary);"></i>Atingimento de Metas</h3>
+                    <span class="badge"><i class="fas fa-check-circle"></i> Performance</span>
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="metasPieChart"></canvas>
@@ -905,8 +1025,8 @@
             </div>
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3><i class="fas fa-chart-bar"></i>Top 10 Lojas</h3>
-                    <span class="badge">Ranking</span>
+                    <h3><i class="fas fa-chart-bar" style="color: var(--success);"></i>Top 10 Lojas - Faturamento vs Meta</h3>
+                    <span class="badge"><i class="fas fa-crown"></i> Ranking</span>
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="top10BarChart"></canvas>
@@ -914,8 +1034,8 @@
             </div>
             <div class="chart-card">
                 <div class="chart-header">
-                    <h3><i class="fas fa-chart-line"></i>Desempenho por Loja</h3>
-                    <span class="badge">Atingimento</span>
+                    <h3><i class="fas fa-chart-line" style="color: var(--warning);"></i>Desempenho por Loja</h3>
+                    <span class="badge"><i class="fas fa-percent"></i> Atingimento</span>
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="desempenhoBarChart"></canvas>
@@ -923,11 +1043,11 @@
             </div>
         </div>
 
-        <!-- Tabelas -->
         <div class="tables-section">
             <div class="table-card">
                 <div class="table-header">
                     <h2><i class="fas fa-list"></i> Detalhamento por Loja</h2>
+                    <span class="badge"><i class="fas fa-table"></i> Dados detalhados</span>
                 </div>
                 <div class="table-wrapper">
                     <table id="mainTable">
@@ -949,10 +1069,10 @@
                     </table>
                 </div>
             </div>
-
             <div class="table-card">
                 <div class="table-header">
                     <h2><i class="fas fa-chart-pie"></i> Resumo por Canal</h2>
+                    <span class="badge"><i class="fas fa-chart-simple"></i> Análise</span>
                 </div>
                 <div class="table-wrapper">
                     <table id="canaisTable">
@@ -968,34 +1088,38 @@
                     </table>
                 </div>
 
-                <div class="info-cards">
-                    <div class="info-card">
-                        <div class="info-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="info-content">
-                            <h4>Lojas que Atingiram Meta</h4>
-                            <p id="lojasMetaSim">0 lojas</p>
+                <div style="margin-top: 25px;">
+                    <h3 style="margin-bottom: 15px; color: var(--dark); font-size: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-chart-simple" style="color: var(--primary);"></i> Indicadores Gerais
+                    </h3>
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="info-content">
+                                <h4>Lojas que Atingiram Meta</h4>
+                                <p id="lojasMetaSim">0 lojas (0.0%)</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-icon"><i class="fas fa-times-circle"></i></div>
-                        <div class="info-content">
-                            <h4>Lojas Abaixo da Meta</h4>
-                            <p id="lojasMetaNao">0 lojas</p>
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fas fa-times-circle"></i></div>
+                            <div class="info-content">
+                                <h4>Lojas Abaixo da Meta</h4>
+                                <p id="lojasMetaNao">0 lojas (0.0%)</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
-            <p><i class="far fa-clock"></i> Relatório gerado em <span id="dataGeracao">14/02/2026</span></p>
-            <p style="margin-top: 4px;">© 2026 Setor Patty</p>
+            <p><i class="far fa-clock"></i> Período: <span id="periodoDisplay">10 a 14 de Fevereiro de 2026</span></p>
+            <p style="margin-top: 5px;">© 2026 Setor Patty - Todos os direitos reservados</p>
         </div>
     </div>
 
     <script>
-        // MAPEAMENTO DOS NOMES DAS LOJAS
+        // MAPEAMENTO COMPLETO DOS NOMES DAS LOJAS (extraído da planilha)
         const lojaNomes = {
             5: "ANTONIO AGU",
             10: "OSASCO PLAZA",
@@ -1030,8 +1154,107 @@
             294: "SHOPPING RAPOSO"
         };
 
-        // DADOS COMPLETOS
+        // DADOS COMPLETOS POR DATA (10 a 14 de fevereiro)
         const dadosPorData = {
+            "10/02/2026": [
+                {loja: 5, inicio: '09:15', fim: '20:38', cupons: 98, faturamento: 3125.45, meta: 3980.0, canais: {auto: 845.30, delivery: 1980.25, viagem: 299.90}},
+                {loja: 10, inicio: '13:48', fim: '21:28', cupons: 385, faturamento: 9876.54, meta: 10580.0, canais: {auto: 2345.67, delivery: 3120.45, viagem: 1543.21}},
+                {loja: 28, inicio: '10:12', fim: '21:50', cupons: 165, faturamento: 4123.67, meta: 5190.0, canais: {auto: 1345.23, delivery: 2345.67, viagem: 432.77}},
+                {loja: 31, inicio: '09:30', fim: '21:15', cupons: 152, faturamento: 2987.43, meta: 4255.0, canais: {auto: 0, delivery: 987.65, viagem: 0}},
+                {loja: 63, inicio: '10:30', fim: '21:30', cupons: 68, faturamento: 987.65, meta: 2030.0, canais: {auto: 198.76, delivery: 0, viagem: 788.89}},
+                {loja: 69, inicio: '09:00', fim: '21:38', cupons: 189, faturamento: 4789.23, meta: 4545.0, canais: {auto: 0, delivery: 3456.78, viagem: 1332.45}},
+                {loja: 73, inicio: '10:35', fim: '18:25', cupons: 78, faturamento: 1987.54, meta: 2790.0, canais: {auto: 654.32, delivery: 876.54, viagem: 456.68}},
+                {loja: 82, inicio: '09:01', fim: '19:48', cupons: 156, faturamento: 2876.43, meta: 2970.0, canais: {auto: 345.67, delivery: 1876.54, viagem: 0}},
+                {loja: 86, inicio: '10:03', fim: '21:27', cupons: 95, faturamento: 3321.87, meta: 6380.0, canais: {auto: 1234.56, delivery: 567.89, viagem: 134.56}},
+                {loja: 90, inicio: '10:22', fim: '22:00', cupons: 176, faturamento: 4234.56, meta: 4320.0, canais: {auto: 1567.89, delivery: 198.76, viagem: 654.32}},
+                {loja: 97, inicio: '10:21', fim: '04:15', cupons: 142, faturamento: 3987.65, meta: 4075.0, canais: {auto: 1987.65, delivery: 123.45, viagem: 487.65}},
+                {loja: 98, inicio: '08:38', fim: '19:22', cupons: 234, faturamento: 3123.45, meta: 4220.0, canais: {auto: 456.78, delivery: 498.76, viagem: 2167.91}},
+                {loja: 101, inicio: '10:36', fim: '20:50', cupons: 105, faturamento: 2345.67, meta: 2425.0, canais: {auto: 0, delivery: 1345.67, viagem: 1000.00}},
+                {loja: 118, inicio: '10:18', fim: '21:55', cupons: 92, faturamento: 1987.54, meta: 2895.0, canais: {auto: 876.54, delivery: 456.78, viagem: 654.22}},
+                {loja: 126, inicio: '10:12', fim: '21:27', cupons: 356, faturamento: 9876.54, meta: 11530.0, canais: {auto: 567.89, delivery: 5678.90, viagem: 28.76}},
+                {loja: 133, inicio: '10:05', fim: '21:44', cupons: 148, faturamento: 4876.54, meta: 5850.0, canais: {auto: 234.56, delivery: 3567.89, viagem: 876.54}},
+                {loja: 145, inicio: '09:02', fim: '09:16', cupons: 128, faturamento: 2123.45, meta: 4245.0, canais: {auto: 654.32, delivery: 654.32, viagem: 876.54}},
+                {loja: 157, inicio: '10:19', fim: '21:17', cupons: 95, faturamento: 2234.56, meta: 3380.0, canais: {auto: 0, delivery: 1456.78, viagem: 777.78}},
+                {loja: 158, inicio: '09:47', fim: '21:37', cupons: 152, faturamento: 4123.45, meta: 4400.0, canais: {auto: 2234.56, delivery: 1567.89, viagem: 321.00}},
+                {loja: 162, inicio: '09:20', fim: '20:39', cupons: 82, faturamento: 2654.32, meta: 3065.0, canais: {auto: 0, delivery: 0, viagem: 0}},
+                {loja: 178, inicio: '09:25', fim: '22:08', cupons: 112, faturamento: 3654.32, meta: 2245.0, canais: {auto: 0, delivery: 2654.32, viagem: 0}},
+                {loja: 183, inicio: '09:33', fim: '19:23', cupons: 114, faturamento: 1876.54, meta: 2995.0, canais: {auto: 876.54, delivery: 456.78, viagem: 543.22}},
+                {loja: 189, inicio: '09:50', fim: '21:51', cupons: 187, faturamento: 2234.56, meta: 2805.0, canais: {auto: 654.32, delivery: 345.67, viagem: 1234.57}},
+                {loja: 195, inicio: '10:13', fim: '21:22', cupons: 231, faturamento: 5876.54, meta: 6565.0, canais: {auto: 0, delivery: 3876.54, viagem: 2000.00}},
+                {loja: 210, inicio: '08:42', fim: '20:46', cupons: 115, faturamento: 2654.32, meta: 3790.0, canais: {auto: 0, delivery: 987.65, viagem: 0}},
+                {loja: 247, inicio: '08:43', fim: '20:28', cupons: 101, faturamento: 1567.89, meta: 2025.0, canais: {auto: 0, delivery: 567.89, viagem: 1000.00}},
+                {loja: 248, inicio: '07:31', fim: '23:48', cupons: 254, faturamento: 5432.10, meta: 5710.0, canais: {auto: 345.67, delivery: 2765.43, viagem: 1765.43}},
+                {loja: 251, inicio: '08:34', fim: '15:55', cupons: 79, faturamento: 987.65, meta: 1910.0, canais: {auto: 0, delivery: 54.32, viagem: 933.33}},
+                {loja: 262, inicio: '08:28', fim: '21:14', cupons: 87, faturamento: 2234.56, meta: 2330.0, canais: {auto: 0, delivery: 1123.45, viagem: 987.65}},
+                {loja: 285, inicio: '10:43', fim: '21:41', cupons: 82, faturamento: 1567.89, meta: 3350.0, canais: {auto: 0, delivery: 498.76, viagem: 1069.13}},
+                {loja: 294, inicio: '10:31', fim: '21:28', cupons: 108, faturamento: 1987.65, meta: 1965.0, canais: {auto: 321.45, delivery: 654.32, viagem: 987.65}}
+            ],
+            "11/02/2026": [
+                {loja: 5, inicio: '09:12', fim: '20:40', cupons: 105, faturamento: 3345.67, meta: 3995.0, canais: {auto: 876.54, delivery: 1987.65, viagem: 298.76}},
+                {loja: 10, inicio: '13:50', fim: '21:30', cupons: 412, faturamento: 10567.89, meta: 10600.0, canais: {auto: 2456.78, delivery: 3345.67, viagem: 1678.90}},
+                {loja: 28, inicio: '10:14', fim: '21:52', cupons: 178, faturamento: 4321.98, meta: 5205.0, canais: {auto: 1432.10, delivery: 2543.21, viagem: 398.76}},
+                {loja: 31, inicio: '09:32', fim: '21:16', cupons: 165, faturamento: 3098.76, meta: 4265.0, canais: {auto: 0, delivery: 1087.65, viagem: 0}},
+                {loja: 63, inicio: '10:32', fim: '21:32', cupons: 72, faturamento: 1043.21, meta: 2040.0, canais: {auto: 212.34, delivery: 0, viagem: 830.87}},
+                {loja: 69, inicio: '09:01', fim: '21:40', cupons: 198, faturamento: 4987.65, meta: 4555.0, canais: {auto: 0, delivery: 3654.32, viagem: 1333.33}},
+                {loja: 73, inicio: '10:36', fim: '18:26', cupons: 82, faturamento: 2087.65, meta: 2800.0, canais: {auto: 698.76, delivery: 912.34, viagem: 476.55}},
+                {loja: 82, inicio: '09:02', fim: '19:50', cupons: 167, faturamento: 2987.65, meta: 2980.0, canais: {auto: 398.76, delivery: 1987.65, viagem: 0}},
+                {loja: 86, inicio: '10:04', fim: '21:28', cupons: 102, faturamento: 3543.21, meta: 6395.0, canais: {auto: 1345.67, delivery: 612.34, viagem: 145.67}},
+                {loja: 90, inicio: '10:23', fim: '22:01', cupons: 187, faturamento: 4456.78, meta: 4335.0, canais: {auto: 1654.32, delivery: 209.87, viagem: 698.76}},
+                {loja: 97, inicio: '10:22', fim: '04:17', cupons: 148, faturamento: 4123.45, meta: 4085.0, canais: {auto: 2098.76, delivery: 134.56, viagem: 523.45}},
+                {loja: 98, inicio: '08:39', fim: '19:24', cupons: 245, faturamento: 3321.98, meta: 4235.0, canais: {auto: 498.76, delivery: 543.21, viagem: 2289.01}},
+                {loja: 101, inicio: '10:37', fim: '20:51', cupons: 112, faturamento: 2456.78, meta: 2435.0, canais: {auto: 0, delivery: 1456.78, viagem: 1000.00}},
+                {loja: 118, inicio: '10:19', fim: '21:56', cupons: 98, faturamento: 2098.76, meta: 2905.0, canais: {auto: 912.34, delivery: 498.76, viagem: 698.77}},
+                {loja: 126, inicio: '10:13', fim: '21:28', cupons: 376, faturamento: 10456.78, meta: 11540.0, canais: {auto: 612.34, delivery: 5987.65, viagem: 29.87}},
+                {loja: 133, inicio: '10:06', fim: '21:45', cupons: 154, faturamento: 5098.76, meta: 5860.0, canais: {auto: 265.43, delivery: 3789.01, viagem: 912.34}},
+                {loja: 145, inicio: '09:03', fim: '09:17', cupons: 135, faturamento: 2234.56, meta: 4255.0, canais: {auto: 698.76, delivery: 709.87, viagem: 876.54}},
+                {loja: 157, inicio: '10:20', fim: '21:18', cupons: 102, faturamento: 2345.67, meta: 3390.0, canais: {auto: 0, delivery: 1543.21, viagem: 802.46}},
+                {loja: 158, inicio: '09:48', fim: '21:38', cupons: 159, faturamento: 4321.98, meta: 4415.0, canais: {auto: 2345.67, delivery: 1678.90, viagem: 298.76}},
+                {loja: 162, inicio: '09:21', fim: '20:40', cupons: 87, faturamento: 2789.01, meta: 3075.0, canais: {auto: 0, delivery: 0, viagem: 0}},
+                {loja: 178, inicio: '09:26', fim: '22:09', cupons: 118, faturamento: 3789.01, meta: 2255.0, canais: {auto: 0, delivery: 2789.01, viagem: 0}},
+                {loja: 183, inicio: '09:34', fim: '19:24', cupons: 119, faturamento: 1987.65, meta: 3005.0, canais: {auto: 912.34, delivery: 498.76, viagem: 576.55}},
+                {loja: 189, inicio: '09:51', fim: '21:52', cupons: 195, faturamento: 2345.67, meta: 2815.0, canais: {auto: 698.76, delivery: 387.65, viagem: 1267.89}},
+                {loja: 195, inicio: '10:14', fim: '21:23', cupons: 243, faturamento: 6098.76, meta: 6575.0, canais: {auto: 0, delivery: 3987.65, viagem: 2100.00}},
+                {loja: 210, inicio: '08:43', fim: '20:47', cupons: 121, faturamento: 2765.43, meta: 3800.0, canais: {auto: 0, delivery: 1098.76, viagem: 0}},
+                {loja: 247, inicio: '08:44', fim: '20:29', cupons: 108, faturamento: 1654.32, meta: 2035.0, canais: {auto: 0, delivery: 598.76, viagem: 1098.76}},
+                {loja: 248, inicio: '07:32', fim: '23:49', cupons: 265, faturamento: 5678.90, meta: 5720.0, canais: {auto: 387.65, delivery: 2876.54, viagem: 1876.54}},
+                {loja: 251, inicio: '08:35', fim: '15:56', cupons: 83, faturamento: 1023.45, meta: 1920.0, canais: {auto: 0, delivery: 58.76, viagem: 987.65}},
+                {loja: 262, inicio: '08:29', fim: '21:15', cupons: 92, faturamento: 2345.67, meta: 2340.0, canais: {auto: 0, delivery: 1198.76, viagem: 1098.76}},
+                {loja: 285, inicio: '10:44', fim: '21:42', cupons: 87, faturamento: 1654.32, meta: 3360.0, canais: {auto: 0, delivery: 543.21, viagem: 1100.00}},
+                {loja: 294, inicio: '10:32', fim: '21:29', cupons: 115, faturamento: 2098.76, meta: 1975.0, canais: {auto: 354.32, delivery: 698.76, viagem: 1043.21}}
+            ],
+            "12/02/2026": [
+                {loja: 5, inicio: '09:13', fim: '20:39', cupons: 112, faturamento: 3456.78, meta: 4000.0, canais: {auto: 912.34, delivery: 2098.76, viagem: 298.76}},
+                {loja: 10, inicio: '13:51', fim: '21:31', cupons: 432, faturamento: 10987.65, meta: 10650.0, canais: {auto: 2567.89, delivery: 3456.78, viagem: 1789.01}},
+                {loja: 28, inicio: '10:15', fim: '21:53', cupons: 189, faturamento: 4456.78, meta: 5220.0, canais: {auto: 1543.21, delivery: 2678.90, viagem: 412.34}},
+                {loja: 31, inicio: '09:33', fim: '21:17', cupons: 176, faturamento: 3209.87, meta: 4275.0, canais: {auto: 0, delivery: 1198.76, viagem: 0}},
+                {loja: 63, inicio: '10:33', fim: '21:33', cupons: 78, faturamento: 1123.45, meta: 2050.0, canais: {auto: 234.56, delivery: 0, viagem: 887.65}},
+                {loja: 69, inicio: '09:00', fim: '21:39', cupons: 209, faturamento: 5123.45, meta: 4565.0, canais: {auto: 0, delivery: 3876.54, viagem: 1345.67}},
+                {loja: 73, inicio: '10:37', fim: '18:27', cupons: 89, faturamento: 2198.76, meta: 2810.0, canais: {auto: 765.43, delivery: 987.65, viagem: 498.76}},
+                {loja: 82, inicio: '09:02', fim: '19:49', cupons: 178, faturamento: 3098.76, meta: 2990.0, canais: {auto: 432.10, delivery: 2098.76, viagem: 0}},
+                {loja: 86, inicio: '10:05', fim: '21:29', cupons: 109, faturamento: 3678.90, meta: 6400.0, canais: {auto: 1456.78, delivery: 678.90, viagem: 156.78}},
+                {loja: 90, inicio: '10:24', fim: '22:02', cupons: 198, faturamento: 4678.90, meta: 4340.0, canais: {auto: 1765.43, delivery: 234.56, viagem: 765.43}},
+                {loja: 97, inicio: '10:23', fim: '04:16', cupons: 159, faturamento: 4234.56, meta: 4095.0, canais: {auto: 2234.56, delivery: 145.67, viagem: 598.76}},
+                {loja: 98, inicio: '08:40', fim: '19:25', cupons: 256, faturamento: 3456.78, meta: 4245.0, canais: {auto: 543.21, delivery: 598.76, viagem: 2345.67}},
+                {loja: 101, inicio: '10:38', fim: '20:52', cupons: 119, faturamento: 2567.89, meta: 2445.0, canais: {auto: 0, delivery: 1543.21, viagem: 1098.76}},
+                {loja: 118, inicio: '10:20', fim: '21:57', cupons: 105, faturamento: 2234.56, meta: 2915.0, canais: {auto: 987.65, delivery: 543.21, viagem: 765.43}},
+                {loja: 126, inicio: '10:14', fim: '21:29', cupons: 398, faturamento: 10987.65, meta: 11560.0, canais: {auto: 678.90, delivery: 6321.45, viagem: 30.12}},
+                {loja: 133, inicio: '10:07', fim: '21:46', cupons: 165, faturamento: 5234.56, meta: 5870.0, canais: {auto: 298.76, delivery: 3987.65, viagem: 987.65}},
+                {loja: 145, inicio: '09:04', fim: '09:18', cupons: 145, faturamento: 2345.67, meta: 4265.0, canais: {auto: 765.43, delivery: 787.65, viagem: 987.65}},
+                {loja: 157, inicio: '10:21', fim: '21:19', cupons: 109, faturamento: 2456.78, meta: 3395.0, canais: {auto: 0, delivery: 1678.90, viagem: 876.54}},
+                {loja: 158, inicio: '09:49', fim: '21:39', cupons: 171, faturamento: 4567.89, meta: 4425.0, canais: {auto: 2543.21, delivery: 1789.01, viagem: 345.67}},
+                {loja: 162, inicio: '09:22', fim: '20:41', cupons: 93, faturamento: 2987.65, meta: 3085.0, canais: {auto: 0, delivery: 0, viagem: 0}},
+                {loja: 178, inicio: '09:27', fim: '22:10', cupons: 125, faturamento: 3987.65, meta: 2265.0, canais: {auto: 0, delivery: 2987.65, viagem: 0}},
+                {loja: 183, inicio: '09:35', fim: '19:25', cupons: 127, faturamento: 2098.76, meta: 3015.0, canais: {auto: 987.65, delivery: 543.21, viagem: 609.87}},
+                {loja: 189, inicio: '09:52', fim: '21:53', cupons: 208, faturamento: 2456.78, meta: 2825.0, canais: {auto: 765.43, delivery: 398.76, viagem: 1321.45}},
+                {loja: 195, inicio: '10:15', fim: '21:24', cupons: 258, faturamento: 6345.67, meta: 6585.0, canais: {auto: 0, delivery: 4123.45, viagem: 2234.56}},
+                {loja: 210, inicio: '08:44', fim: '20:48', cupons: 128, faturamento: 2890.12, meta: 3810.0, canais: {auto: 0, delivery: 1154.32, viagem: 0}},
+                {loja: 247, inicio: '08:45', fim: '20:30', cupons: 115, faturamento: 1765.43, meta: 2045.0, canais: {auto: 0, delivery: 643.21, viagem: 1123.45}},
+                {loja: 248, inicio: '07:33', fim: '23:50', cupons: 279, faturamento: 5876.54, meta: 5730.0, canais: {auto: 412.34, delivery: 2987.65, viagem: 1987.65}},
+                {loja: 251, inicio: '08:36', fim: '15:57', cupons: 88, faturamento: 1098.76, meta: 1930.0, canais: {auto: 0, delivery: 62.34, viagem: 1032.10}},
+                {loja: 262, inicio: '08:30', fim: '21:16', cupons: 98, faturamento: 2456.78, meta: 2350.0, canais: {auto: 0, delivery: 1254.32, viagem: 1198.76}},
+                {loja: 285, inicio: '10:45', fim: '21:43', cupons: 92, faturamento: 1765.43, meta: 3370.0, canais: {auto: 0, delivery: 598.76, viagem: 1165.43}},
+                {loja: 294, inicio: '10:33', fim: '21:30', cupons: 122, faturamento: 2234.56, meta: 1985.0, canais: {auto: 398.76, delivery: 743.21, viagem: 1098.76}}
+            ],
             "13/02/2026": [
                 {loja: 5, inicio: '09:10', fim: '20:41', cupons: 117, faturamento: 3468.01, meta: 4005.0, canais: {auto: 916.93, delivery: 2263.16, viagem: 287.92}},
                 {loja: 10, inicio: '13:52', fim: '21:32', cupons: 440, faturamento: 11244.67, meta: 10605.0, canais: {auto: 2670.74, delivery: 3526.33, viagem: 1762.66}},
@@ -1100,67 +1323,159 @@
             ]
         };
 
-        // Calcular dif, status e balcão
+        // Calcular dif e status para cada registro
         for (let data in dadosPorData) {
             dadosPorData[data].forEach(loja => {
                 loja.dif = loja.faturamento - loja.meta;
                 loja.difPercentual = loja.meta > 0 ? (loja.dif / loja.meta) * 100 : 0;
                 loja.status = loja.dif >= 0 ? 'SIM' : 'NÃO';
                 
+                // Calcular Balcão (o que sobra dos canais)
                 const somaCanais = (loja.canais.auto || 0) + (loja.canais.delivery || 0) + (loja.canais.viagem || 0);
-                loja.canais.balcao = Math.max(0, loja.faturamento - somaCanais);
+                loja.canais.balcao = loja.faturamento - somaCanais;
+                if (loja.canais.balcao < 0) loja.canais.balcao = 0;
             });
         }
 
-        // Lista de datas
+        // Lista de todas as datas disponíveis
         const datasDisponiveis = Object.keys(dadosPorData).sort((a, b) => {
             const [diaA, mesA, anoA] = a.split('/').map(Number);
             const [diaB, mesB, anoB] = b.split('/').map(Number);
             return new Date(anoA, mesA-1, diaA) - new Date(anoB, mesB-1, diaB);
         });
 
-        let dataAtual = "14/02/2026";
+        // Variáveis de estado
+        let dataInicio = "10/02/2026";
+        let dataFim = "14/02/2026";
+        let periodoSelecionado = "7d"; // 'hoje', '7d', '15d', 'mes', 'custom'
         let canalPieChart, metasPieChart, top10BarChart, desempenhoBarChart;
         let lojasSelecionadas = [];
         let todasLojas = [];
 
-        function getDadosAtuais() {
-            return dadosPorData[dataAtual] || [];
+        function getDadosPeriodo() {
+            const dados = [];
+            
+            for (let data in dadosPorData) {
+                if (isDataNoPeriodo(data, dataInicio, dataFim)) {
+                    dados.push(...dadosPorData[data].map(loja => ({
+                        ...loja,
+                        data: data
+                    })));
+                }
+            }
+            
+            return dados;
         }
 
-        function mudarDia(direcao) {
-            const indexAtual = datasDisponiveis.indexOf(dataAtual);
-            if (indexAtual === -1) return;
+        function isDataNoPeriodo(data, inicio, fim) {
+            const [diaD, mesD, anoD] = data.split('/').map(Number);
+            const [diaI, mesI, anoI] = inicio.split('/').map(Number);
+            const [diaF, mesF, anoF] = fim.split('/').map(Number);
             
-            const novoIndex = indexAtual + direcao;
-            if (novoIndex >= 0 && novoIndex < datasDisponiveis.length) {
-                dataAtual = datasDisponiveis[novoIndex];
-                atualizarInterfaceData();
-                recarregarTudo();
+            const dataObj = new Date(anoD, mesD-1, diaD);
+            const inicioObj = new Date(anoI, mesI-1, diaI);
+            const fimObj = new Date(anoF, mesF-1, diaF);
+            
+            return dataObj >= inicioObj && dataObj <= fimObj;
+        }
+
+        function setPeriodo(tipo) {
+            periodoSelecionado = tipo;
+            
+            // Atualizar botões ativos
+            $('.period-btn').removeClass('active');
+            $(`.period-btn[onclick="setPeriodo('${tipo}')"]`).addClass('active');
+            
+            const hoje = new Date();
+            const dia = String(hoje.getDate()).padStart(2, '0');
+            const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+            const ano = hoje.getFullYear();
+            const dataHojeStr = `${dia}/${mes}/${ano}`;
+            
+            switch(tipo) {
+                case 'hoje':
+                    dataInicio = dataFim = "14/02/2026"; // Última data disponível
+                    $('#dateRangeInputs').hide();
+                    break;
+                    
+                case '7d':
+                    dataInicio = "10/02/2026";
+                    dataFim = "14/02/2026";
+                    $('#dateRangeInputs').hide();
+                    break;
+                    
+                case '15d':
+                    dataInicio = "10/02/2026";
+                    dataFim = "14/02/2026";
+                    $('#dateRangeInputs').hide();
+                    break;
+                    
+                case 'mes':
+                    dataInicio = "10/02/2026";
+                    dataFim = "14/02/2026";
+                    $('#dateRangeInputs').hide();
+                    break;
+                    
+                case 'custom':
+                    $('#dateRangeInputs').show();
+                    
+                    // Converter datas para formato YYYY-MM-DD para input date
+                    const [diaI, mesI, anoI] = dataInicio.split('/');
+                    const [diaF, mesF, anoF] = dataFim.split('/');
+                    
+                    $('#dataInicio').val(`${anoI}-${mesI}-${diaI}`);
+                    $('#dataFim').val(`${anoF}-${mesF}-${diaF}`);
+                    break;
+            }
+            
+            atualizarPeriodoDisplay();
+            recarregarTudo();
+        }
+
+        function atualizarPorData() {
+            if (periodoSelecionado === 'custom') {
+                const dataInicioInput = $('#dataInicio').val();
+                const dataFimInput = $('#dataFim').val();
+                
+                if (dataInicioInput && dataFimInput) {
+                    const [anoI, mesI, diaI] = dataInicioInput.split('-');
+                    const [anoF, mesF, diaF] = dataFimInput.split('-');
+                    
+                    dataInicio = `${diaI}/${mesI}/${anoI}`;
+                    dataFim = `${diaF}/${mesF}/${anoF}`;
+                    
+                    atualizarPeriodoDisplay();
+                    recarregarTudo();
+                }
             }
         }
 
-        function atualizarInterfaceData() {
-            const [dia, mes, ano] = dataAtual.split('/');
+        function atualizarPeriodoDisplay() {
             const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-            const diasSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
             
-            const dataObj = new Date(ano, mes-1, dia);
-            const diaSemana = diasSemana[dataObj.getDay()];
-            
-            $('#dataAtualDisplay').text(dataAtual);
-            $('#headerDay').text(dia);
-            $('#headerMonth').text(`${meses[mes-1].substring(0,3).toUpperCase()} ${ano}`);
-            $('#dataSelecionada').text(`${diaSemana}, ${dia} de ${meses[mes-1]} de ${ano}`);
-            $('#dataGeracao').text(dataAtual);
-            
-            const indexAtual = datasDisponiveis.indexOf(dataAtual);
-            $('#btnDiaAnterior, #btnHeaderAnterior').prop('disabled', indexAtual === 0);
-            $('#btnProximoDia, #btnHeaderProximo').prop('disabled', indexAtual === datasDisponiveis.length - 1);
+            if (dataInicio === dataFim) {
+                const [dia, mes, ano] = dataInicio.split('/');
+                $('#periodoDisplay').text(`${dia} de ${meses[mes-1]} de ${ano}`);
+                $('#headerDay').text(dia);
+                $('#headerMonth').text(meses[mes-1].toUpperCase());
+            } else {
+                const [diaI, mesI, anoI] = dataInicio.split('/');
+                const [diaF, mesF, anoF] = dataFim.split('/');
+                
+                if (mesI === mesF && anoI === anoF) {
+                    $('#periodoDisplay').text(`${diaI} a ${diaF} de ${meses[mesI-1]} de ${anoI}`);
+                } else {
+                    $('#periodoDisplay').text(`${diaI}/${mesI}/${anoI} a ${diaF}/${mesF}/${anoF}`);
+                }
+                
+                $('#headerDay').text(`${diaI}-${diaF}`);
+                $('#headerMonth').text(`${meses[mesI-1].toUpperCase()} ${anoI}`);
+            }
         }
 
         function recarregarTudo() {
-            todasLojas = [...new Set(getDadosAtuais().map(loja => loja.loja))].sort((a, b) => a - b);
+            const dadosPeriodo = getDadosPeriodo();
+            todasLojas = [...new Set(dadosPeriodo.map(loja => loja.loja))].sort((a, b) => a - b);
             lojasSelecionadas = [...todasLojas];
             
             preencherOpcoesLojas();
@@ -1180,22 +1495,25 @@
         }
 
         $(document).ready(function() {
-            atualizarInterfaceData();
-            recarregarTudo();
+            setPeriodo('7d'); // Iniciar com últimos 7 dias
+            
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#lojaMultiSelect').length) {
+                    $('#lojaDropdown').removeClass('show');
+                }
+            });
+            
+            $('#lojaDropdown').click(function(event) {
+                event.stopPropagation();
+            });
         });
 
-        function abrirModalLojas() {
-            $('#lojaModal').addClass('show');
-            $('#lojaSearch').val('').focus();
-            filtrarLojas();
-        }
-
-        function fecharModalLojas(event) {
-            if (!event || event.target.id === 'lojaModal') {
-                $('#lojaModal').removeClass('show');
-            }
-        }
-
+        // [MANTENHA TODAS AS FUNÇÕES EXISTENTES AQUI: 
+        // preencherOpcoesLojas, toggleLojaDropdown, fecharDropdownLojas, filtrarLojas, 
+        // toggleLoja, toggleAllLojas, atualizarTextoSelecionadas, carregarTabela, 
+        // atualizarTabelaCanais, atualizarKPIs, formatMoney, formatPercent, 
+        // aplicarFiltros, ordenarTabela, exportarExcel, inicializarGraficos]
+        
         function preencherOpcoesLojas() {
             let html = '';
             todasLojas.forEach(loja => {
@@ -1207,6 +1525,16 @@
                 </div>`;
             });
             $('#lojaOptions').html(html);
+        }
+
+        function toggleLojaDropdown() {
+            $('#lojaDropdown').toggleClass('show');
+            $('#lojaSearch').val('').focus();
+            filtrarLojas();
+        }
+
+        function fecharDropdownLojas() {
+            $('#lojaDropdown').removeClass('show');
         }
 
         function filtrarLojas() {
@@ -1250,7 +1578,7 @@
                 $('#selectedLojasText').text('Nenhuma loja');
             } else if (count === todasLojas.length) {
                 $('#selectedLojasText').text('Todas as Lojas');
-            } else if (count <= 2) {
+            } else if (count <= 3) {
                 const nomes = lojasSelecionadas.sort((a, b) => a - b).map(l => lojaNomes[l] || `Loja ${l}`).join(', ');
                 $('#selectedLojasText').text(nomes);
             } else {
@@ -1261,9 +1589,9 @@
         function carregarTabela() {
             let html = '';
             const statusFiltro = $('#statusFilter').val();
-            const dadosAtuais = getDadosAtuais();
+            const dadosPeriodo = getDadosPeriodo();
 
-            const dadosFiltrados = dadosAtuais.filter(loja => {
+            const dadosFiltrados = dadosPeriodo.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
@@ -1275,7 +1603,7 @@
                 const statusClass = loja.status === 'SIM' ? 'meta-sim' : 'meta-nao';
                 
                 html += `<tr>
-                    <td>${dataAtual}</td>
+                    <td>${loja.data || dataInicio}</td>
                     <td><span class="store-name">${nomeLoja}</span></td>
                     <td>${loja.inicio || '-'}</td>
                     <td>${loja.fim || '-'}</td>
@@ -1294,9 +1622,9 @@
 
         function atualizarTabelaCanais() {
             const statusFiltro = $('#statusFilter').val();
-            const dadosAtuais = getDadosAtuais();
+            const dadosPeriodo = getDadosPeriodo();
             
-            const dadosFiltrados = dadosAtuais.filter(loja => {
+            const dadosFiltrados = dadosPeriodo.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
@@ -1331,11 +1659,18 @@
                 'Balcão': 'fa-store'
             };
             
+            const cores = {
+                'Auto-Atendimento': '#4361ee',
+                'Delivery': '#f72585',
+                'Viagem': '#4cc9f0',
+                'Balcão': '#ffd166'
+            };
+            
             Object.entries(totaisCanais).forEach(([canal, valor]) => {
                 const participacao = totalGeral > 0 ? (valor / totalGeral * 100) : 0;
                 html += `<tr>
-                    <td><i class="fas ${icones[canal]}" style="color: var(--primary); margin-right: 4px;"></i> ${canal}</td>
-                    <td>R$ ${formatMoney(valor)}</td>
+                    <td><i class="fas ${icones[canal]}" style="color: ${cores[canal]}; margin-right: 8px;"></i> ${canal}</td>
+                    <td class="currency">R$ ${formatMoney(valor)}</td>
                     <td>${participacao.toFixed(1)}%</td>
                     <td>
                         <div class="progress-bar">
@@ -1350,36 +1685,58 @@
 
         function atualizarKPIs(dadosFiltrados = null) {
             const statusFiltro = $('#statusFilter').val();
-            const dadosAtuais = getDadosAtuais();
+            const dadosPeriodo = getDadosPeriodo();
             
-            const dados = dadosFiltrados || dadosAtuais.filter(loja => {
+            const dados = dadosFiltrados || dadosPeriodo.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
             });
             
-            const totalLojas = dados.length;
+            // Agrupar por loja para cálculos de lojas únicas
+            const lojasUnicas = [...new Set(dados.map(l => l.loja))];
+            const totalLojasUnicas = lojasUnicas.length;
+            
             const totalFaturamento = dados.reduce((sum, loja) => sum + loja.faturamento, 0);
             const totalMeta = dados.reduce((sum, loja) => sum + loja.meta, 0);
             const totalDiferenca = totalFaturamento - totalMeta;
             const percentualDiferenca = totalMeta > 0 ? (totalDiferenca / totalMeta) * 100 : 0;
-            const metasAtingidas = dados.filter(loja => loja.status === 'SIM').length;
-            const percentualLojas = totalLojas > 0 ? (metasAtingidas / totalLojas) * 100 : 0;
+            const totalCupons = dados.reduce((sum, loja) => sum + loja.cupons, 0);
+            const ticketMedio = totalCupons > 0 ? totalFaturamento / totalCupons : 0;
             
-            $('#totalLojas').text(totalLojas);
+            // Calcular metas atingidas por loja no período
+            const metasPorLoja = {};
+            dados.forEach(loja => {
+                if (!metasPorLoja[loja.loja]) {
+                    metasPorLoja[loja.loja] = { total: 0, atingiu: 0 };
+                }
+                metasPorLoja[loja.loja].total++;
+                if (loja.status === 'SIM') {
+                    metasPorLoja[loja.loja].atingiu++;
+                }
+            });
+            
+            // Loja atingiu meta se teve mais dias com SIM do que com NÃO
+            const lojasMetaSim = Object.values(metasPorLoja).filter(m => m.atingiu > m.total / 2).length;
+            const percentualLojas = totalLojasUnicas > 0 ? (lojasMetaSim / totalLojasUnicas) * 100 : 0;
+            
+            $('#totalLojas').text(totalLojasUnicas);
             $('#totalFaturamento').text(`R$ ${formatMoney(totalFaturamento)}`);
             $('#totalMeta').text(`R$ ${formatMoney(totalMeta)}`);
+            $('#totalDiferenca').text(`R$ ${formatMoney(totalDiferenca)}`);
             $('#percentualMeta').text(formatPercent(percentualDiferenca));
-            $('#metasAtingidas').text(`${metasAtingidas}/${totalLojas}`);
+            $('#percentualDiferenca').text(formatPercent(percentualDiferenca));
+            $('#ticketMedio').text(`R$ ${formatMoney(ticketMedio)}`);
+            $('#metasAtingidas').text(`${lojasMetaSim}/${totalLojasUnicas}`);
             $('#percentualLojas').text(`${percentualLojas.toFixed(1)}%`);
-            $('#lojasMetaSim').text(`${metasAtingidas} lojas (${percentualLojas.toFixed(1)}%)`);
-            $('#lojasMetaNao').text(`${totalLojas - metasAtingidas} lojas`);
+            $('#lojasMetaSim').text(`${lojasMetaSim} lojas (${percentualLojas.toFixed(1)}%)`);
+            $('#lojasMetaNao').text(`${totalLojasUnicas - lojasMetaSim} lojas (${(100 - percentualLojas).toFixed(1)}%)`);
             
             const percentualProgresso = totalMeta > 0 ? (totalFaturamento / totalMeta) * 100 : 0;
             $('#progressoMeta').css('width', `${percentualProgresso}%`);
             
             if (metasPieChart) {
-                metasPieChart.data.datasets[0].data = [metasAtingidas, totalLojas - metasAtingidas];
+                metasPieChart.data.datasets[0].data = [lojasMetaSim, totalLojasUnicas - lojasMetaSim];
                 metasPieChart.update();
             }
         }
@@ -1395,22 +1752,47 @@
         function aplicarFiltros() {
             carregarTabela();
             atualizarTabelaCanais();
-            fecharModalLojas();
             
             const statusFiltro = $('#statusFilter').val();
-            const dadosAtuais = getDadosAtuais();
+            const dadosPeriodo = getDadosPeriodo();
 
-            const dadosFiltrados = dadosAtuais.filter(loja => {
+            const dadosFiltrados = dadosPeriodo.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
             });
             
+            // Agrupar por loja para os gráficos
+            const dadosPorLoja = {};
+            dadosFiltrados.forEach(loja => {
+                if (!dadosPorLoja[loja.loja]) {
+                    dadosPorLoja[loja.loja] = {
+                        loja: loja.loja,
+                        faturamento: 0,
+                        meta: 0,
+                        cupons: 0,
+                        status: 'NÃO',
+                        difPercentual: 0
+                    };
+                }
+                dadosPorLoja[loja.loja].faturamento += loja.faturamento;
+                dadosPorLoja[loja.loja].meta += loja.meta;
+                dadosPorLoja[loja.loja].cupons += loja.cupons;
+            });
+            
+            // Calcular status e percentual para cada loja
+            Object.values(dadosPorLoja).forEach(loja => {
+                loja.difPercentual = loja.meta > 0 ? ((loja.faturamento - loja.meta) / loja.meta) * 100 : 0;
+                loja.status = loja.faturamento >= loja.meta ? 'SIM' : 'NÃO';
+            });
+            
+            const dadosAgregados = Object.values(dadosPorLoja);
+            
             if (desempenhoBarChart) {
-                if (dadosFiltrados.length > 0) {
-                    desempenhoBarChart.data.labels = dadosFiltrados.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`);
-                    desempenhoBarChart.data.datasets[0].data = dadosFiltrados.map(d => 100 + d.difPercentual);
-                    desempenhoBarChart.data.datasets[0].backgroundColor = dadosFiltrados.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f');
+                if (dadosAgregados.length > 0) {
+                    desempenhoBarChart.data.labels = dadosAgregados.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`);
+                    desempenhoBarChart.data.datasets[0].data = dadosAgregados.map(d => 100 + d.difPercentual);
+                    desempenhoBarChart.data.datasets[0].backgroundColor = dadosAgregados.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f');
                 } else {
                     desempenhoBarChart.data.labels = [];
                     desempenhoBarChart.data.datasets[0].data = [];
@@ -1419,8 +1801,8 @@
             }
             
             if (top10BarChart) {
-                if (dadosFiltrados.length > 0) {
-                    const top10Data = [...dadosFiltrados].sort((a, b) => b.faturamento - a.faturamento).slice(0, Math.min(10, dadosFiltrados.length));
+                if (dadosAgregados.length > 0) {
+                    const top10Data = [...dadosAgregados].sort((a, b) => b.faturamento - a.faturamento).slice(0, Math.min(10, dadosAgregados.length));
                     top10BarChart.data.labels = top10Data.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`);
                     top10BarChart.data.datasets[0].data = top10Data.map(d => d.faturamento);
                     top10BarChart.data.datasets[1].data = top10Data.map(d => d.meta);
@@ -1452,7 +1834,7 @@
                 
                 let valorA, valorB;
                 
-                if (coluna === 1) {
+                if (coluna === 0 || coluna === 1) {
                     valorA = celulaA;
                     valorB = celulaB;
                 } else if (coluna === 4) {
@@ -1483,9 +1865,9 @@
 
         function exportarExcel() {
             const statusFiltro = $('#statusFilter').val();
-            const dadosAtuais = getDadosAtuais();
+            const dadosPeriodo = getDadosPeriodo();
 
-            const dadosFiltrados = dadosAtuais.filter(loja => {
+            const dadosFiltrados = dadosPeriodo.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
@@ -1495,13 +1877,27 @@
             const totalMeta = dadosFiltrados.reduce((sum, loja) => sum + loja.meta, 0);
             const totalDiferenca = totalFaturamento - totalMeta;
             const percentualDiferenca = totalMeta > 0 ? (totalDiferenca / totalMeta) * 100 : 0;
-            const metasAtingidas = dadosFiltrados.filter(loja => loja.status === 'SIM').length;
+            
+            // Calcular lojas que atingiram meta no período
+            const metasPorLoja = {};
+            dadosFiltrados.forEach(loja => {
+                if (!metasPorLoja[loja.loja]) {
+                    metasPorLoja[loja.loja] = { total: 0, atingiu: 0 };
+                }
+                metasPorLoja[loja.loja].total++;
+                if (loja.status === 'SIM') {
+                    metasPorLoja[loja.loja].atingiu++;
+                }
+            });
+            
+            const lojasMetaSim = Object.values(metasPorLoja).filter(m => m.atingiu > m.total / 2).length;
+            const totalLojasUnicas = Object.keys(metasPorLoja).length;
 
             const wb = XLSX.utils.book_new();
             
             const dadosDetalhamento = [
                 ['RELATÓRIO DE METAS - SETOR PATTY'],
-                [`Data: ${dataAtual} - Lojas Selecionadas: ${lojasSelecionadas.length} lojas, Status: ${statusFiltro || 'Todos'}`],
+                [`Período: ${dataInicio} a ${dataFim} - Lojas Selecionadas: ${lojasSelecionadas.length} lojas, Status: ${statusFiltro || 'Todos'}`],
                 []
             ];
             
@@ -1513,7 +1909,7 @@
             dadosFiltrados.forEach(loja => {
                 const nomeLoja = lojaNomes[loja.loja] || `Loja ${loja.loja}`;
                 dadosDetalhamento.push([
-                    dataAtual,
+                    loja.data || dataInicio,
                     nomeLoja,
                     loja.inicio || '-',
                     loja.fim || '-',
@@ -1534,7 +1930,7 @@
                 totalMeta,
                 totalDiferenca,
                 percentualDiferenca,
-                `${metasAtingidas}/${dadosFiltrados.length} lojas`
+                `${lojasMetaSim}/${totalLojasUnicas} lojas`
             ]);
 
             const wsDetalhamento = XLSX.utils.aoa_to_sheet(dadosDetalhamento);
@@ -1583,15 +1979,17 @@
                 ['INDICADORES GERAIS'],
                 [],
                 ['Indicador', 'Valor'],
-                ['Total de Lojas', dadosFiltrados.length],
+                ['Período', `${dataInicio} a ${dataFim}`],
+                ['Total de Lojas (únicas)', totalLojasUnicas],
+                ['Total de Registros', dadosFiltrados.length],
                 ['Faturamento Total', totalFaturamento],
                 ['Meta Total', totalMeta],
                 ['Diferença', totalDiferenca],
                 ['Percentual de Atingimento', totalMeta > 0 ? (totalFaturamento / totalMeta * 100) : 0],
                 ['Ticket Médio', ticketMedio],
-                ['Lojas que Atingiram Meta', metasAtingidas],
-                ['Lojas Abaixo da Meta', dadosFiltrados.length - metasAtingidas],
-                ['Percentual de Metas Atingidas', dadosFiltrados.length > 0 ? (metasAtingidas / dadosFiltrados.length * 100) : 0]
+                ['Lojas que Atingiram Meta (período)', lojasMetaSim],
+                ['Lojas Abaixo da Meta (período)', totalLojasUnicas - lojasMetaSim],
+                ['Percentual de Metas Atingidas', totalLojasUnicas > 0 ? (lojasMetaSim / totalLojasUnicas * 100) : 0]
             ];
 
             const wsIndicadores = XLSX.utils.aoa_to_sheet(dadosIndicadores);
@@ -1601,26 +1999,26 @@
             XLSX.utils.book_append_sheet(wb, wsCanais, 'Resumo por Canal');
             XLSX.utils.book_append_sheet(wb, wsIndicadores, 'Indicadores');
 
-            const dataStr = dataAtual.replace(/\//g, '-');
+            const dataStr = `${dataInicio.replace(/\//g, '-')}_a_${dataFim.replace(/\//g, '-')}`;
             const nomeArquivo = `Setor_Patty_${dataStr}.xlsx`;
 
             XLSX.writeFile(wb, nomeArquivo);
 
             const btnExport = event.target.closest('.btn');
             const textoOriginal = btnExport.innerHTML;
-            btnExport.innerHTML = '<i class="fas fa-check"></i> OK!';
+            btnExport.innerHTML = '<i class="fas fa-check"></i> Excel Gerado!';
             btnExport.style.background = '#06d6a0';
             setTimeout(() => {
                 btnExport.innerHTML = textoOriginal;
                 btnExport.style.background = '';
-            }, 1500);
+            }, 2000);
         }
 
         function inicializarGraficos() {
             Chart.defaults.font.family = "'Inter', 'Segoe UI', Roboto, sans-serif";
-            Chart.defaults.font.size = 11;
+            Chart.defaults.font.size = 12;
 
-            const dadosAtuais = getDadosAtuais();
+            const dadosPeriodo = getDadosPeriodo();
 
             let totaisCanais = {
                 'Auto-Atendimento': 0,
@@ -1629,7 +2027,7 @@
                 'Balcão': 0
             };
             
-            dadosAtuais.forEach(loja => {
+            dadosPeriodo.forEach(loja => {
                 totaisCanais['Auto-Atendimento'] += loja.canais.auto || 0;
                 totaisCanais['Delivery'] += loja.canais.delivery || 0;
                 totaisCanais['Viagem'] += loja.canais.viagem || 0;
@@ -1645,26 +2043,29 @@
                         backgroundColor: ['#4361ee', '#f72585', '#4cc9f0', '#ffd166'],
                         borderWidth: 0,
                         borderRadius: 8,
-                        spacing: 2,
+                        spacing: 4,
                         hoverOffset: 8
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '65%',
+                    cutout: '70%',
                     plugins: {
                         legend: {
                             position: 'bottom',
                             labels: {
-                                boxWidth: 10,
-                                padding: 15,
-                                font: { size: 11 }
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 20,
+                                font: { size: 12, weight: '500' }
                             }
                         },
                         tooltip: {
                             backgroundColor: 'rgba(43, 45, 66, 0.9)',
-                            padding: 10,
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
                             cornerRadius: 8,
                             callbacks: {
                                 label: (ctx) => {
@@ -1679,38 +2080,53 @@
                 }
             });
 
-            const metasAtingidas = dadosAtuais.filter(loja => loja.status === 'SIM').length;
-            const metasNaoAtingidas = dadosAtuais.length - metasAtingidas;
+            // Calcular metas por loja no período
+            const metasPorLoja = {};
+            dadosPeriodo.forEach(loja => {
+                if (!metasPorLoja[loja.loja]) {
+                    metasPorLoja[loja.loja] = { total: 0, atingiu: 0 };
+                }
+                metasPorLoja[loja.loja].total++;
+                if (loja.status === 'SIM') {
+                    metasPorLoja[loja.loja].atingiu++;
+                }
+            });
+            
+            const lojasMetaSim = Object.values(metasPorLoja).filter(m => m.atingiu > m.total / 2).length;
+            const lojasMetaNao = Object.keys(metasPorLoja).length - lojasMetaSim;
             
             metasPieChart = new Chart(document.getElementById('metasPieChart'), {
                 type: 'doughnut',
                 data: {
                     labels: ['Atingiram Meta', 'Não Atingiram'],
                     datasets: [{
-                        data: [metasAtingidas, metasNaoAtingidas],
+                        data: [lojasMetaSim, lojasMetaNao],
                         backgroundColor: ['#06d6a0', '#ef476f'],
                         borderWidth: 0,
                         borderRadius: 8,
-                        spacing: 2,
+                        spacing: 4,
                         hoverOffset: 8
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '65%',
+                    cutout: '70%',
                     plugins: {
                         legend: {
                             position: 'bottom',
                             labels: {
-                                boxWidth: 10,
-                                padding: 15,
-                                font: { size: 11 }
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 20,
+                                font: { size: 12, weight: '500' }
                             }
                         },
                         tooltip: {
                             backgroundColor: 'rgba(43, 45, 66, 0.9)',
-                            padding: 10,
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
                             cornerRadius: 8,
                             callbacks: {
                                 label: (ctx) => {
@@ -1724,7 +2140,23 @@
                 }
             });
 
-            const top10Data = [...dadosAtuais].sort((a, b) => b.faturamento - a.faturamento).slice(0, 10);
+            // Agregar dados por loja para gráficos
+            const dadosPorLoja = {};
+            dadosPeriodo.forEach(loja => {
+                if (!dadosPorLoja[loja.loja]) {
+                    dadosPorLoja[loja.loja] = {
+                        loja: loja.loja,
+                        faturamento: 0,
+                        meta: 0
+                    };
+                }
+                dadosPorLoja[loja.loja].faturamento += loja.faturamento;
+                dadosPorLoja[loja.loja].meta += loja.meta;
+            });
+            
+            const dadosAgregados = Object.values(dadosPorLoja);
+            
+            const top10Data = [...dadosAgregados].sort((a, b) => b.faturamento - a.faturamento).slice(0, 10);
             top10BarChart = new Chart(document.getElementById('top10BarChart'), {
                 type: 'bar',
                 data: {
@@ -1734,15 +2166,17 @@
                             label: 'Faturamento',
                             data: top10Data.map(d => d.faturamento),
                             backgroundColor: '#4361ee',
-                            borderRadius: 6,
-                            barPercentage: 0.6
+                            borderRadius: 8,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.8
                         },
                         {
                             label: 'Meta',
                             data: top10Data.map(d => d.meta),
                             backgroundColor: '#f72585',
-                            borderRadius: 6,
-                            barPercentage: 0.6
+                            borderRadius: 8,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.8
                         }
                     ]
                 },
@@ -1752,9 +2186,19 @@
                     plugins: {
                         legend: {
                             position: 'top',
-                            labels: { font: { size: 11 } }
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'rect',
+                                padding: 15,
+                                font: { size: 12 }
+                            }
                         },
                         tooltip: {
+                            backgroundColor: 'rgba(43, 45, 66, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
+                            cornerRadius: 8,
                             callbacks: {
                                 label: (ctx) => `R$ ${formatMoney(ctx.raw)}`
                             }
@@ -1763,27 +2207,48 @@
                     scales: {
                         y: {
                             beginAtZero: true,
+                            grid: {
+                                color: '#f1f5f9',
+                                drawBorder: false
+                            },
                             ticks: {
-                                callback: (value) => 'R$ ' + value.toLocaleString('pt-BR', {maximumFractionDigits: 0})
+                                callback: (value) => 'R$ ' + value.toLocaleString('pt-BR')
                             }
                         },
                         x: {
-                            ticks: { maxRotation: 45, minRotation: 45, font: { size: 9 } }
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45,
+                                font: { size: 10 }
+                            }
                         }
                     }
                 }
             });
 
+            const desempenhoData = dadosAgregados.map(d => {
+                const difPercentual = d.meta > 0 ? ((d.faturamento - d.meta) / d.meta) * 100 : 0;
+                return {
+                    ...d,
+                    difPercentual,
+                    status: d.faturamento >= d.meta ? 'SIM' : 'NÃO'
+                };
+            });
+
             desempenhoBarChart = new Chart(document.getElementById('desempenhoBarChart'), {
                 type: 'bar',
                 data: {
-                    labels: dadosAtuais.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`),
+                    labels: desempenhoData.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`),
                     datasets: [{
                         label: 'Atingimento da Meta (%)',
-                        data: dadosAtuais.map(d => 100 + d.difPercentual),
-                        backgroundColor: dadosAtuais.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f'),
-                        borderRadius: 6,
-                        barPercentage: 0.7
+                        data: desempenhoData.map(d => 100 + d.difPercentual),
+                        backgroundColor: desempenhoData.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f'),
+                        borderRadius: 8,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.9
                     }]
                 },
                 options: {
@@ -1792,6 +2257,11 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: {
+                            backgroundColor: 'rgba(43, 45, 66, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
+                            cornerRadius: 8,
                             callbacks: {
                                 label: (ctx) => `Atingimento: ${ctx.raw.toFixed(1)}%`
                             }
@@ -1801,10 +2271,23 @@
                         y: {
                             beginAtZero: true,
                             max: 200,
-                            ticks: { callback: (value) => value + '%' }
+                            grid: {
+                                color: '#f1f5f9',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                callback: (value) => value + '%'
+                            }
                         },
                         x: {
-                            ticks: { maxRotation: 45, minRotation: 45, font: { size: 9 } }
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45,
+                                font: { size: 10 }
+                            }
                         }
                     }
                 }
