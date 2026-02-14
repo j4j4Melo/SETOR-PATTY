@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setor Patty - Relatório de Metas | 13/02/2026</title>
+    <title>Setor Patty - Relatório de Metas | Fevereiro 2026</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- SheetJS para Excel profissional -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
@@ -47,7 +46,6 @@
             margin: 0 auto;
         }
 
-        /* Header */
         .header {
             background: var(--gradient-1);
             padding: 30px;
@@ -126,7 +124,43 @@
             letter-spacing: 1px;
         }
 
-        /* Filtros */
+        .date-selector {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 15px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .date-selector button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .date-selector button:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+
+        .date-selector span {
+            font-weight: 600;
+            min-width: 140px;
+            text-align: center;
+        }
+
         .filters {
             background: white;
             padding: 20px 25px;
@@ -295,6 +329,18 @@
             accent-color: var(--primary);
         }
 
+        select {
+            padding: 12px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+            background: white;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
         .btn {
             padding: 12px 28px;
             border: none;
@@ -333,7 +379,6 @@
             box-shadow: 0 6px 15px rgba(6, 214, 160, 0.4);
         }
 
-        /* Cards KPI */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -416,7 +461,6 @@
         .trend-up { color: var(--success); }
         .trend-down { color: var(--danger); }
 
-        /* Gráficos */
         .charts-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -475,7 +519,6 @@
             margin-top: 10px;
         }
 
-        /* Tabelas */
         .tables-section {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -610,7 +653,6 @@
             transition: width 0.3s;
         }
 
-        /* Info Cards */
         .info-cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -660,7 +702,6 @@
             font-weight: 700;
         }
 
-        /* Footer */
         .footer {
             margin-top: 50px;
             text-align: center;
@@ -670,7 +711,6 @@
             border-top: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* Responsividade */
         @media (max-width: 1200px) {
             .charts-grid {
                 grid-template-columns: 1fr;
@@ -691,7 +731,6 @@
             .multi-select { width: 100%; }
         }
 
-        /* Animações */
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -707,7 +746,6 @@
             animation: slideIn 0.5s ease-out;
         }
 
-        /* Scrollbar personalizada */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -727,7 +765,6 @@
             background: var(--dark);
         }
 
-        /* Botão de fechar para o dropdown */
         .dropdown-close {
             padding: 12px 15px;
             display: flex;
@@ -750,11 +787,64 @@
         .dropdown-close i {
             font-size: 14px;
         }
+
+        .date-navigation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: var(--shadow-sm);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .date-navigation button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .date-navigation button:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+
+        .date-navigation button:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .date-navigation span {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--dark);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .store-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <div class="header-title">
@@ -765,14 +855,26 @@
                         <i class="fas fa-chart-line"></i> Atualizado em tempo real
                     </p>
                 </div>
-                <div class="header-date">
-                    <div class="day">13</div>
-                    <div class="month">FEVEREIRO 2026</div>
+                <div style="display: flex; align-items: center;">
+                    <div class="date-selector">
+                        <button onclick="mudarDia(-1)" id="btnHeaderAnterior" title="Dia anterior"><i class="fas fa-chevron-left"></i></button>
+                        <span id="dataAtualDisplay">14/02/2026</span>
+                        <button onclick="mudarDia(1)" id="btnHeaderProximo" title="Próximo dia"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="header-date" style="margin-left: 15px;">
+                        <div class="day" id="headerDay">14</div>
+                        <div class="month" id="headerMonth">FEVEREIRO 2026</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Filtros -->
+        <div class="date-navigation">
+            <button onclick="mudarDia(-1)" id="btnDiaAnterior"><i class="fas fa-chevron-left"></i></button>
+            <span id="dataSelecionada">Sexta-feira, 14 de Fevereiro de 2026</span>
+            <button onclick="mudarDia(1)" id="btnProximoDia"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
         <div class="filters">
             <div class="filter-group">
                 <label><i class="fas fa-store"></i> Lojas:</label>
@@ -788,9 +890,7 @@
                         <div class="select-all" onclick="toggleAllLojas()">
                             <i class="fas fa-check-square"></i> Selecionar Todas
                         </div>
-                        <div class="options-list" id="lojaOptions">
-                            <!-- Será preenchido via JavaScript -->
-                        </div>
+                        <div class="options-list" id="lojaOptions"></div>
                         <div class="dropdown-close" onclick="fecharDropdownLojas()">
                             <i class="fas fa-times"></i> Fechar
                         </div>
@@ -813,7 +913,6 @@
             </button>
         </div>
 
-        <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card">
                 <div class="kpi-icon blue"><i class="fas fa-store"></i></div>
@@ -824,38 +923,37 @@
             <div class="kpi-card">
                 <div class="kpi-icon green"><i class="fas fa-dollar-sign"></i></div>
                 <div class="kpi-label">Faturamento Total</div>
-                <div class="kpi-value" id="totalFaturamento">R$ 116.787,39</div>
-                <div class="kpi-trend"><i class="fas fa-chart-line"></i> <span id="percentualMeta">-9,88%</span> vs meta</div>
+                <div class="kpi-value" id="totalFaturamento">R$ 0,00</div>
+                <div class="kpi-trend"><i class="fas fa-chart-line"></i> <span id="percentualMeta">0,00%</span> vs meta</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-icon purple"><i class="fas fa-bullseye"></i></div>
                 <div class="kpi-label">Meta Total</div>
-                <div class="kpi-value" id="totalMeta">R$ 129.590,00</div>
+                <div class="kpi-value" id="totalMeta">R$ 0,00</div>
                 <div class="progress-bar">
-                    <div class="progress-fill" id="progressoMeta" style="width: 90.1%"></div>
+                    <div class="progress-fill" id="progressoMeta" style="width: 0%"></div>
                 </div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-icon red"><i class="fas fa-exclamation-triangle"></i></div>
                 <div class="kpi-label">Diferença</div>
-                <div class="kpi-value" id="totalDiferenca">R$ -12.802,61</div>
-                <div class="kpi-trend"><i class="fas fa-arrow-down trend-down"></i> <span id="percentualDiferenca">-9,88%</span> abaixo</div>
+                <div class="kpi-value" id="totalDiferenca">R$ 0,00</div>
+                <div class="kpi-trend"><i class="fas fa-arrow-down trend-down"></i> <span id="percentualDiferenca">0,00%</span> abaixo</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-icon blue"><i class="fas fa-ticket-alt"></i></div>
                 <div class="kpi-label">Ticket Médio</div>
-                <div class="kpi-value" id="ticketMedio">R$ 20,83</div>
-                <div class="kpi-trend"><i class="fas fa-chart-line trend-up"></i> +5,2% vs ontem</div>
+                <div class="kpi-value" id="ticketMedio">R$ 0,00</div>
+                <div class="kpi-trend"><i class="fas fa-chart-line trend-up"></i> vs ontem</div>
             </div>
             <div class="kpi-card">
                 <div class="kpi-icon orange"><i class="fas fa-trophy"></i></div>
                 <div class="kpi-label">Metas Atingidas</div>
-                <div class="kpi-value" id="metasAtingidas">12/31</div>
-                <div class="kpi-trend"><i class="fas fa-percent"></i> <span id="percentualLojas">38,7%</span> das lojas</div>
+                <div class="kpi-value" id="metasAtingidas">0/31</div>
+                <div class="kpi-trend"><i class="fas fa-percent"></i> <span id="percentualLojas">0,0%</span> das lojas</div>
             </div>
         </div>
 
-        <!-- Gráficos -->
         <div class="charts-grid">
             <div class="chart-card">
                 <div class="chart-header">
@@ -895,7 +993,6 @@
             </div>
         </div>
 
-        <!-- Tabelas -->
         <div class="tables-section">
             <div class="table-card">
                 <div class="table-header">
@@ -918,9 +1015,7 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody">
-                            <!-- Será preenchido via JavaScript -->
-                        </tbody>
+                        <tbody id="tableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -939,13 +1034,10 @@
                                 <th>Performance</th>
                             </tr>
                         </thead>
-                        <tbody id="canaisTableBody">
-                            <!-- Será preenchido via JavaScript -->
-                        </tbody>
+                        <tbody id="canaisTableBody"></tbody>
                     </table>
                 </div>
 
-                <!-- Indicadores Gerais -->
                 <div style="margin-top: 25px;">
                     <h3 style="margin-bottom: 15px; color: var(--dark); font-size: 16px; display: flex; align-items: center; gap: 8px;">
                         <i class="fas fa-chart-simple" style="color: var(--primary);"></i> Indicadores Gerais
@@ -955,14 +1047,14 @@
                             <div class="info-icon"><i class="fas fa-check-circle"></i></div>
                             <div class="info-content">
                                 <h4>Lojas que Atingiram Meta</h4>
-                                <p id="lojasMetaSim">12 lojas (38.7%)</p>
+                                <p id="lojasMetaSim">0 lojas (0.0%)</p>
                             </div>
                         </div>
                         <div class="info-card">
                             <div class="info-icon"><i class="fas fa-times-circle"></i></div>
                             <div class="info-content">
                                 <h4>Lojas Abaixo da Meta</h4>
-                                <p id="lojasMetaNao">19 lojas (61.3%)</p>
+                                <p id="lojasMetaNao">0 lojas (0.0%)</p>
                             </div>
                         </div>
                     </div>
@@ -970,92 +1062,209 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
-            <p><i class="far fa-clock"></i> Relatório gerado em 13/02/2026 às 10:30:00</p>
+            <p><i class="far fa-clock"></i> Relatório gerado em <span id="dataGeracao">14/02/2026</span> às 10:30:00</p>
             <p style="margin-top: 5px;">© 2026 Setor Patty - Todos os direitos reservados</p>
         </div>
     </div>
 
     <script>
-        // Dados
-        const dadosLojas = [
-            {data: '13/02/2026', loja: 5, inicio: '09:10', fim: '20:41', cupons: 117, faturamento: 3468.01, meta: 4005.0, dif: -536.99, difPercentual: -13.41, status: 'NÃO', canais: {auto: 26.4, delivery: 65.3, viagem: 8.3}},
-            {data: '13/02/2026', loja: 10, inicio: '13:52', fim: '21:12', cupons: 437, faturamento: 11130.79, meta: 10605.0, dif: 525.79, difPercentual: 4.96, status: 'SIM', canais: {auto: 23.4, delivery: 0.3, viagem: 15.8}},
-            {data: '13/02/2026', loja: 28, inicio: '10:16', fim: '21:54', cupons: 185, faturamento: 4548.00, meta: 5215.0, dif: -667.00, difPercentual: -12.79, status: 'NÃO', canais: {auto: 32.6, delivery: 59.3, viagem: 8.1}},
-            {data: '13/02/2026', loja: 31, inicio: '09:33', fim: '21:17', cupons: 173, faturamento: 3256.98, meta: 4280.0, dif: -1023.02, difPercentual: -23.90, status: 'NÃO', canais: {auto: 0.0, delivery: 36.0, viagem: 0.0}},
-            {data: '13/02/2026', loja: 63, inicio: '10:34', fim: '21:34', cupons: 76, faturamento: 1111.57, meta: 2055.0, dif: -943.43, difPercentual: -45.91, status: 'NÃO', canais: {auto: 21.4, delivery: 0.0, viagem: 100.0}},
-            {data: '13/02/2026', loja: 69, inicio: '09:02', fim: '21:42', cupons: 209, faturamento: 5127.82, meta: 4570.0, dif: 557.82, difPercentual: 12.21, status: 'SIM', canais: {auto: 0.0, delivery: 75.6, viagem: 27.2}},
-            {data: '13/02/2026', loja: 73, inicio: '10:38', fim: '18:28', cupons: 86, faturamento: 2147.35, meta: 2815.0, dif: -667.65, difPercentual: -23.72, status: 'NÃO', canais: {auto: 37.0, delivery: 51.1, viagem: 11.9}},
-            {data: '13/02/2026', loja: 82, inicio: '09:03', fim: '19:52', cupons: 177, faturamento: 3106.10, meta: 2995.0, dif: 111.10, difPercentual: 3.71, status: 'SIM', canais: {auto: 13.6, delivery: 65.3, viagem: 0.0}},
-            {data: '13/02/2026', loja: 86, inicio: '10:06', fim: '21:09', cupons: 108, faturamento: 3642.71, meta: 6405.0, dif: -2762.29, difPercentual: -43.13, status: 'NÃO', canais: {auto: 40.8, delivery: 9.9, viagem: 4.2}},
-            {data: '13/02/2026', loja: 90, inicio: '10:25', fim: '22:02', cupons: 198, faturamento: 4673.55, meta: 4345.0, dif: 328.55, difPercentual: 7.56, status: 'SIM', canais: {auto: 37.5, delivery: 4.6, viagem: 16.0}},
-            {data: '13/02/2026', loja: 97, inicio: '10:24', fim: '21:16', cupons: 180, faturamento: 5825.73, meta: 4100.0, dif: 1725.73, difPercentual: 42.09, status: 'SIM', canais: {auto: 37.7, delivery: 2.3, viagem: 9.1}},
-            {data: '13/02/2026', loja: 98, inicio: '08:41', fim: '19:26', cupons: 258, faturamento: 3493.53, meta: 4245.0, dif: -751.47, difPercentual: -17.70, status: 'NÃO', canais: {auto: 15.2, delivery: 16.8, viagem: 68.0}},
-            {data: '13/02/2026', loja: 101, inicio: '10:39', fim: '20:53', cupons: 116, faturamento: 2575.19, meta: 2450.0, dif: 125.19, difPercentual: 5.11, status: 'SIM', canais: {auto: 0.0, delivery: 57.9, viagem: 42.1}},
-            {data: '13/02/2026', loja: 118, inicio: '10:21', fim: '21:58', cupons: 103, faturamento: 2239.19, meta: 2920.0, dif: -680.81, difPercentual: -23.32, status: 'NÃO', canais: {auto: 41.6, delivery: 24.2, viagem: 34.2}},
-            {data: '13/02/2026', loja: 126, inicio: '10:15', fim: '20:41', cupons: 397, faturamento: 11001.14, meta: 11555.0, dif: -553.86, difPercentual: -4.79, status: 'NÃO', canais: {auto: 5.9, delivery: 9.5, viagem: 0.3}},
-            {data: '13/02/2026', loja: 133, inicio: '10:08', fim: '21:47', cupons: 164, faturamento: 5198.91, meta: 5875.0, dif: -676.09, difPercentual: -11.51, status: 'NÃO', canais: {auto: 5.4, delivery: 77.3, viagem: 17.4}},
-            {data: '13/02/2026', loja: 145, inicio: '09:05', fim: '21:31', cupons: 128, faturamento: 2259.77, meta: 4270.0, dif: -2010.23, difPercentual: -47.08, status: 'NÃO', canais: {auto: 32.4, delivery: 32.6, viagem: 43.3}},
-            {data: '13/02/2026', loja: 157, inicio: '10:22', fim: '21:20', cupons: 107, faturamento: 2516.24, meta: 3405.0, dif: -888.76, difPercentual: -26.10, status: 'NÃO', canais: {auto: 0.0, delivery: 65.3, viagem: 34.7}},
-            {data: '13/02/2026', loja: 158, inicio: '09:50', fim: '21:40', cupons: 167, faturamento: 4474.48, meta: 4425.0, dif: 49.48, difPercentual: 1.12, status: 'SIM', canais: {auto: 54.8, delivery: 38.9, viagem: 6.3}},
-            {data: '13/02/2026', loja: 162, inicio: '09:23', fim: '20:42', cupons: 91, faturamento: 2951.27, meta: 3090.0, dif: -138.73, difPercentual: -4.49, status: 'NÃO', canais: {auto: 0.0, delivery: 0.0, viagem: 0.0}},
-            {data: '13/02/2026', loja: 178, inicio: '09:28', fim: '22:04', cupons: 123, faturamento: 3952.24, meta: 2270.0, dif: 1682.24, difPercentual: 74.11, status: 'SIM', canais: {auto: 0.0, delivery: 74.2, viagem: 0.0}},
-            {data: '13/02/2026', loja: 183, inicio: '09:36', fim: '19:26', cupons: 126, faturamento: 2092.38, meta: 3020.0, dif: -927.62, difPercentual: -30.72, status: 'NÃO', canais: {auto: 43.6, delivery: 25.9, viagem: 30.1}},
-            {data: '13/02/2026', loja: 189, inicio: '09:53', fim: '21:54', cupons: 203, faturamento: 2519.29, meta: 2830.0, dif: -310.71, difPercentual: -10.98, status: 'NÃO', canais: {auto: 29.3, delivery: 15.1, viagem: 55.6}},
-            {data: '13/02/2026', loja: 195, inicio: '10:16', fim: '21:25', cupons: 255, faturamento: 6218.50, meta: 6590.0, dif: -371.50, difPercentual: -5.64, status: 'NÃO', canais: {auto: 0.0, delivery: 67.2, viagem: 33.0}},
-            {data: '13/02/2026', loja: 210, inicio: '08:45', fim: '20:49', cupons: 128, faturamento: 2899.39, meta: 3815.0, dif: -915.61, difPercentual: -24.00, status: 'NÃO', canais: {auto: 0.0, delivery: 40.6, viagem: 0.0}},
-            {data: '13/02/2026', loja: 247, inicio: '08:46', fim: '20:31', cupons: 112, faturamento: 1768.70, meta: 2050.0, dif: -281.30, difPercentual: -13.72, status: 'NÃO', canais: {auto: 0.0, delivery: 35.7, viagem: 64.3}},
-            {data: '13/02/2026', loja: 248, inicio: '07:34', fim: '22:10', cupons: 245, faturamento: 5043.58, meta: 5735.0, dif: -691.42, difPercentual: -12.06, status: 'NÃO', canais: {auto: 6.6, delivery: 44.0, viagem: 37.2}},
-            {data: '13/02/2026', loja: 251, inicio: '08:37', fim: '15:58', cupons: 88, faturamento: 1072.78, meta: 1935.0, dif: -862.22, difPercentual: -44.56, status: 'NÃO', canais: {auto: 0.0, delivery: 5.6, viagem: 94.4}},
-            {data: '13/02/2026', loja: 262, inicio: '08:31', fim: '21:17', cupons: 96, faturamento: 2489.25, meta: 2355.0, dif: 134.25, difPercentual: 5.70, status: 'SIM', canais: {auto: 0.0, delivery: 50.7, viagem: 44.2}},
-            {data: '13/02/2026', loja: 285, inicio: '10:46', fim: '21:44', cupons: 90, faturamento: 1728.33, meta: 3375.0, dif: -1646.67, difPercentual: -48.79, status: 'NÃO', canais: {auto: 0.0, delivery: 31.6, viagem: 68.4}},
-            {data: '13/02/2026', loja: 294, inicio: '10:34', fim: '21:31', cupons: 120, faturamento: 2254.62, meta: 1990.0, dif: 264.62, difPercentual: 13.30, status: 'SIM', canais: {auto: 16.0, delivery: 35.2, viagem: 48.8}}
-        ];
+        // MAPEAMENTO COMPLETO DOS NOMES DAS LOJAS (extraído da planilha)
+        const lojaNomes = {
+            5: "ANTONIO AGU",
+            10: "OSASCO PLAZA",
+            28: "SHOPPING TAMBORÉ",
+            31: "AUGUSTA",
+            63: "SHOPPING ITAPECERICA",
+            69: "PERUS",
+            73: "BRIGADEIRO JARDINS",
+            82: "TEODORO SAMPAIO",
+            86: "REX RAFAEL DE BARROS",
+            90: "SHOPPING PARQUE BARUERI",
+            97: "ASSAÍ JOÃO DIAS",
+            98: "FRANCO DA ROCHA",
+            101: "CARREFOUR RAPOSO TAVARES",
+            118: "SHOPPING ITAPECERICA II",
+            126: "OSASCO JOÃO DE ANDRADE",
+            133: "PARQUE TIETÊ",
+            145: "ITASHOPPING",
+            157: "JARDIM SÃO LUIZ",
+            158: "ASSAÍ CARAPICUÍBA",
+            162: "MARQUESA TAIPAS",
+            178: "EXTRA CARAPICUÍBA",
+            183: "FRANCO DA ROCHA 2",
+            189: "SHOPPING PATIO CIANÊ",
+            195: "EXTRA JARAGUÁ",
+            210: "ASSAÍ ABOLIÇÃO CAMPINAS",
+            247: "METRÔ CCR VILA DAS BELEZAS",
+            248: "METRÔ CCR CAPÃO REDONDO",
+            251: "SOROCABA CENTRO",
+            262: "ASSAÍ INDAIATUBA",
+            285: "EXTRA JARDIM ÂNGELA",
+            294: "SHOPPING RAPOSO"
+        };
 
-        // Mapeamento dos canais
-        const canais = ['Auto-Atendimento', 'Delivery', 'Viagem', 'Balcão'];
-        
-        // Variáveis globais para os gráficos e estado
+        // DADOS COMPLETOS POR DATA (extraídos da planilha)
+        const dadosPorData = {
+            "13/02/2026": [
+                {loja: 5, inicio: '09:10', fim: '20:41', cupons: 117, faturamento: 3468.01, meta: 4005.0, canais: {auto: 916.93, delivery: 2263.16, viagem: 287.92}},
+                {loja: 10, inicio: '13:52', fim: '21:32', cupons: 440, faturamento: 11244.67, meta: 10605.0, canais: {auto: 2670.74, delivery: 3526.33, viagem: 1762.66}},
+                {loja: 28, inicio: '10:16', fim: '21:54', cupons: 186, faturamento: 4553.9, meta: 5215.0, canais: {auto: 1483.52, delivery: 2696.43, viagem: 373.95}},
+                {loja: 31, inicio: '09:33', fim: '21:17', cupons: 173, faturamento: 3256.98, meta: 4280.0, canais: {auto: 0, delivery: 1171.54, viagem: 0}},
+                {loja: 63, inicio: '10:34', fim: '21:34', cupons: 76, faturamento: 1111.57, meta: 2055.0, canais: {auto: 237.48, delivery: 0, viagem: 1111.57}},
+                {loja: 69, inicio: '09:02', fim: '21:42', cupons: 211, faturamento: 5193.42, meta: 4570.0, canais: {auto: 0, delivery: 3876.7, viagem: 1394.96}},
+                {loja: 73, inicio: '10:38', fim: '18:28', cupons: 86, faturamento: 2147.35, meta: 2815.0, canais: {auto: 795.02, delivery: 1097.72, viagem: 254.61}},
+                {loja: 82, inicio: '09:03', fim: '19:52', cupons: 177, faturamento: 3106.1, meta: 2995.0, canais: {auto: 421.82, delivery: 2029.92, viagem: 0}},
+                {loja: 86, inicio: '10:06', fim: '21:30', cupons: 108, faturamento: 3642.71, meta: 6405.0, canais: {auto: 1485.02, delivery: 641.94, viagem: 152.48}},
+                {loja: 90, inicio: '10:25', fim: '22:02', cupons: 198, faturamento: 4673.55, meta: 4345.0, canais: {auto: 1752.34, delivery: 217.27, viagem: 746.4}},
+                {loja: 97, inicio: '10:24', fim: '04:19', cupons: 155, faturamento: 4223.68, meta: 4100.0, canais: {auto: 2306.69, delivery: 133.1, viagem: 542.1}},
+                {loja: 98, inicio: '08:41', fim: '19:26', cupons: 258, faturamento: 3493.53, meta: 4245.0, canais: {auto: 532.17, delivery: 586.56, viagem: 2374.8}},
+                {loja: 101, inicio: '10:39', fim: '20:53', cupons: 116, faturamento: 2575.19, meta: 2450.0, canais: {auto: 0, delivery: 1489.73, viagem: 1085.46}},
+                {loja: 118, inicio: '10:21', fim: '21:58', cupons: 103, faturamento: 2239.19, meta: 2920.0, canais: {auto: 932.34, delivery: 540.76, viagem: 766.09}},
+                {loja: 126, inicio: '10:15', fim: '21:30', cupons: 396, faturamento: 10997.7, meta: 11555.0, canais: {auto: 643.84, delivery: 6195.35, viagem: 31.07}},
+                {loja: 133, inicio: '10:08', fim: '21:47', cupons: 164, faturamento: 5198.91, meta: 5875.0, canais: {auto: 278.37, delivery: 4016.21, viagem: 904.33}},
+                {loja: 145, inicio: '09:05', fim: '09:19', cupons: 142, faturamento: 2451.98, meta: 4270.0, canais: {auto: 732, delivery: 736.95, viagem: 979.54}},
+                {loja: 157, inicio: '10:22', fim: '21:20', cupons: 107, faturamento: 2516.24, meta: 3405.0, canais: {auto: 0, delivery: 1644.09, viagem: 872.15}},
+                {loja: 158, inicio: '09:50', fim: '21:40', cupons: 168, faturamento: 4512.33, meta: 4425.0, canais: {auto: 2490.5, delivery: 1741.45, viagem: 280.38}},
+                {loja: 162, inicio: '09:23', fim: '20:42', cupons: 91, faturamento: 2951.27, meta: 3090.0, canais: {auto: 0, delivery: 0, viagem: 0}},
+                {loja: 178, inicio: '09:28', fim: '22:11', cupons: 124, faturamento: 3964.04, meta: 2270.0, canais: {auto: 0, delivery: 2933.02, viagem: 0}},
+                {loja: 183, inicio: '09:36', fim: '19:26', cupons: 126, faturamento: 2092.38, meta: 3020.0, canais: {auto: 912.16, delivery: 542.95, viagem: 629.27}},
+                {loja: 189, inicio: '09:53', fim: '21:54', cupons: 203, faturamento: 2519.29, meta: 2830.0, canais: {auto: 737.6, delivery: 379.76, viagem: 1401.93}},
+                {loja: 195, inicio: '10:16', fim: '21:25', cupons: 256, faturamento: 6232.95, meta: 6590.0, canais: {auto: 0, delivery: 4180.13, viagem: 2052.82}},
+                {loja: 210, inicio: '08:45', fim: '20:49', cupons: 128, faturamento: 2899.39, meta: 3815.0, canais: {auto: 0, delivery: 1176.61, viagem: 0}},
+                {loja: 247, inicio: '08:46', fim: '20:31', cupons: 112, faturamento: 1768.7, meta: 2050.0, canais: {auto: 0, delivery: 632.17, viagem: 1136.53}},
+                {loja: 248, inicio: '07:34', fim: '23:51', cupons: 277, faturamento: 6052.05, meta: 5735.0, canais: {auto: 387.87, delivery: 3040.98, viagem: 1978.3}},
+                {loja: 251, inicio: '08:37', fim: '15:58', cupons: 88, faturamento: 1072.78, meta: 1935.0, canais: {auto: 0, delivery: 59.8, viagem: 1012.98}},
+                {loja: 262, inicio: '08:31', fim: '21:17', cupons: 96, faturamento: 2489.25, meta: 2355.0, canais: {auto: 0, delivery: 1262.64, viagem: 1099.12}},
+                {loja: 285, inicio: '10:46', fim: '21:44', cupons: 91, faturamento: 1741.23, meta: 3375.0, canais: {auto: 0, delivery: 546.45, viagem: 1194.78}},
+                {loja: 294, inicio: '10:34', fim: '21:31', cupons: 120, faturamento: 2254.62, meta: 1990.0, canais: {auto: 360.98, delivery: 792.59, viagem: 1101.05}}
+            ],
+            "14/02/2026": [
+                {loja: 5, inicio: '09:24', fim: '12:34', cupons: 29, faturamento: 886.93, meta: 4015.0, canais: {auto: 204.58, delivery: 565.12, viagem: 117.23}},
+                {loja: 10, inicio: '12:06', fim: '12:15', cupons: 15, faturamento: 367.1, meta: 12645.0, canais: {auto: 0, delivery: 0, viagem: 112.93}},
+                {loja: 28, inicio: '10:27', fim: '12:32', cupons: 18, faturamento: 396.84, meta: 5390.0, canais: {auto: 218.81, delivery: 172.54, viagem: 5.49}},
+                {loja: 31, inicio: '09:38', fim: '12:36', cupons: 23, faturamento: 419.6, meta: 3335.0, canais: {auto: 0, delivery: 198.43, viagem: 0}},
+                {loja: 63, inicio: '10:36', fim: '12:35', cupons: 13, faturamento: 243.17, meta: 1650.0, canais: {auto: 19.9, delivery: 0, viagem: 243.17}},
+                {loja: 69, inicio: '09:49', fim: '12:32', cupons: 19, faturamento: 460.12, meta: 5095.0, canais: {auto: 0, delivery: 300.25, viagem: 189.63}},
+                {loja: 73, inicio: '10:37', fim: '12:32', cupons: 13, faturamento: 226.44, meta: 2285.0, canais: {auto: 180.75, delivery: 0, viagem: 45.69}},
+                {loja: 82, inicio: '09:03', fim: '12:32', cupons: 32, faturamento: 590.89, meta: 2100.0, canais: {auto: 0, delivery: 409.8, viagem: 0}},
+                {loja: 86, inicio: '10:08', fim: '12:09', cupons: 14, faturamento: 331.55, meta: 5635.0, canais: {auto: 113.49, delivery: 29.9, viagem: 28.8}},
+                {loja: 90, inicio: '10:47', fim: '12:21', cupons: 7, faturamento: 237.3, meta: 4955.0, canais: {auto: 129.04, delivery: 0, viagem: 0}},
+                {loja: 97, inicio: '19:36', fim: '12:09', cupons: 28, faturamento: 631.59, meta: 6315.0, canais: {auto: 346.75, delivery: 259.16, viagem: 37.84}},
+                {loja: 98, inicio: '09:55', fim: '12:34', cupons: 33, faturamento: 606.66, meta: 3780.0, canais: {auto: 0, delivery: 154.54, viagem: 452.12}},
+                {loja: 101, inicio: '10:05', fim: '12:34', cupons: 11, faturamento: 262.79, meta: 2980.0, canais: {auto: 0, delivery: 130.57, viagem: 132.22}},
+                {loja: 118, inicio: '10:34', fim: '12:22', cupons: 10, faturamento: 295.4, meta: 3870.0, canais: {auto: 205.63, delivery: 82.8, viagem: 6.97}},
+                {loja: 126, inicio: null, fim: null, cupons: 10, faturamento: 406.17, meta: 13025.0, canais: {auto: 0, delivery: 0, viagem: 0}},
+                {loja: 133, inicio: '10:09', fim: '12:25', cupons: 21, faturamento: 534.99, meta: 6680.0, canais: {auto: 0, delivery: 409.63, viagem: 125.36}},
+                {loja: 145, inicio: '09:28', fim: '12:25', cupons: 14, faturamento: 232.3, meta: 4375.0, canais: {auto: 74.3, delivery: 119.44, viagem: 112.86}},
+                {loja: 157, inicio: '10:28', fim: '12:29', cupons: 13, faturamento: 440.71, meta: 3365.0, canais: {auto: 0, delivery: 311.77, viagem: 128.94}},
+                {loja: 158, inicio: '09:23', fim: '12:37', cupons: 21, faturamento: 580.7, meta: 4655.0, canais: {auto: 322.01, delivery: 258.69, viagem: 0}},
+                {loja: 162, inicio: '09:42', fim: '12:23', cupons: 26, faturamento: 381.51, meta: 2985.0, canais: {auto: 0, delivery: 0, viagem: 0}},
+                {loja: 178, inicio: '09:26', fim: '12:24', cupons: 13, faturamento: 361.86, meta: 2165.0, canais: {auto: 0, delivery: 289.9, viagem: 0}},
+                {loja: 183, inicio: '10:54', fim: '12:35', cupons: 14, faturamento: 219.33, meta: 2540.0, canais: {auto: 0, delivery: 0, viagem: 219.33}},
+                {loja: 189, inicio: '10:06', fim: '12:32', cupons: 29, faturamento: 327.98, meta: 2665.0, canais: {auto: 10.88, delivery: 75.88, viagem: 241.22}},
+                {loja: 195, inicio: '09:51', fim: '12:30', cupons: 32, faturamento: 604.97, meta: 5780.0, canais: {auto: 0, delivery: 267.55, viagem: 337.42}},
+                {loja: 210, inicio: '08:31', fim: '12:33', cupons: 57, faturamento: 1032.05, meta: 4025.0, canais: {auto: 0, delivery: 344.01, viagem: 0}},
+                {loja: 247, inicio: '08:26', fim: '12:23', cupons: 27, faturamento: 338.39, meta: 1700.0, canais: {auto: 0, delivery: 55.17, viagem: 283.22}},
+                {loja: 248, inicio: '07:13', fim: '12:35', cupons: 59, faturamento: 1009.95, meta: 5725.0, canais: {auto: 0, delivery: 357.27, viagem: 403.2}},
+                {loja: 251, inicio: '08:31', fim: '12:36', cupons: 33, faturamento: 405.0, meta: 1705.0, canais: {auto: 0, delivery: 0, viagem: 405.0}},
+                {loja: 262, inicio: '08:28', fim: '12:34', cupons: 31, faturamento: 505.79, meta: 2615.0, canais: {auto: 0, delivery: 168.13, viagem: 337.66}},
+                {loja: 285, inicio: '08:38', fim: '12:24', cupons: 20, faturamento: 422.86, meta: 2585.0, canais: {auto: 0, delivery: 61.58, viagem: 361.28}},
+                {loja: 294, inicio: '11:50', fim: '12:14', cupons: 4, faturamento: 153.47, meta: 2390.0, canais: {auto: 0, delivery: 113.67, viagem: 39.8}}
+            ]
+        };
+
+        // Calcular dif e status para cada registro
+        for (let data in dadosPorData) {
+            dadosPorData[data].forEach(loja => {
+                loja.dif = loja.faturamento - loja.meta;
+                loja.difPercentual = loja.meta > 0 ? (loja.dif / loja.meta) * 100 : 0;
+                loja.status = loja.dif >= 0 ? 'SIM' : 'NÃO';
+                
+                // Calcular Balcão (o que sobra dos canais)
+                const somaCanais = (loja.canais.auto || 0) + (loja.canais.delivery || 0) + (loja.canais.viagem || 0);
+                loja.canais.balcao = loja.faturamento - somaCanais;
+                if (loja.canais.balcao < 0) loja.canais.balcao = 0;
+            });
+        }
+
+        // Lista de todas as datas disponíveis
+        const datasDisponiveis = Object.keys(dadosPorData).sort((a, b) => {
+            const [diaA, mesA, anoA] = a.split('/').map(Number);
+            const [diaB, mesB, anoB] = b.split('/').map(Number);
+            return new Date(anoA, mesA-1, diaA) - new Date(anoB, mesB-1, diaB);
+        });
+
+        let dataAtual = "14/02/2026";
         let canalPieChart, metasPieChart, top10BarChart, desempenhoBarChart;
-        let lojasSelecionadas = []; // Array para armazenar as lojas selecionadas
+        let lojasSelecionadas = [];
         let todasLojas = [];
 
-        // Inicialização
-        $(document).ready(function() {
-            // Extrair todas as lojas únicas e ordenar
-            todasLojas = [...new Set(dadosLojas.map(loja => loja.loja))].sort((a, b) => a - b);
+        function getDadosAtuais() {
+            return dadosPorData[dataAtual] || [];
+        }
+
+        function mudarDia(direcao) {
+            const indexAtual = datasDisponiveis.indexOf(dataAtual);
+            if (indexAtual === -1) return;
             
-            // Inicialmente selecionar todas as lojas
+            const novoIndex = indexAtual + direcao;
+            if (novoIndex >= 0 && novoIndex < datasDisponiveis.length) {
+                dataAtual = datasDisponiveis[novoIndex];
+                atualizarInterfaceData();
+                recarregarTudo();
+            }
+        }
+
+        function atualizarInterfaceData() {
+            const [dia, mes, ano] = dataAtual.split('/');
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            const diasSemana = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+            
+            const dataObj = new Date(ano, mes-1, dia);
+            const diaSemana = diasSemana[dataObj.getDay()];
+            
+            $('#dataAtualDisplay').text(dataAtual);
+            $('#headerDay').text(dia);
+            $('#headerMonth').text(`${meses[mes-1].toUpperCase()} ${ano}`);
+            $('#dataSelecionada').text(`${diaSemana}, ${dia} de ${meses[mes-1]} de ${ano}`);
+            $('#dataGeracao').text(dataAtual);
+            
+            const indexAtual = datasDisponiveis.indexOf(dataAtual);
+            $('#btnDiaAnterior, #btnHeaderAnterior').prop('disabled', indexAtual === 0);
+            $('#btnProximoDia, #btnHeaderProximo').prop('disabled', indexAtual === datasDisponiveis.length - 1);
+        }
+
+        function recarregarTudo() {
+            todasLojas = [...new Set(getDadosAtuais().map(loja => loja.loja))].sort((a, b) => a - b);
             lojasSelecionadas = [...todasLojas];
             
-            // Preencher opções de lojas no multi-select
             preencherOpcoesLojas();
-            
-            // Atualizar texto do botão
             atualizarTextoSelecionadas();
-
-            // Carregar tabela
             carregarTabela();
-
-            // Inicializar gráficos
+            destruirGraficos();
             inicializarGraficos();
-            
-            // Atualizar KPIs
             atualizarKPIs();
-            
-            // Atualizar tabela de canais
             atualizarTabelaCanais();
-            
-            // Fechar dropdown ao clicar fora - EXCETO quando clicar dentro do dropdown
+        }
+
+        function destruirGraficos() {
+            if (canalPieChart) canalPieChart.destroy();
+            if (metasPieChart) metasPieChart.destroy();
+            if (top10BarChart) top10BarChart.destroy();
+            if (desempenhoBarChart) desempenhoBarChart.destroy();
+        }
+
+        $(document).ready(function() {
+            atualizarInterfaceData();
+            recarregarTudo();
+
             $(document).click(function(event) {
-                // Se clicou fora do multi-select, fechar o dropdown
                 if (!$(event.target).closest('#lojaMultiSelect').length) {
                     $('#lojaDropdown').removeClass('show');
                 }
             });
             
-            // Impedir que cliques dentro do dropdown fechem ele (evitar propagação)
             $('#lojaDropdown').click(function(event) {
                 event.stopPropagation();
             });
@@ -1064,10 +1273,11 @@
         function preencherOpcoesLojas() {
             let html = '';
             todasLojas.forEach(loja => {
+                const nomeLoja = lojaNomes[loja] || `Loja ${loja}`;
                 const isSelected = lojasSelecionadas.includes(loja);
                 html += `<div class="option-item ${isSelected ? 'selected' : ''}" onclick="toggleLoja(${loja})">
                     <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLoja(${loja})">
-                    <span>Loja ${loja}</span>
+                    <span>${nomeLoja}</span>
                 </div>`;
             });
             $('#lojaOptions').html(html);
@@ -1087,11 +1297,7 @@
             const termo = $('#lojaSearch').val().toLowerCase();
             $('.option-item').each(function() {
                 const texto = $(this).find('span').text().toLowerCase();
-                if (texto.includes(termo)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
+                $(this).toggle(texto.includes(termo));
             });
         }
 
@@ -1103,28 +1309,20 @@
                 lojasSelecionadas.splice(index, 1);
             }
             
-            // Atualizar visual
             atualizarTextoSelecionadas();
-            preencherOpcoesLojas(); // Recarregar para atualizar os checkboxes
-            
-            // Aplicar filtros automaticamente
+            preencherOpcoesLojas();
             aplicarFiltros();
         }
 
         function toggleAllLojas() {
             if (lojasSelecionadas.length === todasLojas.length) {
-                // Se todas estão selecionadas, desmarcar todas
                 lojasSelecionadas = [];
             } else {
-                // Senão, selecionar todas
                 lojasSelecionadas = [...todasLojas];
             }
             
-            // Atualizar visual
             atualizarTextoSelecionadas();
             preencherOpcoesLojas();
-            
-            // Aplicar filtros automaticamente
             aplicarFiltros();
         }
 
@@ -1137,7 +1335,7 @@
             } else if (count === todasLojas.length) {
                 $('#selectedLojasText').text('Todas as Lojas');
             } else if (count <= 3) {
-                const nomes = lojasSelecionadas.sort((a, b) => a - b).map(l => `Loja ${l}`).join(', ');
+                const nomes = lojasSelecionadas.sort((a, b) => a - b).map(l => lojaNomes[l] || `Loja ${l}`).join(', ');
                 $('#selectedLojasText').text(nomes);
             } else {
                 $('#selectedLojasText').text(`${count} lojas selecionadas`);
@@ -1147,26 +1345,24 @@
         function carregarTabela() {
             let html = '';
             const statusFiltro = $('#statusFilter').val();
+            const dadosAtuais = getDadosAtuais();
 
-            const dadosFiltrados = dadosLojas.filter(loja => {
-                // Filtro de lojas (multi-select)
+            const dadosFiltrados = dadosAtuais.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
-                
-                // Filtro de status
                 if (statusFiltro && loja.status != statusFiltro) return false;
-                
                 return true;
             });
 
             dadosFiltrados.forEach(loja => {
+                const nomeLoja = lojaNomes[loja.loja] || `Loja ${loja.loja}`;
                 const difClass = loja.dif >= 0 ? 'valor-positivo' : 'valor-negativo';
                 const statusClass = loja.status === 'SIM' ? 'meta-sim' : 'meta-nao';
                 
                 html += `<tr>
-                    <td>${loja.data}</td>
-                    <td><strong>Loja ${loja.loja}</strong></td>
-                    <td>${loja.inicio}</td>
-                    <td>${loja.fim}</td>
+                    <td>${dataAtual}</td>
+                    <td><span class="store-name">${nomeLoja}</span></td>
+                    <td>${loja.inicio || '-'}</td>
+                    <td>${loja.fim || '-'}</td>
                     <td>${loja.cupons}</td>
                     <td class="currency">R$ ${formatMoney(loja.faturamento)}</td>
                     <td class="currency">R$ ${formatMoney(loja.meta)}</td>
@@ -1177,25 +1373,19 @@
             });
 
             $('#tableBody').html(html);
-            
-            // Atualizar KPIs com dados filtrados
             atualizarKPIs(dadosFiltrados);
         }
 
         function atualizarTabelaCanais() {
             const statusFiltro = $('#statusFilter').val();
+            const dadosAtuais = getDadosAtuais();
             
-            const dadosFiltrados = dadosLojas.filter(loja => {
-                // Filtro de lojas (multi-select)
+            const dadosFiltrados = dadosAtuais.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
-                
-                // Filtro de status
                 if (statusFiltro && loja.status != statusFiltro) return false;
-                
                 return true;
             });
             
-            // Calcular totais por canal baseado nos percentuais de cada loja
             let totaisCanais = {
                 'Auto-Atendimento': 0,
                 'Delivery': 0,
@@ -1204,26 +1394,19 @@
             };
             
             dadosFiltrados.forEach(loja => {
-                // Distribuir o faturamento da loja pelos canais baseado nos percentuais
-                totaisCanais['Auto-Atendimento'] += loja.faturamento * (loja.canais.auto / 100);
-                totaisCanais['Delivery'] += loja.faturamento * (loja.canais.delivery / 100);
-                totaisCanais['Viagem'] += loja.faturamento * (loja.canais.viagem / 100);
-                
-                // Balcão é o que sobra (100% - soma dos outros)
-                const somaPercentuais = loja.canais.auto + loja.canais.delivery + loja.canais.viagem;
-                const percentualBalcao = 100 - somaPercentuais;
-                totaisCanais['Balcão'] += loja.faturamento * (percentualBalcao / 100);
+                totaisCanais['Auto-Atendimento'] += loja.canais.auto || 0;
+                totaisCanais['Delivery'] += loja.canais.delivery || 0;
+                totaisCanais['Viagem'] += loja.canais.viagem || 0;
+                totaisCanais['Balcão'] += loja.canais.balcao || 0;
             });
             
             const totalGeral = Object.values(totaisCanais).reduce((a, b) => a + b, 0);
             
-            // Atualizar gráfico de pizza de canais
             if (canalPieChart) {
                 canalPieChart.data.datasets[0].data = Object.values(totaisCanais);
                 canalPieChart.update();
             }
             
-            // Atualizar tabela de canais
             let html = '';
             const icones = {
                 'Auto-Atendimento': 'fa-robot',
@@ -1258,8 +1441,9 @@
 
         function atualizarKPIs(dadosFiltrados = null) {
             const statusFiltro = $('#statusFilter').val();
+            const dadosAtuais = getDadosAtuais();
             
-            const dados = dadosFiltrados || dadosLojas.filter(loja => {
+            const dados = dadosFiltrados || dadosAtuais.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
@@ -1287,11 +1471,9 @@
             $('#lojasMetaSim').text(`${metasAtingidas} lojas (${percentualLojas.toFixed(1)}%)`);
             $('#lojasMetaNao').text(`${totalLojas - metasAtingidas} lojas (${(100 - percentualLojas).toFixed(1)}%)`);
             
-            // Atualizar barra de progresso
             const percentualProgresso = totalMeta > 0 ? (totalFaturamento / totalMeta) * 100 : 0;
             $('#progressoMeta').css('width', `${percentualProgresso}%`);
             
-            // Atualizar gráfico de pizza de metas
             if (metasPieChart) {
                 metasPieChart.data.datasets[0].data = [metasAtingidas, totalLojas - metasAtingidas];
                 metasPieChart.update();
@@ -1300,10 +1482,6 @@
 
         function formatMoney(value) {
             return value.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        }
-
-        function formatMoneyUS(value) {
-            return value.toFixed(2).replace('.', ','); // Formato para Excel
         }
 
         function formatPercent(value) {
@@ -1315,32 +1493,30 @@
             atualizarTabelaCanais();
             
             const statusFiltro = $('#statusFilter').val();
+            const dadosAtuais = getDadosAtuais();
 
-            const dadosFiltrados = dadosLojas.filter(loja => {
+            const dadosFiltrados = dadosAtuais.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
             });
             
-            // Atualizar gráfico de barras de desempenho
             if (desempenhoBarChart) {
                 if (dadosFiltrados.length > 0) {
-                    desempenhoBarChart.data.labels = dadosFiltrados.map(d => 'Loja ' + d.loja);
+                    desempenhoBarChart.data.labels = dadosFiltrados.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`);
                     desempenhoBarChart.data.datasets[0].data = dadosFiltrados.map(d => 100 + d.difPercentual);
                     desempenhoBarChart.data.datasets[0].backgroundColor = dadosFiltrados.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f');
                 } else {
                     desempenhoBarChart.data.labels = [];
                     desempenhoBarChart.data.datasets[0].data = [];
-                    desempenhoBarChart.data.datasets[0].backgroundColor = [];
                 }
                 desempenhoBarChart.update();
             }
             
-            // Atualizar gráfico de top 10
             if (top10BarChart) {
                 if (dadosFiltrados.length > 0) {
                     const top10Data = [...dadosFiltrados].sort((a, b) => b.faturamento - a.faturamento).slice(0, Math.min(10, dadosFiltrados.length));
-                    top10BarChart.data.labels = top10Data.map(d => 'Loja ' + d.loja);
+                    top10BarChart.data.labels = top10Data.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`);
                     top10BarChart.data.datasets[0].data = top10Data.map(d => d.faturamento);
                     top10BarChart.data.datasets[1].data = top10Data.map(d => d.meta);
                 } else {
@@ -1358,7 +1534,6 @@
             const tbody = $('#tableBody');
             const linhas = tbody.find('tr').get();
             
-            // Determinar direção da ordenação
             if (ordemAtual.coluna === coluna) {
                 ordemAtual.ascendente = !ordemAtual.ascendente;
             } else {
@@ -1366,27 +1541,25 @@
                 ordemAtual.ascendente = true;
             }
             
-            // Ordenar linhas
             linhas.sort((a, b) => {
                 const celulaA = $(a).children('td').eq(coluna).text();
                 const celulaB = $(b).children('td').eq(coluna).text();
                 
                 let valorA, valorB;
                 
-                // Tratar diferentes tipos de dados
-                if (coluna === 1) { // Loja
-                    valorA = parseInt(celulaA.replace('Loja ', ''));
-                    valorB = parseInt(celulaB.replace('Loja ', ''));
-                } else if (coluna === 4) { // Cupons
-                    valorA = parseInt(celulaA);
-                    valorB = parseInt(celulaB);
-                } else if (coluna === 5 || coluna === 6 || coluna === 7) { // Faturamento, Meta e Diferença
-                    valorA = parseFloat(celulaA.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
-                    valorB = parseFloat(celulaB.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
-                } else if (coluna === 8) { // Dif %
-                    valorA = parseFloat(celulaA.replace('%', '').replace('+', ''));
-                    valorB = parseFloat(celulaB.replace('%', '').replace('+', ''));
-                } else { // Data e outros
+                if (coluna === 1) {
+                    valorA = celulaA;
+                    valorB = celulaB;
+                } else if (coluna === 4) {
+                    valorA = parseInt(celulaA) || 0;
+                    valorB = parseInt(celulaB) || 0;
+                } else if (coluna === 5 || coluna === 6 || coluna === 7) {
+                    valorA = parseFloat(celulaA.replace('R$ ', '').replace(/\./g, '').replace(',', '.')) || 0;
+                    valorB = parseFloat(celulaB.replace('R$ ', '').replace(/\./g, '').replace(',', '.')) || 0;
+                } else if (coluna === 8) {
+                    valorA = parseFloat(celulaA.replace('%', '').replace('+', '')) || 0;
+                    valorB = parseFloat(celulaB.replace('%', '').replace('+', '')) || 0;
+                } else {
                     valorA = celulaA;
                     valorB = celulaB;
                 }
@@ -1396,55 +1569,49 @@
                 return 0;
             });
             
-            // Reinserir linhas ordenadas
             tbody.empty().append(linhas);
             
-            // Atualizar ícones de ordenação
             $('th i').removeClass('fa-sort-up fa-sort-down').addClass('fa-sort');
             const icone = ordemAtual.ascendente ? 'fa-sort-up' : 'fa-sort-down';
             $(`th:eq(${coluna}) i`).removeClass('fa-sort').addClass(icone);
         }
 
         function exportarExcel() {
-            // Obter dados filtrados atuais
             const statusFiltro = $('#statusFilter').val();
+            const dadosAtuais = getDadosAtuais();
 
-            const dadosFiltrados = dadosLojas.filter(loja => {
+            const dadosFiltrados = dadosAtuais.filter(loja => {
                 if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
                 if (statusFiltro && loja.status != statusFiltro) return false;
                 return true;
             });
 
-            // Calcular totais
             const totalFaturamento = dadosFiltrados.reduce((sum, loja) => sum + loja.faturamento, 0);
             const totalMeta = dadosFiltrados.reduce((sum, loja) => sum + loja.meta, 0);
             const totalDiferenca = totalFaturamento - totalMeta;
             const percentualDiferenca = totalMeta > 0 ? (totalDiferenca / totalMeta) * 100 : 0;
             const metasAtingidas = dadosFiltrados.filter(loja => loja.status === 'SIM').length;
 
-            // Criar workbook
             const wb = XLSX.utils.book_new();
             
-            // === PLANILHA 1: DETALHAMENTO ===
             const dadosDetalhamento = [
                 ['RELATÓRIO DE METAS - SETOR PATTY'],
-                [`Data: 13/02/2026 - Lojas Selecionadas: ${lojasSelecionadas.length} lojas, Status: ${statusFiltro || 'Todos'}`],
+                [`Data: ${dataAtual} - Lojas Selecionadas: ${lojasSelecionadas.length} lojas, Status: ${statusFiltro || 'Todos'}`],
                 []
             ];
             
-            // Cabeçalho
             dadosDetalhamento.push([
                 'Data', 'Loja', 'Início', 'Fim', 'Qtd Cupons', 
                 'Faturamento (R$)', 'Meta (R$)', 'Diferença (R$)', 'Diferença %', 'Status'
             ]);
             
-            // Dados
             dadosFiltrados.forEach(loja => {
+                const nomeLoja = lojaNomes[loja.loja] || `Loja ${loja.loja}`;
                 dadosDetalhamento.push([
-                    loja.data,
-                    loja.loja,
-                    loja.inicio,
-                    loja.fim,
+                    dataAtual,
+                    nomeLoja,
+                    loja.inicio || '-',
+                    loja.fim || '-',
                     loja.cupons,
                     loja.faturamento,
                     loja.meta,
@@ -1454,7 +1621,6 @@
                 ]);
             });
             
-            // Linha de total
             dadosDetalhamento.push([]);
             dadosDetalhamento.push([
                 'TOTAIS', '', '', '', 
@@ -1466,87 +1632,13 @@
                 `${metasAtingidas}/${dadosFiltrados.length} lojas`
             ]);
 
-            // Criar worksheet de detalhamento
             const wsDetalhamento = XLSX.utils.aoa_to_sheet(dadosDetalhamento);
             
-            // Aplicar formatação para valores monetários e negativos
-            const range = XLSX.utils.decode_range(wsDetalhamento['!ref']);
-            
-            // Formatar colunas de valores
-            for (let row = range.s.r + 3; row <= range.e.r; row++) {
-                // Coluna F (Faturamento)
-                const cellFRef = XLSX.utils.encode_cell({ r: row, c: 5 });
-                if (wsDetalhamento[cellFRef]) {
-                    if (!wsDetalhamento[cellFRef].s) wsDetalhamento[cellFRef].s = {};
-                    wsDetalhamento[cellFRef].s.numFmt = '"R$" #,##0.00';
-                }
-                
-                // Coluna G (Meta)
-                const cellGRef = XLSX.utils.encode_cell({ r: row, c: 6 });
-                if (wsDetalhamento[cellGRef]) {
-                    if (!wsDetalhamento[cellGRef].s) wsDetalhamento[cellGRef].s = {};
-                    wsDetalhamento[cellGRef].s.numFmt = '"R$" #,##0.00';
-                }
-                
-                // Coluna H (Diferença)
-                const cellHRef = XLSX.utils.encode_cell({ r: row, c: 7 });
-                if (wsDetalhamento[cellHRef]) {
-                    if (!wsDetalhamento[cellHRef].s) wsDetalhamento[cellHRef].s = {};
-                    wsDetalhamento[cellHRef].s.numFmt = '"R$" #,##0.00';
-                    
-                    // Se valor negativo, texto vermelho
-                    if (wsDetalhamento[cellHRef].v < 0) {
-                        wsDetalhamento[cellHRef].s.font = { color: { rgb: "FF0000" } };
-                    }
-                }
-                
-                // Coluna I (Diferença %)
-                const cellIRef = XLSX.utils.encode_cell({ r: row, c: 8 });
-                if (wsDetalhamento[cellIRef]) {
-                    if (!wsDetalhamento[cellIRef].s) wsDetalhamento[cellIRef].s = {};
-                    wsDetalhamento[cellIRef].s.numFmt = '0.00"%"';
-                    
-                    // Se valor negativo, texto vermelho
-                    if (wsDetalhamento[cellIRef].v < 0) {
-                        wsDetalhamento[cellIRef].s.font = { color: { rgb: "FF0000" } };
-                    }
-                }
-            }
-            
-            // Formatar linha de total
-            const totalRow = range.e.r;
-            for (let col = 5; col <= 8; col++) {
-                const cellRef = XLSX.utils.encode_cell({ r: totalRow, c: col });
-                if (wsDetalhamento[cellRef]) {
-                    if (!wsDetalhamento[cellRef].s) wsDetalhamento[cellRef].s = {};
-                    
-                    if (col <= 7) {
-                        wsDetalhamento[cellRef].s.numFmt = '"R$" #,##0.00';
-                    } else if (col === 8) {
-                        wsDetalhamento[cellRef].s.numFmt = '0.00"%"';
-                    }
-                    
-                    // Negrito para linha de total
-                    wsDetalhamento[cellRef].s.font = { bold: true };
-                }
-            }
-            
-            // Ajustar largura das colunas
             wsDetalhamento['!cols'] = [
-                { wch: 12 }, // Data
-                { wch: 8 },  // Loja
-                { wch: 8 },  // Início
-                { wch: 8 },  // Fim
-                { wch: 12 }, // Cupons
-                { wch: 18 }, // Faturamento
-                { wch: 18 }, // Meta
-                { wch: 18 }, // Diferença
-                { wch: 15 }, // Dif %
-                { wch: 12 }  // Status
+                { wch: 12 }, { wch: 30 }, { wch: 8 }, { wch: 8 }, { wch: 12 },
+                { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 15 }, { wch: 12 }
             ];
 
-            // === PLANILHA 2: RESUMO POR CANAL ===
-            // Calcular totais por canal para os dados filtrados
             let totaisCanais = {
                 'Auto-Atendimento': 0,
                 'Delivery': 0,
@@ -1555,13 +1647,10 @@
             };
             
             dadosFiltrados.forEach(loja => {
-                totaisCanais['Auto-Atendimento'] += loja.faturamento * (loja.canais.auto / 100);
-                totaisCanais['Delivery'] += loja.faturamento * (loja.canais.delivery / 100);
-                totaisCanais['Viagem'] += loja.faturamento * (loja.canais.viagem / 100);
-                
-                const somaPercentuais = loja.canais.auto + loja.canais.delivery + loja.canais.viagem;
-                const percentualBalcao = 100 - somaPercentuais;
-                totaisCanais['Balcão'] += loja.faturamento * (percentualBalcao / 100);
+                totaisCanais['Auto-Atendimento'] += loja.canais.auto || 0;
+                totaisCanais['Delivery'] += loja.canais.delivery || 0;
+                totaisCanais['Viagem'] += loja.canais.viagem || 0;
+                totaisCanais['Balcão'] += loja.canais.balcao || 0;
             });
             
             const totalCanais = Object.values(totaisCanais).reduce((a, b) => a + b, 0);
@@ -1580,32 +1669,8 @@
             dadosCanais.push(['TOTAL', totalCanais, '100.0']);
 
             const wsCanais = XLSX.utils.aoa_to_sheet(dadosCanais);
-            
-            // Formatar colunas de valores na planilha de canais
-            const rangeCanais = XLSX.utils.decode_range(wsCanais['!ref']);
-            for (let row = rangeCanais.s.r + 3; row <= rangeCanais.e.r; row++) {
-                // Coluna B (Valor)
-                const cellBRef = XLSX.utils.encode_cell({ r: row, c: 1 });
-                if (wsCanais[cellBRef]) {
-                    if (!wsCanais[cellBRef].s) wsCanais[cellBRef].s = {};
-                    wsCanais[cellBRef].s.numFmt = '"R$" #,##0.00';
-                }
-                
-                // Coluna C (Participação)
-                const cellCRef = XLSX.utils.encode_cell({ r: row, c: 2 });
-                if (wsCanais[cellCRef]) {
-                    if (!wsCanais[cellCRef].s) wsCanais[cellCRef].s = {};
-                    wsCanais[cellCRef].s.numFmt = '0.0"%"';
-                }
-            }
-            
-            wsCanais['!cols'] = [
-                { wch: 25 }, // Canal
-                { wch: 18 }, // Valor
-                { wch: 18 }  // Participação
-            ];
+            wsCanais['!cols'] = [{ wch: 25 }, { wch: 18 }, { wch: 18 }];
 
-            // === PLANILHA 3: INDICADORES ===
             const ticketMedio = dadosFiltrados.reduce((sum, loja) => sum + loja.cupons, 0) > 0 ? 
                 totalFaturamento / dadosFiltrados.reduce((sum, loja) => sum + loja.cupons, 0) : 0;
                 
@@ -1625,55 +1690,17 @@
             ];
 
             const wsIndicadores = XLSX.utils.aoa_to_sheet(dadosIndicadores);
-            
-            // Formatar valores na planilha de indicadores
-            const rangeInd = XLSX.utils.decode_range(wsIndicadores['!ref']);
-            for (let row = rangeInd.s.r + 3; row <= rangeInd.e.r; row++) {
-                const cellRef = XLSX.utils.encode_cell({ r: row, c: 1 });
-                if (wsIndicadores[cellRef]) {
-                    if (!wsIndicadores[cellRef].s) wsIndicadores[cellRef].s = {};
-                    
-                    // Linha 7: Diferença
-                    if (row === 7) {
-                        wsIndicadores[cellRef].s.numFmt = '"R$" #,##0.00';
-                        if (wsIndicadores[cellRef].v < 0) {
-                            wsIndicadores[cellRef].s.font = { color: { rgb: "FF0000" }, bold: true };
-                        }
-                    }
-                    // Linhas 5, 6: Faturamento e Meta
-                    else if (row === 5 || row === 6) {
-                        wsIndicadores[cellRef].s.numFmt = '"R$" #,##0.00';
-                    }
-                    // Linhas 8, 11: Percentuais
-                    else if (row === 8 || row === 11) {
-                        wsIndicadores[cellRef].s.numFmt = '0.00"%"';
-                    }
-                    // Linha 9: Ticket Médio
-                    else if (row === 9) {
-                        wsIndicadores[cellRef].s.numFmt = '"R$" #,##0.00';
-                    }
-                }
-            }
-            
-            wsIndicadores['!cols'] = [
-                { wch: 30 }, // Indicador
-                { wch: 20 }  // Valor
-            ];
+            wsIndicadores['!cols'] = [{ wch: 30 }, { wch: 20 }];
 
-            // Adicionar planilhas ao workbook
             XLSX.utils.book_append_sheet(wb, wsDetalhamento, 'Detalhamento');
             XLSX.utils.book_append_sheet(wb, wsCanais, 'Resumo por Canal');
             XLSX.utils.book_append_sheet(wb, wsIndicadores, 'Indicadores');
 
-            // Gerar nome do arquivo
-            const dataAtual = new Date();
-            const dataStr = `${dataAtual.getDate()}-${dataAtual.getMonth()+1}-${dataAtual.getFullYear()}`;
+            const dataStr = dataAtual.replace(/\//g, '-');
             const nomeArquivo = `Setor_Patty_${dataStr}.xlsx`;
 
-            // Salvar arquivo
             XLSX.writeFile(wb, nomeArquivo);
 
-            // Feedback visual
             const btnExport = event.target.closest('.btn');
             const textoOriginal = btnExport.innerHTML;
             btnExport.innerHTML = '<i class="fas fa-check"></i> Excel Gerado!';
@@ -1688,13 +1715,8 @@
             Chart.defaults.font.family = "'Inter', 'Segoe UI', Roboto, sans-serif";
             Chart.defaults.font.size = 12;
 
-            // Destruir gráficos existentes se houver
-            if (canalPieChart) canalPieChart.destroy();
-            if (metasPieChart) metasPieChart.destroy();
-            if (top10BarChart) top10BarChart.destroy();
-            if (desempenhoBarChart) desempenhoBarChart.destroy();
+            const dadosAtuais = getDadosAtuais();
 
-            // Calcular totais iniciais por canal
             let totaisCanais = {
                 'Auto-Atendimento': 0,
                 'Delivery': 0,
@@ -1702,17 +1724,13 @@
                 'Balcão': 0
             };
             
-            dadosLojas.forEach(loja => {
-                totaisCanais['Auto-Atendimento'] += loja.faturamento * (loja.canais.auto / 100);
-                totaisCanais['Delivery'] += loja.faturamento * (loja.canais.delivery / 100);
-                totaisCanais['Viagem'] += loja.faturamento * (loja.canais.viagem / 100);
-                
-                const somaPercentuais = loja.canais.auto + loja.canais.delivery + loja.canais.viagem;
-                const percentualBalcao = 100 - somaPercentuais;
-                totaisCanais['Balcão'] += loja.faturamento * (percentualBalcao / 100);
+            dadosAtuais.forEach(loja => {
+                totaisCanais['Auto-Atendimento'] += loja.canais.auto || 0;
+                totaisCanais['Delivery'] += loja.canais.delivery || 0;
+                totaisCanais['Viagem'] += loja.canais.viagem || 0;
+                totaisCanais['Balcão'] += loja.canais.balcao || 0;
             });
 
-            // Gráfico 1: Pizza de Canais (estilo profissional)
             canalPieChart = new Chart(document.getElementById('canalPieChart'), {
                 type: 'doughnut',
                 data: {
@@ -1759,9 +1777,8 @@
                 }
             });
 
-            // Gráfico 2: Pizza de Metas (estilo profissional)
-            const metasAtingidas = dadosLojas.filter(loja => loja.status === 'SIM').length;
-            const metasNaoAtingidas = dadosLojas.length - metasAtingidas;
+            const metasAtingidas = dadosAtuais.filter(loja => loja.status === 'SIM').length;
+            const metasNaoAtingidas = dadosAtuais.length - metasAtingidas;
             
             metasPieChart = new Chart(document.getElementById('metasPieChart'), {
                 type: 'doughnut',
@@ -1808,12 +1825,11 @@
                 }
             });
 
-            // Gráfico 3: Top 10 (estilo profissional)
-            const top10Data = [...dadosLojas].sort((a, b) => b.faturamento - a.faturamento).slice(0, 10);
+            const top10Data = [...dadosAtuais].sort((a, b) => b.faturamento - a.faturamento).slice(0, 10);
             top10BarChart = new Chart(document.getElementById('top10BarChart'), {
                 type: 'bar',
                 data: {
-                    labels: top10Data.map(d => 'Loja ' + d.loja),
+                    labels: top10Data.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`),
                     datasets: [
                         {
                             label: 'Faturamento',
@@ -1871,21 +1887,25 @@
                         x: {
                             grid: {
                                 display: false
+                            },
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45,
+                                font: { size: 10 }
                             }
                         }
                     }
                 }
             });
 
-            // Gráfico 4: Desempenho (estilo profissional)
             desempenhoBarChart = new Chart(document.getElementById('desempenhoBarChart'), {
                 type: 'bar',
                 data: {
-                    labels: dadosLojas.map(d => 'Loja ' + d.loja),
+                    labels: dadosAtuais.map(d => lojaNomes[d.loja] || `Loja ${d.loja}`),
                     datasets: [{
                         label: 'Atingimento da Meta (%)',
-                        data: dadosLojas.map(d => 100 + d.difPercentual),
-                        backgroundColor: dadosLojas.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f'),
+                        data: dadosAtuais.map(d => 100 + d.difPercentual),
+                        backgroundColor: dadosAtuais.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f'),
                         borderRadius: 8,
                         barPercentage: 0.7,
                         categoryPercentage: 0.9
