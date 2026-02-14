@@ -579,7 +579,13 @@
             margin-bottom: 30px;
         }
 
-        @media (min-width: 992px) {
+        @media (min-width: 1200px) {
+            .charts-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
             .charts-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -1117,6 +1123,15 @@
             </div>
             <div class="chart-card">
                 <div class="chart-header">
+                    <h3><i class="fas fa-chart-line" style="color: var(--warning);"></i>Evolução por ADM</h3>
+                    <span class="badge"><i class="fas fa-user-tie"></i> Performance Diária</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="admEvolucaoChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
                     <h3><i class="fas fa-chart-bar" style="color: var(--success);"></i>Top 10 Lojas - Faturamento</h3>
                     <span class="badge"><i class="fas fa-crown"></i> Ranking</span>
                 </div>
@@ -1131,6 +1146,15 @@
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="desempenhoBarChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-tachometer-alt" style="color: var(--info);"></i>Ranking por ADM</h3>
+                    <span class="badge"><i class="fas fa-trophy"></i> Comparativo</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="admRankingChart"></canvas>
                 </div>
             </div>
         </div>
@@ -1863,7 +1887,7 @@
         let dataInicio = "14/02/2026";
         let dataFim = "14/02/2026";
         let periodoSelecionado = "hoje";
-        let canalPieChart, metasPieChart, top10BarChart, desempenhoBarChart;
+        let canalPieChart, metasPieChart, admEvolucaoChart, admRankingChart, top10BarChart, desempenhoBarChart;
         let lojasSelecionadas = [];
         let todasLojas = [];
 
@@ -2009,6 +2033,8 @@
         function destruirGraficos() {
             if (canalPieChart) canalPieChart.destroy();
             if (metasPieChart) metasPieChart.destroy();
+            if (admEvolucaoChart) admEvolucaoChart.destroy();
+            if (admRankingChart) admRankingChart.destroy();
             if (top10BarChart) top10BarChart.destroy();
             if (desempenhoBarChart) desempenhoBarChart.destroy();
         }
@@ -2345,6 +2371,103 @@
                 }
                 top10BarChart.update();
             }
+
+            if (admEvolucaoChart || admRankingChart) {
+                atualizarGraficosADM(dadosFiltrados);
+            }
+        }
+
+        function atualizarGraficosADM(dadosFiltrados) {
+            const dadosPorData = {};
+            const dadosPorADM = {};
+            
+            // Agrupar dados por data e ADM
+            dadosFiltrados.forEach(loja => {
+                if (!dadosPorData[loja.data]) {
+                    dadosPorData[loja.data] = {};
+                }
+                if (!dadosPorData[loja.data][loja.adm]) {
+                    dadosPorData[loja.data][loja.adm] = 0;
+                }
+                dadosPorData[loja.data][loja.adm] += loja.faturamento;
+                
+                if (!dadosPorADM[loja.adm]) {
+                    dadosPorADM[loja.adm] = {
+                        faturamento: 0,
+                        meta: 0,
+                        cupons: 0
+                    };
+                }
+                dadosPorADM[loja.adm].faturamento += loja.faturamento;
+                dadosPorADM[loja.adm].meta += loja.meta;
+                dadosPorADM[loja.adm].cupons += loja.cupons;
+            });
+            
+            const datasOrdenadas = Object.keys(dadosPorData).sort((a, b) => {
+                const [diaA, mesA, anoA] = a.split('/').map(Number);
+                const [diaB, mesB, anoB] = b.split('/').map(Number);
+                return new Date(anoA, mesA-1, diaA) - new Date(anoB, mesB-1, diaB);
+            });
+
+            // Atualizar gráfico de evolução por ADM
+            if (admEvolucaoChart) {
+                const admList = ['ADM1', 'ADM2', 'ADM3', 'ADM4'];
+                const datasets = admList.map(adm => {
+                    const data = datasOrdenadas.map(data => dadosPorData[data][adm] || 0);
+                    return {
+                        label: admNomes[adm],
+                        data: data,
+                        borderColor: adm === 'ADM1' ? '#4361ee' : 
+                                    adm === 'ADM2' ? '#f72585' : 
+                                    adm === 'ADM3' ? '#06d6a0' : '#ffd166',
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    };
+                });
+
+                admEvolucaoChart.data.labels = datasOrdenadas.map(d => {
+                    const [dia, mes] = d.split('/');
+                    return `${dia}/${mes}`;
+                });
+                admEvolucaoChart.data.datasets = datasets;
+                admEvolucaoChart.update();
+            }
+
+            // Atualizar gráfico de ranking por ADM
+            if (admRankingChart) {
+                const admList = ['ADM1', 'ADM2', 'ADM3', 'ADM4'];
+                const faturamentos = admList.map(adm => dadosPorADM[adm]?.faturamento || 0);
+                const metas = admList.map(adm => dadosPorADM[adm]?.meta || 0);
+                const tickets = admList.map(adm => {
+                    const cupons = dadosPorADM[adm]?.cupons || 0;
+                    const fat = dadosPorADM[adm]?.faturamento || 0;
+                    return cupons > 0 ? fat / cupons : 0;
+                });
+
+                admRankingChart.data.labels = admList.map(adm => admNomes[adm]);
+                admRankingChart.data.datasets = [
+                    {
+                        label: 'Faturamento (R$)',
+                        data: faturamentos,
+                        backgroundColor: '#4361ee',
+                        borderRadius: 6,
+                        barPercentage: 0.7,
+                        yAxisID: 'y'
+                    },
+                    {
+                        label: 'Ticket Médio (R$)',
+                        data: tickets,
+                        backgroundColor: '#f72585',
+                        borderRadius: 6,
+                        barPercentage: 0.7,
+                        yAxisID: 'y1'
+                    }
+                ];
+                admRankingChart.update();
+            }
         }
 
         let ordemAtual = { coluna: -1, ascendente: true };
@@ -2673,6 +2796,120 @@
                 }
             });
 
+            // Gráfico de evolução por ADM
+            admEvolucaoChart = new Chart(document.getElementById('admEvolucaoChart'), {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: []
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 15,
+                                font: { size: 10 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => {
+                                    return `${ctx.dataset.label}: R$ ${formatMoney(ctx.raw)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => 'R$ ' + (value/1000).toFixed(0) + 'k'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de ranking por ADM
+            admRankingChart = new Chart(document.getElementById('admRankingChart'), {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Faturamento (R$)',
+                            data: [],
+                            backgroundColor: '#4361ee',
+                            borderRadius: 6,
+                            barPercentage: 0.7,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Ticket Médio (R$)',
+                            data: [],
+                            backgroundColor: '#f72585',
+                            borderRadius: 6,
+                            barPercentage: 0.7,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 15,
+                                font: { size: 10 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: (ctx) => {
+                                    if (ctx.dataset.label.includes('Faturamento')) {
+                                        return `Faturamento: R$ ${formatMoney(ctx.raw)}`;
+                                    } else {
+                                        return `Ticket Médio: R$ ${formatMoney(ctx.raw)}`;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            beginAtZero: true,
+                            ticks: {
+                                callback: (value) => 'R$ ' + (value/1000).toFixed(0) + 'k'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            beginAtZero: true,
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                            ticks: {
+                                callback: (value) => 'R$ ' + value.toFixed(0)
+                            }
+                        }
+                    }
+                }
+            });
+
             const dadosPorLoja = {};
             dadosPeriodo.forEach(loja => {
                 if (!dadosPorLoja[loja.loja]) {
@@ -2768,6 +3005,8 @@
                     }
                 }
             });
+
+            aplicarFiltros();
         }
     </script>
 </body>
