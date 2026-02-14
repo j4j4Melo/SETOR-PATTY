@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setor Patty - Relatório de Metas | 13/02/2026</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- SheetJS para Excel profissional -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #f72585;
+            --success: #06d6a0;
+            --danger: #ef476f;
+            --warning: #ffd166;
+            --info: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #2b2d42;
+            --gray: #8d99ae;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --shadow-sm: 0 5px 15px rgba(0,0,0,0.08);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .dashboard {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: var(--gradient-1);
+            padding: 30px;
+            border-radius: 24px;
+            margin-bottom: 30px;
+            color: white;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-title h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-title p {
+            font-size: 16px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-title p i {
+            font-size: 18px;
+        }
+
+        .header-date {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .header-date .day {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .header-date .month {
+            font-size: 16px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Filtros */
+        .filters {
+            background: white;
+            padding: 20px 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .filter-group label {
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 14px;
+            min-width: 70px;
+        }
+
+        .multi-select {
+            position: relative;
+            flex: 1;
+        }
+
+        .multi-select .select-btn {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 14px;
+            background: white;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .multi-select .select-btn:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .multi-select .select-btn .selected-count {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .multi-select .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 16px;
+            margin-top: 8px;
+            max-height: 350px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .multi-select .dropdown-menu.show {
+            display: block;
+            animation: slideDown 0.2s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .multi-select .search-box {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .multi-select .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .multi-select .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .multi-select .select-all {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            transition: background 0.2s;
+        }
+
+        .multi-select .select-all:hover {
+            background: #f8f9fa;
+        }
+
+        .multi-select .select-all i {
+            font-size: 16px;
+        }
+
+        .multi-select .options-list {
+            padding: 8px 0;
+        }
+
+        .multi-select .option-item {
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .multi-select .option-item:hover {
+            background: #f8f9fa;
+            border-left-color: var(--primary);
+        }
+
+        .multi-select .option-item.selected {
+            background: rgba(67, 97, 238, 0.05);
+            border-left-color: var(--primary);
+        }
+
+        .multi-select .option-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+            box-shadow: 0 4px 10px rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-success:hover {
+            background: #05b586;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(6, 214, 160, 0.4);
+        }
+
+        /* Cards KPI */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(67, 97, 238, 0.03) 100%);
+            border-radius: 50%;
+        }
+
+        .kpi-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .kpi-icon.blue { background: linear-gradient(135deg, #4361ee20, #4361ee40); color: var(--primary); }
+        .kpi-icon.green { background: linear-gradient(135deg, #06d6a020, #06d6a040); color: var(--success); }
+        .kpi-icon.orange { background: linear-gradient(135deg, #f7258520, #f7258540); color: var(--secondary); }
+        .kpi-icon.red { background: linear-gradient(135deg, #ef476f20, #ef476f40); color: var(--danger); }
+        .kpi-icon.purple { background: linear-gradient(135deg, #9b5de520, #9b5de540); color: #9b5de5; }
+
+        .kpi-label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .kpi-trend {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding-top: 8px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .trend-up { color: var(--success); }
+        .trend-down { color: var(--danger); }
+
+        /* Gráficos */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .chart-card:hover {
+            box-shadow: var(--shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .chart-header h3 {
+            color: var(--dark);
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-header h3 i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .chart-header .badge {
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 320px;
+            margin-top: 10px;
+        }
+
+        /* Tabelas */
+        .tables-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .table-header h2 {
+            color: var(--dark);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-header h2 i {
+            color: var(--primary);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+            border: 1px solid #f1f5f9;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f8fafc;
+            color: var(--dark);
+            padding: 16px 12px;
+            font-weight: 700;
+            text-align: center;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        th:hover {
+            background: #f1f5f9;
+        }
+
+        th i {
+            margin-left: 5px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            text-align: center;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .meta-sim {
+            background: linear-gradient(135deg, #06d6a020, #06d6a040);
+            color: var(--success);
+            font-weight: 700;
+            border-radius: 30px;
+            padding: 6px 16px;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .meta-nao {
+            background: linear-gradient(135deg, #ef476f20, #ef476f40);
+            color: var(--danger);
+            font-weight: 700;
+            border-radius: 30px;
+            padding: 6px 16px;
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .valor-positivo {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .valor-negativo {
+            color: var(--danger);
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        .info-content h4 {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .info-content p {
+            color: var(--dark);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 13px;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tables-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            .header-content { flex-direction: column; text-align: center; }
+            .kpi-grid { grid-template-columns: 1fr; }
+            .info-cards { grid-template-columns: 1fr; }
+            .filters { flex-direction: column; }
+            .filter-group { width: 100%; }
+            .multi-select { width: 100%; }
+        }
+
+        /* Animações */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .kpi-card, .chart-card, .table-card {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1><i class="fas fa-store-alt" style="margin-right: 12px;"></i>Setor Patty</h1>
+                    <p>
+                        <i class="fas fa-store"></i> 31 Lojas em operação 
+                        <i class="fas fa-circle" style="font-size: 6px; margin: 0 8px;"></i>
+                        <i class="fas fa-chart-line"></i> Atualizado em tempo real
+                    </p>
+                </div>
+                <div class="header-date">
+                    <div class="day">13</div>
+                    <div class="month">FEVEREIRO 2026</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters">
+            <div class="filter-group">
+                <label><i class="fas fa-store"></i> Lojas:</label>
+                <div class="multi-select" id="lojaMultiSelect">
+                    <div class="select-btn" onclick="toggleLojaDropdown()">
+                        <span id="selectedLojasText">Todas as Lojas</span>
+                        <span class="selected-count" id="selectedCount">31</span>
+                    </div>
+                    <div class="dropdown-menu" id="lojaDropdown">
+                        <div class="search-box">
+                            <input type="text" id="lojaSearch" placeholder="Buscar loja..." onkeyup="filtrarLojas()">
+                        </div>
+                        <div class="select-all" onclick="toggleAllLojas()">
+                            <i class="fas fa-check-square"></i> Selecionar Todas
+                        </div>
+                        <div class="options-list" id="lojaOptions">
+                            <!-- Será preenchido via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-group">
+                <label><i class="fas fa-chart-bar"></i> Status:</label>
+                <select id="statusFilter" onchange="aplicarFiltros()">
+                    <option value="">Todos os Status</option>
+                    <option value="SIM">Meta Atingida</option>
+                    <option value="NÃO">Meta Não Atingida</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="aplicarFiltros()">
+                <i class="fas fa-sync-alt"></i> Atualizar Dados
+            </button>
+            <button class="btn btn-success" onclick="exportarExcel()">
+                <i class="fas fa-file-excel"></i> Exportar Excel
+            </button>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-icon blue"><i class="fas fa-store"></i></div>
+                <div class="kpi-label">Total de Lojas</div>
+                <div class="kpi-value" id="totalLojas">31</div>
+                <div class="kpi-trend"><i class="fas fa-check-circle trend-up"></i> 100% operantes</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon green"><i class="fas fa-dollar-sign"></i></div>
+                <div class="kpi-label">Faturamento Total</div>
+                <div class="kpi-value" id="totalFaturamento">R$ 116.787,39</div>
+                <div class="kpi-trend"><i class="fas fa-chart-line"></i> <span id="percentualMeta">-9,88%</span> vs meta</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon purple"><i class="fas fa-bullseye"></i></div>
+                <div class="kpi-label">Meta Total</div>
+                <div class="kpi-value" id="totalMeta">R$ 129.590,00</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressoMeta" style="width: 90.1%"></div>
+                </div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="kpi-label">Diferença</div>
+                <div class="kpi-value" id="totalDiferenca">R$ -12.802,61</div>
+                <div class="kpi-trend"><i class="fas fa-arrow-down trend-down"></i> <span id="percentualDiferenca">-9,88%</span> abaixo</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon blue"><i class="fas fa-ticket-alt"></i></div>
+                <div class="kpi-label">Ticket Médio</div>
+                <div class="kpi-value" id="ticketMedio">R$ 20,83</div>
+                <div class="kpi-trend"><i class="fas fa-chart-line trend-up"></i> +5,2% vs ontem</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-icon orange"><i class="fas fa-trophy"></i></div>
+                <div class="kpi-label">Metas Atingidas</div>
+                <div class="kpi-value" id="metasAtingidas">12/31</div>
+                <div class="kpi-trend"><i class="fas fa-percent"></i> <span id="percentualLojas">38,7%</span> das lojas</div>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-pie" style="color: var(--primary);"></i>Distribuição por Canal</h3>
+                    <span class="badge"><i class="fas fa-store-alt"></i> Vendas</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="canalPieChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-bullseye" style="color: var(--secondary);"></i>Atingimento de Metas</h3>
+                    <span class="badge"><i class="fas fa-check-circle"></i> Performance</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="metasPieChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-bar" style="color: var(--success);"></i>Top 10 Lojas - Faturamento vs Meta</h3>
+                    <span class="badge"><i class="fas fa-crown"></i> Ranking</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="top10BarChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-line" style="color: var(--warning);"></i>Desempenho por Loja</h3>
+                    <span class="badge"><i class="fas fa-percent"></i> Atingimento</span>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="desempenhoBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabelas -->
+        <div class="tables-section">
+            <div class="table-card">
+                <div class="table-header">
+                    <h2><i class="fas fa-list"></i> Detalhamento por Loja</h2>
+                    <span class="badge"><i class="fas fa-table"></i> Dados detalhados</span>
+                </div>
+                <div class="table-wrapper">
+                    <table id="mainTable">
+                        <thead>
+                            <tr>
+                                <th onclick="ordenarTabela(0)">Data <i class="fas fa-sort"></i></th>
+                                <th onclick="ordenarTabela(1)">Loja <i class="fas fa-sort"></i></th>
+                                <th>Início</th>
+                                <th>Fim</th>
+                                <th onclick="ordenarTabela(4)">Cupons <i class="fas fa-sort"></i></th>
+                                <th onclick="ordenarTabela(5)">Faturamento <i class="fas fa-sort"></i></th>
+                                <th onclick="ordenarTabela(6)">Meta <i class="fas fa-sort"></i></th>
+                                <th>Diferença</th>
+                                <th onclick="ordenarTabela(8)">Dif % <i class="fas fa-sort"></i></th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Será preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="table-card">
+                <div class="table-header">
+                    <h2><i class="fas fa-chart-pie"></i> Resumo por Canal</h2>
+                    <span class="badge"><i class="fas fa-chart-simple"></i> Análise</span>
+                </div>
+                <div class="table-wrapper">
+                    <table id="canaisTable">
+                        <thead>
+                            <tr>
+                                <th>Canal</th>
+                                <th>Valor (R$)</th>
+                                <th>Participação</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="canaisTableBody">
+                            <!-- Será preenchido via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Indicadores Gerais -->
+                <div style="margin-top: 25px;">
+                    <h3 style="margin-bottom: 15px; color: var(--dark); font-size: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-chart-simple" style="color: var(--primary);"></i> Indicadores Gerais
+                    </h3>
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="info-content">
+                                <h4>Lojas que Atingiram Meta</h4>
+                                <p id="lojasMetaSim">12 lojas (38.7%)</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fas fa-times-circle"></i></div>
+                            <div class="info-content">
+                                <h4>Lojas Abaixo da Meta</h4>
+                                <p id="lojasMetaNao">19 lojas (61.3%)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><i class="far fa-clock"></i> Relatório gerado em 13/02/2026 às 10:30:00</p>
+            <p style="margin-top: 5px;">© 2026 Setor Patty - Todos os direitos reservados</p>
+        </div>
+    </div>
+
+    <script>
+        // Dados
+        const dadosLojas = [
+            {data: '13/02/2026', loja: 5, inicio: '09:10', fim: '20:41', cupons: 117, faturamento: 3468.01, meta: 4005.0, dif: -536.99, difPercentual: -13.41, status: 'NÃO', canais: {auto: 26.4, delivery: 65.3, viagem: 8.3}},
+            {data: '13/02/2026', loja: 10, inicio: '13:52', fim: '21:12', cupons: 437, faturamento: 11130.79, meta: 10605.0, dif: 525.79, difPercentual: 4.96, status: 'SIM', canais: {auto: 23.4, delivery: 0.3, viagem: 15.8}},
+            {data: '13/02/2026', loja: 28, inicio: '10:16', fim: '21:54', cupons: 185, faturamento: 4548.00, meta: 5215.0, dif: -667.00, difPercentual: -12.79, status: 'NÃO', canais: {auto: 32.6, delivery: 59.3, viagem: 8.1}},
+            {data: '13/02/2026', loja: 31, inicio: '09:33', fim: '21:17', cupons: 173, faturamento: 3256.98, meta: 4280.0, dif: -1023.02, difPercentual: -23.90, status: 'NÃO', canais: {auto: 0.0, delivery: 36.0, viagem: 0.0}},
+            {data: '13/02/2026', loja: 63, inicio: '10:34', fim: '21:34', cupons: 76, faturamento: 1111.57, meta: 2055.0, dif: -943.43, difPercentual: -45.91, status: 'NÃO', canais: {auto: 21.4, delivery: 0.0, viagem: 100.0}},
+            {data: '13/02/2026', loja: 69, inicio: '09:02', fim: '21:42', cupons: 209, faturamento: 5127.82, meta: 4570.0, dif: 557.82, difPercentual: 12.21, status: 'SIM', canais: {auto: 0.0, delivery: 75.6, viagem: 27.2}},
+            {data: '13/02/2026', loja: 73, inicio: '10:38', fim: '18:28', cupons: 86, faturamento: 2147.35, meta: 2815.0, dif: -667.65, difPercentual: -23.72, status: 'NÃO', canais: {auto: 37.0, delivery: 51.1, viagem: 11.9}},
+            {data: '13/02/2026', loja: 82, inicio: '09:03', fim: '19:52', cupons: 177, faturamento: 3106.10, meta: 2995.0, dif: 111.10, difPercentual: 3.71, status: 'SIM', canais: {auto: 13.6, delivery: 65.3, viagem: 0.0}},
+            {data: '13/02/2026', loja: 86, inicio: '10:06', fim: '21:09', cupons: 108, faturamento: 3642.71, meta: 6405.0, dif: -2762.29, difPercentual: -43.13, status: 'NÃO', canais: {auto: 40.8, delivery: 9.9, viagem: 4.2}},
+            {data: '13/02/2026', loja: 90, inicio: '10:25', fim: '22:02', cupons: 198, faturamento: 4673.55, meta: 4345.0, dif: 328.55, difPercentual: 7.56, status: 'SIM', canais: {auto: 37.5, delivery: 4.6, viagem: 16.0}},
+            {data: '13/02/2026', loja: 97, inicio: '10:24', fim: '21:16', cupons: 180, faturamento: 5825.73, meta: 4100.0, dif: 1725.73, difPercentual: 42.09, status: 'SIM', canais: {auto: 37.7, delivery: 2.3, viagem: 9.1}},
+            {data: '13/02/2026', loja: 98, inicio: '08:41', fim: '19:26', cupons: 258, faturamento: 3493.53, meta: 4245.0, dif: -751.47, difPercentual: -17.70, status: 'NÃO', canais: {auto: 15.2, delivery: 16.8, viagem: 68.0}},
+            {data: '13/02/2026', loja: 101, inicio: '10:39', fim: '20:53', cupons: 116, faturamento: 2575.19, meta: 2450.0, dif: 125.19, difPercentual: 5.11, status: 'SIM', canais: {auto: 0.0, delivery: 57.9, viagem: 42.1}},
+            {data: '13/02/2026', loja: 118, inicio: '10:21', fim: '21:58', cupons: 103, faturamento: 2239.19, meta: 2920.0, dif: -680.81, difPercentual: -23.32, status: 'NÃO', canais: {auto: 41.6, delivery: 24.2, viagem: 34.2}},
+            {data: '13/02/2026', loja: 126, inicio: '10:15', fim: '20:41', cupons: 397, faturamento: 11001.14, meta: 11555.0, dif: -553.86, difPercentual: -4.79, status: 'NÃO', canais: {auto: 5.9, delivery: 9.5, viagem: 0.3}},
+            {data: '13/02/2026', loja: 133, inicio: '10:08', fim: '21:47', cupons: 164, faturamento: 5198.91, meta: 5875.0, dif: -676.09, difPercentual: -11.51, status: 'NÃO', canais: {auto: 5.4, delivery: 77.3, viagem: 17.4}},
+            {data: '13/02/2026', loja: 145, inicio: '09:05', fim: '21:31', cupons: 128, faturamento: 2259.77, meta: 4270.0, dif: -2010.23, difPercentual: -47.08, status: 'NÃO', canais: {auto: 32.4, delivery: 32.6, viagem: 43.3}},
+            {data: '13/02/2026', loja: 157, inicio: '10:22', fim: '21:20', cupons: 107, faturamento: 2516.24, meta: 3405.0, dif: -888.76, difPercentual: -26.10, status: 'NÃO', canais: {auto: 0.0, delivery: 65.3, viagem: 34.7}},
+            {data: '13/02/2026', loja: 158, inicio: '09:50', fim: '21:40', cupons: 167, faturamento: 4474.48, meta: 4425.0, dif: 49.48, difPercentual: 1.12, status: 'SIM', canais: {auto: 54.8, delivery: 38.9, viagem: 6.3}},
+            {data: '13/02/2026', loja: 162, inicio: '09:23', fim: '20:42', cupons: 91, faturamento: 2951.27, meta: 3090.0, dif: -138.73, difPercentual: -4.49, status: 'NÃO', canais: {auto: 0.0, delivery: 0.0, viagem: 0.0}},
+            {data: '13/02/2026', loja: 178, inicio: '09:28', fim: '22:04', cupons: 123, faturamento: 3952.24, meta: 2270.0, dif: 1682.24, difPercentual: 74.11, status: 'SIM', canais: {auto: 0.0, delivery: 74.2, viagem: 0.0}},
+            {data: '13/02/2026', loja: 183, inicio: '09:36', fim: '19:26', cupons: 126, faturamento: 2092.38, meta: 3020.0, dif: -927.62, difPercentual: -30.72, status: 'NÃO', canais: {auto: 43.6, delivery: 25.9, viagem: 30.1}},
+            {data: '13/02/2026', loja: 189, inicio: '09:53', fim: '21:54', cupons: 203, faturamento: 2519.29, meta: 2830.0, dif: -310.71, difPercentual: -10.98, status: 'NÃO', canais: {auto: 29.3, delivery: 15.1, viagem: 55.6}},
+            {data: '13/02/2026', loja: 195, inicio: '10:16', fim: '21:25', cupons: 255, faturamento: 6218.50, meta: 6590.0, dif: -371.50, difPercentual: -5.64, status: 'NÃO', canais: {auto: 0.0, delivery: 67.2, viagem: 33.0}},
+            {data: '13/02/2026', loja: 210, inicio: '08:45', fim: '20:49', cupons: 128, faturamento: 2899.39, meta: 3815.0, dif: -915.61, difPercentual: -24.00, status: 'NÃO', canais: {auto: 0.0, delivery: 40.6, viagem: 0.0}},
+            {data: '13/02/2026', loja: 247, inicio: '08:46', fim: '20:31', cupons: 112, faturamento: 1768.70, meta: 2050.0, dif: -281.30, difPercentual: -13.72, status: 'NÃO', canais: {auto: 0.0, delivery: 35.7, viagem: 64.3}},
+            {data: '13/02/2026', loja: 248, inicio: '07:34', fim: '22:10', cupons: 245, faturamento: 5043.58, meta: 5735.0, dif: -691.42, difPercentual: -12.06, status: 'NÃO', canais: {auto: 6.6, delivery: 44.0, viagem: 37.2}},
+            {data: '13/02/2026', loja: 251, inicio: '08:37', fim: '15:58', cupons: 88, faturamento: 1072.78, meta: 1935.0, dif: -862.22, difPercentual: -44.56, status: 'NÃO', canais: {auto: 0.0, delivery: 5.6, viagem: 94.4}},
+            {data: '13/02/2026', loja: 262, inicio: '08:31', fim: '21:17', cupons: 96, faturamento: 2489.25, meta: 2355.0, dif: 134.25, difPercentual: 5.70, status: 'SIM', canais: {auto: 0.0, delivery: 50.7, viagem: 44.2}},
+            {data: '13/02/2026', loja: 285, inicio: '10:46', fim: '21:44', cupons: 90, faturamento: 1728.33, meta: 3375.0, dif: -1646.67, difPercentual: -48.79, status: 'NÃO', canais: {auto: 0.0, delivery: 31.6, viagem: 68.4}},
+            {data: '13/02/2026', loja: 294, inicio: '10:34', fim: '21:31', cupons: 120, faturamento: 2254.62, meta: 1990.0, dif: 264.62, difPercentual: 13.30, status: 'SIM', canais: {auto: 16.0, delivery: 35.2, viagem: 48.8}}
+        ];
+
+        // Mapeamento dos canais
+        const canais = ['Auto-Atendimento', 'Delivery', 'Viagem', 'Balcão'];
+        
+        // Variáveis globais para os gráficos e estado
+        let canalPieChart, metasPieChart, top10BarChart, desempenhoBarChart;
+        let lojasSelecionadas = []; // Array para armazenar as lojas selecionadas
+        let todasLojas = [];
+
+        // Inicialização
+        $(document).ready(function() {
+            // Extrair todas as lojas únicas e ordenar
+            todasLojas = [...new Set(dadosLojas.map(loja => loja.loja))].sort((a, b) => a - b);
+            
+            // Inicialmente selecionar todas as lojas
+            lojasSelecionadas = [...todasLojas];
+            
+            // Preencher opções de lojas no multi-select
+            preencherOpcoesLojas();
+            
+            // Atualizar texto do botão
+            atualizarTextoSelecionadas();
+
+            // Carregar tabela
+            carregarTabela();
+
+            // Inicializar gráficos
+            inicializarGraficos();
+            
+            // Atualizar KPIs
+            atualizarKPIs();
+            
+            // Atualizar tabela de canais
+            atualizarTabelaCanais();
+            
+            // Fechar dropdown ao clicar fora
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#lojaMultiSelect').length) {
+                    $('#lojaDropdown').removeClass('show');
+                }
+            });
+        });
+
+        function preencherOpcoesLojas() {
+            let html = '';
+            todasLojas.forEach(loja => {
+                const isSelected = lojasSelecionadas.includes(loja);
+                html += `<div class="option-item ${isSelected ? 'selected' : ''}" onclick="toggleLoja(${loja})">
+                    <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleLoja(${loja})">
+                    <span>Loja ${loja}</span>
+                </div>`;
+            });
+            $('#lojaOptions').html(html);
+        }
+
+        function toggleLojaDropdown() {
+            $('#lojaDropdown').toggleClass('show');
+            $('#lojaSearch').val('').focus();
+            filtrarLojas();
+        }
+
+        function filtrarLojas() {
+            const termo = $('#lojaSearch').val().toLowerCase();
+            $('.option-item').each(function() {
+                const texto = $(this).find('span').text().toLowerCase();
+                if (texto.includes(termo)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        function toggleLoja(loja) {
+            const index = lojasSelecionadas.indexOf(loja);
+            if (index === -1) {
+                lojasSelecionadas.push(loja);
+            } else {
+                lojasSelecionadas.splice(index, 1);
+            }
+            
+            // Atualizar visual
+            atualizarTextoSelecionadas();
+            preencherOpcoesLojas(); // Recarregar para atualizar os checkboxes
+            
+            // Aplicar filtros automaticamente
+            aplicarFiltros();
+        }
+
+        function toggleAllLojas() {
+            if (lojasSelecionadas.length === todasLojas.length) {
+                // Se todas estão selecionadas, desmarcar todas
+                lojasSelecionadas = [];
+            } else {
+                // Senão, selecionar todas
+                lojasSelecionadas = [...todasLojas];
+            }
+            
+            // Atualizar visual
+            atualizarTextoSelecionadas();
+            preencherOpcoesLojas();
+            
+            // Aplicar filtros automaticamente
+            aplicarFiltros();
+        }
+
+        function atualizarTextoSelecionadas() {
+            const count = lojasSelecionadas.length;
+            $('#selectedCount').text(count);
+            
+            if (count === 0) {
+                $('#selectedLojasText').text('Nenhuma loja');
+            } else if (count === todasLojas.length) {
+                $('#selectedLojasText').text('Todas as Lojas');
+            } else if (count <= 3) {
+                const nomes = lojasSelecionadas.sort((a, b) => a - b).map(l => `Loja ${l}`).join(', ');
+                $('#selectedLojasText').text(nomes);
+            } else {
+                $('#selectedLojasText').text(`${count} lojas selecionadas`);
+            }
+        }
+
+        function carregarTabela() {
+            let html = '';
+            const statusFiltro = $('#statusFilter').val();
+
+            const dadosFiltrados = dadosLojas.filter(loja => {
+                // Filtro de lojas (multi-select)
+                if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
+                
+                // Filtro de status
+                if (statusFiltro && loja.status != statusFiltro) return false;
+                
+                return true;
+            });
+
+            dadosFiltrados.forEach(loja => {
+                const difClass = loja.dif >= 0 ? 'valor-positivo' : 'valor-negativo';
+                const statusClass = loja.status === 'SIM' ? 'meta-sim' : 'meta-nao';
+                
+                html += `<tr>
+                    <td>${loja.data}</td>
+                    <td><strong>Loja ${loja.loja}</strong></td>
+                    <td>${loja.inicio}</td>
+                    <td>${loja.fim}</td>
+                    <td>${loja.cupons}</td>
+                    <td class="currency">R$ ${formatMoney(loja.faturamento)}</td>
+                    <td class="currency">R$ ${formatMoney(loja.meta)}</td>
+                    <td class="currency ${difClass}">R$ ${formatMoney(loja.dif)}</td>
+                    <td class="${difClass}">${formatPercent(loja.difPercentual)}</td>
+                    <td><span class="${statusClass}">${loja.status}</span></td>
+                </tr>`;
+            });
+
+            $('#tableBody').html(html);
+            
+            // Atualizar KPIs com dados filtrados
+            atualizarKPIs(dadosFiltrados);
+        }
+
+        function atualizarTabelaCanais() {
+            const statusFiltro = $('#statusFilter').val();
+            
+            const dadosFiltrados = dadosLojas.filter(loja => {
+                // Filtro de lojas (multi-select)
+                if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
+                
+                // Filtro de status
+                if (statusFiltro && loja.status != statusFiltro) return false;
+                
+                return true;
+            });
+            
+            // Calcular totais por canal baseado nos percentuais de cada loja
+            let totaisCanais = {
+                'Auto-Atendimento': 0,
+                'Delivery': 0,
+                'Viagem': 0,
+                'Balcão': 0
+            };
+            
+            dadosFiltrados.forEach(loja => {
+                // Distribuir o faturamento da loja pelos canais baseado nos percentuais
+                totaisCanais['Auto-Atendimento'] += loja.faturamento * (loja.canais.auto / 100);
+                totaisCanais['Delivery'] += loja.faturamento * (loja.canais.delivery / 100);
+                totaisCanais['Viagem'] += loja.faturamento * (loja.canais.viagem / 100);
+                
+                // Balcão é o que sobra (100% - soma dos outros)
+                const somaPercentuais = loja.canais.auto + loja.canais.delivery + loja.canais.viagem;
+                const percentualBalcao = 100 - somaPercentuais;
+                totaisCanais['Balcão'] += loja.faturamento * (percentualBalcao / 100);
+            });
+            
+            const totalGeral = Object.values(totaisCanais).reduce((a, b) => a + b, 0);
+            
+            // Atualizar gráfico de pizza de canais
+            if (canalPieChart) {
+                canalPieChart.data.datasets[0].data = Object.values(totaisCanais);
+                canalPieChart.update();
+            }
+            
+            // Atualizar tabela de canais
+            let html = '';
+            const icones = {
+                'Auto-Atendimento': 'fa-robot',
+                'Delivery': 'fa-motorcycle',
+                'Viagem': 'fa-plane',
+                'Balcão': 'fa-store'
+            };
+            
+            const cores = {
+                'Auto-Atendimento': '#4361ee',
+                'Delivery': '#f72585',
+                'Viagem': '#4cc9f0',
+                'Balcão': '#ffd166'
+            };
+            
+            Object.entries(totaisCanais).forEach(([canal, valor]) => {
+                const participacao = totalGeral > 0 ? (valor / totalGeral * 100) : 0;
+                html += `<tr>
+                    <td><i class="fas ${icones[canal]}" style="color: ${cores[canal]}; margin-right: 8px;"></i> ${canal}</td>
+                    <td class="currency">R$ ${formatMoney(valor)}</td>
+                    <td>${participacao.toFixed(1)}%</td>
+                    <td>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${participacao}%"></div>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+            
+            $('#canaisTableBody').html(html);
+        }
+
+        function atualizarKPIs(dadosFiltrados = null) {
+            const statusFiltro = $('#statusFilter').val();
+            
+            const dados = dadosFiltrados || dadosLojas.filter(loja => {
+                if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
+                if (statusFiltro && loja.status != statusFiltro) return false;
+                return true;
+            });
+            
+            const totalLojas = dados.length;
+            const totalFaturamento = dados.reduce((sum, loja) => sum + loja.faturamento, 0);
+            const totalMeta = dados.reduce((sum, loja) => sum + loja.meta, 0);
+            const totalDiferenca = totalFaturamento - totalMeta;
+            const percentualDiferenca = totalMeta > 0 ? (totalDiferenca / totalMeta) * 100 : 0;
+            const totalCupons = dados.reduce((sum, loja) => sum + loja.cupons, 0);
+            const ticketMedio = totalCupons > 0 ? totalFaturamento / totalCupons : 0;
+            const metasAtingidas = dados.filter(loja => loja.status === 'SIM').length;
+            const percentualLojas = totalLojas > 0 ? (metasAtingidas / totalLojas) * 100 : 0;
+            
+            $('#totalLojas').text(totalLojas);
+            $('#totalFaturamento').text(`R$ ${formatMoney(totalFaturamento)}`);
+            $('#totalMeta').text(`R$ ${formatMoney(totalMeta)}`);
+            $('#totalDiferenca').text(`R$ ${formatMoney(totalDiferenca)}`);
+            $('#percentualMeta').text(formatPercent(percentualDiferenca));
+            $('#percentualDiferenca').text(formatPercent(percentualDiferenca));
+            $('#ticketMedio').text(`R$ ${formatMoney(ticketMedio)}`);
+            $('#metasAtingidas').text(`${metasAtingidas}/${totalLojas}`);
+            $('#percentualLojas').text(`${percentualLojas.toFixed(1)}%`);
+            $('#lojasMetaSim').text(`${metasAtingidas} lojas (${percentualLojas.toFixed(1)}%)`);
+            $('#lojasMetaNao').text(`${totalLojas - metasAtingidas} lojas (${(100 - percentualLojas).toFixed(1)}%)`);
+            
+            // Atualizar barra de progresso
+            const percentualProgresso = totalMeta > 0 ? (totalFaturamento / totalMeta) * 100 : 0;
+            $('#progressoMeta').css('width', `${percentualProgresso}%`);
+            
+            // Atualizar gráfico de pizza de metas
+            if (metasPieChart) {
+                metasPieChart.data.datasets[0].data = [metasAtingidas, totalLojas - metasAtingidas];
+                metasPieChart.update();
+            }
+        }
+
+        function formatMoney(value) {
+            return value.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        function formatMoneyUS(value) {
+            return value.toFixed(2).replace('.', ','); // Formato para Excel
+        }
+
+        function formatPercent(value) {
+            return (value > 0 ? '+' : '') + value.toFixed(2) + '%';
+        }
+
+        function aplicarFiltros() {
+            carregarTabela();
+            atualizarTabelaCanais();
+            
+            const statusFiltro = $('#statusFilter').val();
+
+            const dadosFiltrados = dadosLojas.filter(loja => {
+                if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
+                if (statusFiltro && loja.status != statusFiltro) return false;
+                return true;
+            });
+            
+            // Atualizar gráfico de barras de desempenho
+            if (desempenhoBarChart) {
+                if (dadosFiltrados.length > 0) {
+                    desempenhoBarChart.data.labels = dadosFiltrados.map(d => 'Loja ' + d.loja);
+                    desempenhoBarChart.data.datasets[0].data = dadosFiltrados.map(d => 100 + d.difPercentual);
+                    desempenhoBarChart.data.datasets[0].backgroundColor = dadosFiltrados.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f');
+                } else {
+                    desempenhoBarChart.data.labels = [];
+                    desempenhoBarChart.data.datasets[0].data = [];
+                    desempenhoBarChart.data.datasets[0].backgroundColor = [];
+                }
+                desempenhoBarChart.update();
+            }
+            
+            // Atualizar gráfico de top 10
+            if (top10BarChart) {
+                if (dadosFiltrados.length > 0) {
+                    const top10Data = [...dadosFiltrados].sort((a, b) => b.faturamento - a.faturamento).slice(0, Math.min(10, dadosFiltrados.length));
+                    top10BarChart.data.labels = top10Data.map(d => 'Loja ' + d.loja);
+                    top10BarChart.data.datasets[0].data = top10Data.map(d => d.faturamento);
+                    top10BarChart.data.datasets[1].data = top10Data.map(d => d.meta);
+                } else {
+                    top10BarChart.data.labels = [];
+                    top10BarChart.data.datasets[0].data = [];
+                    top10BarChart.data.datasets[1].data = [];
+                }
+                top10BarChart.update();
+            }
+        }
+
+        let ordemAtual = { coluna: -1, ascendente: true };
+
+        function ordenarTabela(coluna) {
+            const tbody = $('#tableBody');
+            const linhas = tbody.find('tr').get();
+            
+            // Determinar direção da ordenação
+            if (ordemAtual.coluna === coluna) {
+                ordemAtual.ascendente = !ordemAtual.ascendente;
+            } else {
+                ordemAtual.coluna = coluna;
+                ordemAtual.ascendente = true;
+            }
+            
+            // Ordenar linhas
+            linhas.sort((a, b) => {
+                const celulaA = $(a).children('td').eq(coluna).text();
+                const celulaB = $(b).children('td').eq(coluna).text();
+                
+                let valorA, valorB;
+                
+                // Tratar diferentes tipos de dados
+                if (coluna === 1) { // Loja
+                    valorA = parseInt(celulaA.replace('Loja ', ''));
+                    valorB = parseInt(celulaB.replace('Loja ', ''));
+                } else if (coluna === 4) { // Cupons
+                    valorA = parseInt(celulaA);
+                    valorB = parseInt(celulaB);
+                } else if (coluna === 5 || coluna === 6 || coluna === 7) { // Faturamento, Meta e Diferença
+                    valorA = parseFloat(celulaA.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
+                    valorB = parseFloat(celulaB.replace('R$ ', '').replace(/\./g, '').replace(',', '.'));
+                } else if (coluna === 8) { // Dif %
+                    valorA = parseFloat(celulaA.replace('%', '').replace('+', ''));
+                    valorB = parseFloat(celulaB.replace('%', '').replace('+', ''));
+                } else { // Data e outros
+                    valorA = celulaA;
+                    valorB = celulaB;
+                }
+                
+                if (valorA < valorB) return ordemAtual.ascendente ? -1 : 1;
+                if (valorA > valorB) return ordemAtual.ascendente ? 1 : -1;
+                return 0;
+            });
+            
+            // Reinserir linhas ordenadas
+            tbody.empty().append(linhas);
+            
+            // Atualizar ícones de ordenação
+            $('th i').removeClass('fa-sort-up fa-sort-down').addClass('fa-sort');
+            const icone = ordemAtual.ascendente ? 'fa-sort-up' : 'fa-sort-down';
+            $(`th:eq(${coluna}) i`).removeClass('fa-sort').addClass(icone);
+        }
+
+        function exportarExcel() {
+            // Obter dados filtrados atuais
+            const statusFiltro = $('#statusFilter').val();
+
+            const dadosFiltrados = dadosLojas.filter(loja => {
+                if (lojasSelecionadas.length > 0 && !lojasSelecionadas.includes(loja.loja)) return false;
+                if (statusFiltro && loja.status != statusFiltro) return false;
+                return true;
+            });
+
+            // Calcular totais
+            const totalFaturamento = dadosFiltrados.reduce((sum, loja) => sum + loja.faturamento, 0);
+            const totalMeta = dadosFiltrados.reduce((sum, loja) => sum + loja.meta, 0);
+            const totalDiferenca = totalFaturamento - totalMeta;
+            const percentualDiferenca = totalMeta > 0 ? (totalDiferenca / totalMeta) * 100 : 0;
+            const metasAtingidas = dadosFiltrados.filter(loja => loja.status === 'SIM').length;
+
+            // Criar workbook
+            const wb = XLSX.utils.book_new();
+            
+            // === PLANILHA 1: DETALHAMENTO ===
+            const dadosDetalhamento = [
+                ['RELATÓRIO DE METAS - SETOR PATTY'],
+                [`Data: 13/02/2026 - Lojas Selecionadas: ${lojasSelecionadas.length} lojas, Status: ${statusFiltro || 'Todos'}`],
+                []
+            ];
+            
+            // Cabeçalho
+            dadosDetalhamento.push([
+                'Data', 'Loja', 'Início', 'Fim', 'Qtd Cupons', 
+                'Faturamento (R$)', 'Meta (R$)', 'Diferença (R$)', 'Diferença %', 'Status'
+            ]);
+            
+            // Dados
+            dadosFiltrados.forEach(loja => {
+                dadosDetalhamento.push([
+                    loja.data,
+                    loja.loja,
+                    loja.inicio,
+                    loja.fim,
+                    loja.cupons,
+                    loja.faturamento,
+                    loja.meta,
+                    loja.dif,
+                    loja.difPercentual,
+                    loja.status
+                ]);
+            });
+            
+            // Linha de total
+            dadosDetalhamento.push([]);
+            dadosDetalhamento.push([
+                'TOTAIS', '', '', '', 
+                dadosFiltrados.reduce((sum, loja) => sum + loja.cupons, 0),
+                totalFaturamento,
+                totalMeta,
+                totalDiferenca,
+                percentualDiferenca,
+                `${metasAtingidas}/${dadosFiltrados.length} lojas`
+            ]);
+
+            // Criar worksheet de detalhamento
+            const wsDetalhamento = XLSX.utils.aoa_to_sheet(dadosDetalhamento);
+            
+            // Aplicar formatação para valores monetários e negativos
+            const range = XLSX.utils.decode_range(wsDetalhamento['!ref']);
+            
+            // Formatar colunas de valores
+            for (let row = range.s.r + 3; row <= range.e.r; row++) {
+                // Coluna F (Faturamento)
+                const cellFRef = XLSX.utils.encode_cell({ r: row, c: 5 });
+                if (wsDetalhamento[cellFRef]) {
+                    if (!wsDetalhamento[cellFRef].s) wsDetalhamento[cellFRef].s = {};
+                    wsDetalhamento[cellFRef].s.numFmt = '"R$" #,##0.00';
+                }
+                
+                // Coluna G (Meta)
+                const cellGRef = XLSX.utils.encode_cell({ r: row, c: 6 });
+                if (wsDetalhamento[cellGRef]) {
+                    if (!wsDetalhamento[cellGRef].s) wsDetalhamento[cellGRef].s = {};
+                    wsDetalhamento[cellGRef].s.numFmt = '"R$" #,##0.00';
+                }
+                
+                // Coluna H (Diferença)
+                const cellHRef = XLSX.utils.encode_cell({ r: row, c: 7 });
+                if (wsDetalhamento[cellHRef]) {
+                    if (!wsDetalhamento[cellHRef].s) wsDetalhamento[cellHRef].s = {};
+                    wsDetalhamento[cellHRef].s.numFmt = '"R$" #,##0.00';
+                    
+                    // Se valor negativo, texto vermelho
+                    if (wsDetalhamento[cellHRef].v < 0) {
+                        wsDetalhamento[cellHRef].s.font = { color: { rgb: "FF0000" } };
+                    }
+                }
+                
+                // Coluna I (Diferença %)
+                const cellIRef = XLSX.utils.encode_cell({ r: row, c: 8 });
+                if (wsDetalhamento[cellIRef]) {
+                    if (!wsDetalhamento[cellIRef].s) wsDetalhamento[cellIRef].s = {};
+                    wsDetalhamento[cellIRef].s.numFmt = '0.00"%"';
+                    
+                    // Se valor negativo, texto vermelho
+                    if (wsDetalhamento[cellIRef].v < 0) {
+                        wsDetalhamento[cellIRef].s.font = { color: { rgb: "FF0000" } };
+                    }
+                }
+            }
+            
+            // Formatar linha de total
+            const totalRow = range.e.r;
+            for (let col = 5; col <= 8; col++) {
+                const cellRef = XLSX.utils.encode_cell({ r: totalRow, c: col });
+                if (wsDetalhamento[cellRef]) {
+                    if (!wsDetalhamento[cellRef].s) wsDetalhamento[cellRef].s = {};
+                    
+                    if (col <= 7) {
+                        wsDetalhamento[cellRef].s.numFmt = '"R$" #,##0.00';
+                    } else if (col === 8) {
+                        wsDetalhamento[cellRef].s.numFmt = '0.00"%"';
+                    }
+                    
+                    // Negrito para linha de total
+                    wsDetalhamento[cellRef].s.font = { bold: true };
+                }
+            }
+            
+            // Ajustar largura das colunas
+            wsDetalhamento['!cols'] = [
+                { wch: 12 }, // Data
+                { wch: 8 },  // Loja
+                { wch: 8 },  // Início
+                { wch: 8 },  // Fim
+                { wch: 12 }, // Cupons
+                { wch: 18 }, // Faturamento
+                { wch: 18 }, // Meta
+                { wch: 18 }, // Diferença
+                { wch: 15 }, // Dif %
+                { wch: 12 }  // Status
+            ];
+
+            // === PLANILHA 2: RESUMO POR CANAL ===
+            // Calcular totais por canal para os dados filtrados
+            let totaisCanais = {
+                'Auto-Atendimento': 0,
+                'Delivery': 0,
+                'Viagem': 0,
+                'Balcão': 0
+            };
+            
+            dadosFiltrados.forEach(loja => {
+                totaisCanais['Auto-Atendimento'] += loja.faturamento * (loja.canais.auto / 100);
+                totaisCanais['Delivery'] += loja.faturamento * (loja.canais.delivery / 100);
+                totaisCanais['Viagem'] += loja.faturamento * (loja.canais.viagem / 100);
+                
+                const somaPercentuais = loja.canais.auto + loja.canais.delivery + loja.canais.viagem;
+                const percentualBalcao = 100 - somaPercentuais;
+                totaisCanais['Balcão'] += loja.faturamento * (percentualBalcao / 100);
+            });
+            
+            const totalCanais = Object.values(totaisCanais).reduce((a, b) => a + b, 0);
+            
+            const dadosCanais = [
+                ['RESUMO POR CANAL'],
+                [],
+                ['Canal', 'Valor (R$)', 'Participação (%)']
+            ];
+            
+            Object.entries(totaisCanais).forEach(([canal, valor]) => {
+                dadosCanais.push([canal, valor, totalCanais > 0 ? (valor / totalCanais * 100) : 0]);
+            });
+            
+            dadosCanais.push([]);
+            dadosCanais.push(['TOTAL', totalCanais, '100.0']);
+
+            const wsCanais = XLSX.utils.aoa_to_sheet(dadosCanais);
+            
+            // Formatar colunas de valores na planilha de canais
+            const rangeCanais = XLSX.utils.decode_range(wsCanais['!ref']);
+            for (let row = rangeCanais.s.r + 3; row <= rangeCanais.e.r; row++) {
+                // Coluna B (Valor)
+                const cellBRef = XLSX.utils.encode_cell({ r: row, c: 1 });
+                if (wsCanais[cellBRef]) {
+                    if (!wsCanais[cellBRef].s) wsCanais[cellBRef].s = {};
+                    wsCanais[cellBRef].s.numFmt = '"R$" #,##0.00';
+                }
+                
+                // Coluna C (Participação)
+                const cellCRef = XLSX.utils.encode_cell({ r: row, c: 2 });
+                if (wsCanais[cellCRef]) {
+                    if (!wsCanais[cellCRef].s) wsCanais[cellCRef].s = {};
+                    wsCanais[cellCRef].s.numFmt = '0.0"%"';
+                }
+            }
+            
+            wsCanais['!cols'] = [
+                { wch: 25 }, // Canal
+                { wch: 18 }, // Valor
+                { wch: 18 }  // Participação
+            ];
+
+            // === PLANILHA 3: INDICADORES ===
+            const ticketMedio = dadosFiltrados.reduce((sum, loja) => sum + loja.cupons, 0) > 0 ? 
+                totalFaturamento / dadosFiltrados.reduce((sum, loja) => sum + loja.cupons, 0) : 0;
+                
+            const dadosIndicadores = [
+                ['INDICADORES GERAIS'],
+                [],
+                ['Indicador', 'Valor'],
+                ['Total de Lojas', dadosFiltrados.length],
+                ['Faturamento Total', totalFaturamento],
+                ['Meta Total', totalMeta],
+                ['Diferença', totalDiferenca],
+                ['Percentual de Atingimento', totalMeta > 0 ? (totalFaturamento / totalMeta * 100) : 0],
+                ['Ticket Médio', ticketMedio],
+                ['Lojas que Atingiram Meta', metasAtingidas],
+                ['Lojas Abaixo da Meta', dadosFiltrados.length - metasAtingidas],
+                ['Percentual de Metas Atingidas', dadosFiltrados.length > 0 ? (metasAtingidas / dadosFiltrados.length * 100) : 0]
+            ];
+
+            const wsIndicadores = XLSX.utils.aoa_to_sheet(dadosIndicadores);
+            
+            // Formatar valores na planilha de indicadores
+            const rangeInd = XLSX.utils.decode_range(wsIndicadores['!ref']);
+            for (let row = rangeInd.s.r + 3; row <= rangeInd.e.r; row++) {
+                const cellRef = XLSX.utils.encode_cell({ r: row, c: 1 });
+                if (wsIndicadores[cellRef]) {
+                    if (!wsIndicadores[cellRef].s) wsIndicadores[cellRef].s = {};
+                    
+                    // Linha 7: Diferença
+                    if (row === 7) {
+                        wsIndicadores[cellRef].s.numFmt = '"R$" #,##0.00';
+                        if (wsIndicadores[cellRef].v < 0) {
+                            wsIndicadores[cellRef].s.font = { color: { rgb: "FF0000" }, bold: true };
+                        }
+                    }
+                    // Linhas 5, 6: Faturamento e Meta
+                    else if (row === 5 || row === 6) {
+                        wsIndicadores[cellRef].s.numFmt = '"R$" #,##0.00';
+                    }
+                    // Linhas 8, 11: Percentuais
+                    else if (row === 8 || row === 11) {
+                        wsIndicadores[cellRef].s.numFmt = '0.00"%"';
+                    }
+                    // Linha 9: Ticket Médio
+                    else if (row === 9) {
+                        wsIndicadores[cellRef].s.numFmt = '"R$" #,##0.00';
+                    }
+                }
+            }
+            
+            wsIndicadores['!cols'] = [
+                { wch: 30 }, // Indicador
+                { wch: 20 }  // Valor
+            ];
+
+            // Adicionar planilhas ao workbook
+            XLSX.utils.book_append_sheet(wb, wsDetalhamento, 'Detalhamento');
+            XLSX.utils.book_append_sheet(wb, wsCanais, 'Resumo por Canal');
+            XLSX.utils.book_append_sheet(wb, wsIndicadores, 'Indicadores');
+
+            // Gerar nome do arquivo
+            const dataAtual = new Date();
+            const dataStr = `${dataAtual.getDate()}-${dataAtual.getMonth()+1}-${dataAtual.getFullYear()}`;
+            const nomeArquivo = `Setor_Patty_${dataStr}.xlsx`;
+
+            // Salvar arquivo
+            XLSX.writeFile(wb, nomeArquivo);
+
+            // Feedback visual
+            const btnExport = event.target.closest('.btn');
+            const textoOriginal = btnExport.innerHTML;
+            btnExport.innerHTML = '<i class="fas fa-check"></i> Excel Gerado!';
+            btnExport.style.background = '#06d6a0';
+            setTimeout(() => {
+                btnExport.innerHTML = textoOriginal;
+                btnExport.style.background = '';
+            }, 2000);
+        }
+
+        function inicializarGraficos() {
+            Chart.defaults.font.family = "'Inter', 'Segoe UI', Roboto, sans-serif";
+            Chart.defaults.font.size = 12;
+
+            // Destruir gráficos existentes se houver
+            if (canalPieChart) canalPieChart.destroy();
+            if (metasPieChart) metasPieChart.destroy();
+            if (top10BarChart) top10BarChart.destroy();
+            if (desempenhoBarChart) desempenhoBarChart.destroy();
+
+            // Calcular totais iniciais por canal
+            let totaisCanais = {
+                'Auto-Atendimento': 0,
+                'Delivery': 0,
+                'Viagem': 0,
+                'Balcão': 0
+            };
+            
+            dadosLojas.forEach(loja => {
+                totaisCanais['Auto-Atendimento'] += loja.faturamento * (loja.canais.auto / 100);
+                totaisCanais['Delivery'] += loja.faturamento * (loja.canais.delivery / 100);
+                totaisCanais['Viagem'] += loja.faturamento * (loja.canais.viagem / 100);
+                
+                const somaPercentuais = loja.canais.auto + loja.canais.delivery + loja.canais.viagem;
+                const percentualBalcao = 100 - somaPercentuais;
+                totaisCanais['Balcão'] += loja.faturamento * (percentualBalcao / 100);
+            });
+
+            // Gráfico 1: Pizza de Canais (estilo profissional)
+            canalPieChart = new Chart(document.getElementById('canalPieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(totaisCanais),
+                    datasets: [{
+                        data: Object.values(totaisCanais),
+                        backgroundColor: ['#4361ee', '#f72585', '#4cc9f0', '#ffd166'],
+                        borderWidth: 0,
+                        borderRadius: 8,
+                        spacing: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 20,
+                                font: { size: 12, weight: '500' }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(43, 45, 66, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: (ctx) => {
+                                    const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                    const valor = ctx.raw;
+                                    const percent = ((valor / total) * 100).toFixed(1);
+                                    return `${ctx.label}: R$ ${formatMoney(valor)} (${percent}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico 2: Pizza de Metas (estilo profissional)
+            const metasAtingidas = dadosLojas.filter(loja => loja.status === 'SIM').length;
+            const metasNaoAtingidas = dadosLojas.length - metasAtingidas;
+            
+            metasPieChart = new Chart(document.getElementById('metasPieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Atingiram Meta', 'Não Atingiram'],
+                    datasets: [{
+                        data: [metasAtingidas, metasNaoAtingidas],
+                        backgroundColor: ['#06d6a0', '#ef476f'],
+                        borderWidth: 0,
+                        borderRadius: 8,
+                        spacing: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'circle',
+                                padding: 20,
+                                font: { size: 12, weight: '500' }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(43, 45, 66, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: (ctx) => {
+                                    const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percent = ((ctx.raw / total) * 100).toFixed(1);
+                                    return `${ctx.label}: ${ctx.raw} lojas (${percent}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico 3: Top 10 (estilo profissional)
+            const top10Data = [...dadosLojas].sort((a, b) => b.faturamento - a.faturamento).slice(0, 10);
+            top10BarChart = new Chart(document.getElementById('top10BarChart'), {
+                type: 'bar',
+                data: {
+                    labels: top10Data.map(d => 'Loja ' + d.loja),
+                    datasets: [
+                        {
+                            label: 'Faturamento',
+                            data: top10Data.map(d => d.faturamento),
+                            backgroundColor: '#4361ee',
+                            borderRadius: 8,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.8
+                        },
+                        {
+                            label: 'Meta',
+                            data: top10Data.map(d => d.meta),
+                            backgroundColor: '#f72585',
+                            borderRadius: 8,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                pointStyle: 'rect',
+                                padding: 15,
+                                font: { size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(43, 45, 66, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: (ctx) => `R$ ${formatMoney(ctx.raw)}`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f1f5f9',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                callback: (value) => 'R$ ' + value.toLocaleString('pt-BR')
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfico 4: Desempenho (estilo profissional)
+            desempenhoBarChart = new Chart(document.getElementById('desempenhoBarChart'), {
+                type: 'bar',
+                data: {
+                    labels: dadosLojas.map(d => 'Loja ' + d.loja),
+                    datasets: [{
+                        label: 'Atingimento da Meta (%)',
+                        data: dadosLojas.map(d => 100 + d.difPercentual),
+                        backgroundColor: dadosLojas.map(d => d.difPercentual >= 0 ? '#06d6a0' : '#ef476f'),
+                        borderRadius: 8,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.9
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(43, 45, 66, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: (ctx) => `Atingimento: ${ctx.raw.toFixed(1)}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 200,
+                            grid: {
+                                color: '#f1f5f9',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                callback: (value) => value + '%'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                maxRotation: 45,
+                                minRotation: 45,
+                                font: { size: 10 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
