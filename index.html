@@ -1360,14 +1360,6 @@
         };
 
         // MAPEAMENTO DE ADMs POR LOJA - ATUALIZADO CONFORME A PLANILHA COMPLETA
-        // Baseado na planilha fornecida:
-        // Thais: 247, 157, 63, 285, 118, 248, 97
-        // Fernando: 262, 210
-        // Hedla: 31, 73, 86, 82
-        // Elves: 145, 251, 294, 101, 189
-        // Gabriela: 69, 162, 195, 133, 183, 98
-        // Marcia: 158, 90, 28, 178
-        // Wagner: 5, 126, 10
         const admPorLoja = {
             // THAIS (7 lojas)
             247: "Thais",
@@ -1415,7 +1407,7 @@
             10: "Wagner"
         };
 
-        // Nomes completos dos ADMs (conforme planilha)
+        // Nomes completos dos ADMs
         const admNomes = {
             "Thais": "Thais",
             "Fernando": "Fernando",
@@ -1428,7 +1420,7 @@
 
         // ============================================
         // DADOS COMPLETOS DA PLANILHA - 01 A 14/02/2026
-        // TODAS AS 31 LOJAS INCLUÍDAS - MANTIDOS IGUAIS
+        // TODAS AS 31 LOJAS INCLUÍDAS - DADOS DO DIA 14/02 ATUALIZADOS
         // ============================================
         const dadosPorData = {};
 
@@ -1449,9 +1441,10 @@
             return '-';
         }
 
-        // Array com todos os registros da planilha (TODAS AS 31 LOJAS) - MANTIDO IGUAL
+        // Array com todos os registros da planilha (TODAS AS 31 LOJAS)
+        // Dados de 01 a 13/02 mantidos IGUAIS, apenas 14/02 atualizado conforme nova base
         const registrosPlanilha = [
-            // Loja 5 - ANTONIO AGU
+            // Loja 5 - ANTONIO AGU (WAGNER) - DIAS 01 A 13 IGUAIS
             {loja: 5, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 5, data: '2026-02-02', inicio: '2026-02-02 10:29:46', fim: '2026-02-02 20:44:29', cupons: 165, faturamento: 4397.51, meta: 2655, auto: 1043.4, delivery: 3054.77, viagem: 299.34, balcao: 0},
             {loja: 5, data: '2026-02-03', inicio: '2026-02-03 09:35:29', fim: '2026-02-03 20:38:45', cupons: 92, faturamento: 2771.07, meta: 2775, auto: 979.32, delivery: 1483.02, viagem: 308.73, balcao: 0},
@@ -1465,9 +1458,10 @@
             {loja: 5, data: '2026-02-11', inicio: '2026-02-11 08:59:35', fim: '2026-02-11 20:38:33', cupons: 150, faturamento: 3237.78, meta: 2355, auto: 911.46, delivery: 1847.29, viagem: 479.03, balcao: 0},
             {loja: 5, data: '2026-02-12', inicio: '2026-02-12 09:17:42', fim: '2026-02-12 20:41:08', cupons: 114, faturamento: 2986.23, meta: 3915, auto: 473.37, delivery: 2239.59, viagem: 273.27, balcao: 0},
             {loja: 5, data: '2026-02-13', inicio: '2026-02-13 09:10:14', fim: '2026-02-13 20:41:28', cupons: 117, faturamento: 3468.01, meta: 4005, auto: 916.93, delivery: 2263.16, viagem: 287.92, balcao: 0},
-            {loja: 5, data: '2026-02-14', inicio: '2026-02-14 09:24:40', fim: '2026-02-14 16:55:39', cupons: 79, faturamento: 2454.01, meta: 4015, auto: 565.75, delivery: 1701.85, viagem: 186.41, balcao: 0},
+            // Loja 5 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 5, data: '2026-02-14', inicio: '2026-02-14 09:24:40', fim: '2026-02-14 20:41:25', cupons: 124, faturamento: 4002.33, meta: 4015, auto: 891.45, delivery: 2833.17, viagem: 277.71, balcao: 0},
 
-            // Loja 10 - OSASCO PLAZA (WAGNER)
+            // Loja 10 - OSASCO PLAZA (WAGNER) - DIAS 01 A 13 IGUAIS
             {loja: 10, data: '2026-02-01', inicio: '2026-02-01 10:57:34', fim: '2026-02-01 21:28:09', cupons: 133, faturamento: 5628.37, meta: 9040, auto: 801.44, delivery: 3629.69, viagem: 51.58, balcao: 1145.66},
             {loja: 10, data: '2026-02-02', inicio: '2026-02-02 10:07:47', fim: '2026-02-03 00:03:06', cupons: 343, faturamento: 7404.77, meta: 8705, auto: 3078.59, delivery: 1958.03, viagem: 1111.28, balcao: 1237.19},
             {loja: 10, data: '2026-02-03', inicio: '2026-02-03 10:11:57', fim: '2026-02-04 11:00:03', cupons: 278, faturamento: 6278.13, meta: 8015, auto: 2606.37, delivery: 1505.81, viagem: 1320.37, balcao: 831.26},
@@ -1481,9 +1475,10 @@
             {loja: 10, data: '2026-02-11', inicio: '2026-02-11 10:06:21', fim: '2026-02-11 21:29:38', cupons: 366, faturamento: 7748.85, meta: 9385, auto: 2835.32, delivery: 1745.46, viagem: 2227.96, balcao: 928.25},
             {loja: 10, data: '2026-02-12', inicio: '2026-02-12 10:14:51', fim: '2026-02-12 21:29:52', cupons: 371, faturamento: 6774.97, meta: 9190, auto: 2856.7, delivery: 1488.65, viagem: 903.28, balcao: 1506.44},
             {loja: 10, data: '2026-02-13', inicio: '2026-02-12 13:52:47', fim: '2026-02-13 21:32:37', cupons: 440, faturamento: 11244.67, meta: 10605, auto: 2670.74, delivery: 3526.33, viagem: 1762.66, balcao: 3179.97},
-            {loja: 10, data: '2026-02-14', inicio: '2026-02-14 12:06:52', fim: '2026-02-14 16:12:32', cupons: 175, faturamento: 4398.49, meta: 12645, auto: 1354.45, delivery: 0, viagem: 1325.79, balcao: 0},
+            // Loja 10 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 10, data: '2026-02-14', inicio: '2026-02-14 10:24:15', fim: '2026-02-14 21:44:09', cupons: 395, faturamento: 10951.16, meta: 12645, auto: 3752.31, delivery: 214.91, viagem: 2492.88, balcao: 87.17},
 
-            // Loja 28 - SHOPPING TAMBORÉ (MARCIA)
+            // Loja 28 - SHOPPING TAMBORÉ (MARCIA) - DIAS 01 A 13 IGUAIS
             {loja: 28, data: '2026-02-01', inicio: '2026-02-01 11:03:31', fim: '2026-02-01 21:23:27', cupons: 184, faturamento: 4492.96, meta: 4505, auto: 1922.09, delivery: 2047.81, viagem: 523.06, balcao: 0},
             {loja: 28, data: '2026-02-02', inicio: '2026-02-02 10:18:40', fim: '2026-02-02 21:53:39', cupons: 167, faturamento: 3387.47, meta: 4015, auto: 1198.72, delivery: 1777.26, viagem: 411.49, balcao: 0},
             {loja: 28, data: '2026-02-03', inicio: '2026-02-03 10:22:58', fim: '2026-02-03 22:09:35', cupons: 156, faturamento: 3519.23, meta: 4405, auto: 1435.43, delivery: 1850.99, viagem: 232.81, balcao: 0},
@@ -1497,9 +1492,10 @@
             {loja: 28, data: '2026-02-11', inicio: '2026-02-11 10:24:35', fim: '2026-02-11 21:49:34', cupons: 171, faturamento: 3460.27, meta: 4355, auto: 1392.16, delivery: 1634.8, viagem: 433.31, balcao: 0},
             {loja: 28, data: '2026-02-12', inicio: '2026-02-12 10:10:09', fim: '2026-02-12 22:11:20', cupons: 202, faturamento: 3984.83, meta: 4335, auto: 1637.26, delivery: 1747.07, viagem: 600.5, balcao: 0},
             {loja: 28, data: '2026-02-13', inicio: '2026-02-13 10:16:34', fim: '2026-02-13 21:54:32', cupons: 186, faturamento: 4553.9, meta: 5215, auto: 1483.52, delivery: 2696.43, viagem: 373.95, balcao: 0},
-            {loja: 28, data: '2026-02-14', inicio: '2026-02-14 10:27:19', fim: '2026-02-14 16:54:34', cupons: 90, faturamento: 1536.83, meta: 5390, auto: 769.01, delivery: 368.36, viagem: 399.46, balcao: 0},
+            // Loja 28 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 28, data: '2026-02-14', inicio: '2026-02-14 10:27:19', fim: '2026-02-14 22:09:56', cupons: 209, faturamento: 4208.19, meta: 5390, auto: 1686.28, delivery: 1356.75, viagem: 1165.16, balcao: 0},
 
-            // Loja 31 - AUGUSTA (HEDLA)
+            // Loja 31 - AUGUSTA (HEDLA) - DIAS 01 A 13 IGUAIS
             {loja: 31, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 1645, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 31, data: '2026-02-02', inicio: '2026-02-02 09:21:40', fim: '2026-02-02 18:53:46', cupons: 121, faturamento: 2050.14, meta: 2735, auto: 0, delivery: 879.84, viagem: 0, balcao: 1170.3},
             {loja: 31, data: '2026-02-03', inicio: '2026-02-03 09:15:10', fim: '2026-02-03 16:13:06', cupons: 71, faturamento: 1102.72, meta: 3825, auto: 0, delivery: 401.37, viagem: 0, balcao: 627.49},
@@ -1513,9 +1509,10 @@
             {loja: 31, data: '2026-02-11', inicio: '2026-02-11 09:34:16', fim: '2026-02-11 21:23:44', cupons: 190, faturamento: 3267.6, meta: 4070, auto: 0, delivery: 1551.72, viagem: 0, balcao: 1683.46},
             {loja: 31, data: '2026-02-12', inicio: '2026-02-12 09:25:22', fim: '2026-02-12 21:02:47', cupons: 175, faturamento: 2478.23, meta: 3480, auto: 0, delivery: 1025.48, viagem: 0, balcao: 1452.75},
             {loja: 31, data: '2026-02-13', inicio: '2026-02-13 09:33:13', fim: '2026-02-13 21:17:48', cupons: 173, faturamento: 3256.98, meta: 4280, auto: 0, delivery: 1171.54, viagem: 0, balcao: 2085.44},
-            {loja: 31, data: '2026-02-14', inicio: '2026-02-14 09:38:39', fim: '2026-02-14 16:55:11', cupons: 78, faturamento: 1092.93, meta: 3335, auto: 0, delivery: 301.76, viagem: 0, balcao: 791.17},
+            // Loja 31 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 31, data: '2026-02-14', inicio: '2026-02-14 09:38:39', fim: '2026-02-14 21:20:28', cupons: 153, faturamento: 2582.91, meta: 3335, auto: 0, delivery: 510.63, viagem: 0, balcao: 2072.28},
 
-            // Loja 63 - SHOPPING ITAPECERICA (THAIS)
+            // Loja 63 - SHOPPING ITAPECERICA (THAIS) - DIAS 01 A 13 IGUAIS
             {loja: 63, data: '2026-02-01', inicio: '2026-02-01 12:38:53', fim: '2026-02-03 00:08:12', cupons: 54, faturamento: 986.98, meta: 900, auto: 289.35, delivery: 0, viagem: 697.63, balcao: 0},
             {loja: 63, data: '2026-02-02', inicio: '2026-02-02 13:38:49', fim: '2026-02-04 10:43:37', cupons: 63, faturamento: 1106.6, meta: 1435, auto: 181.09, delivery: 0, viagem: 925.51, balcao: 0},
             {loja: 63, data: '2026-02-03', inicio: '2026-02-03 11:12:16', fim: '2026-02-05 10:47:10', cupons: 59, faturamento: 810.94, meta: 1590, auto: 93.33, delivery: 0, viagem: 717.61, balcao: 0},
@@ -1529,9 +1526,10 @@
             {loja: 63, data: '2026-02-11', inicio: '2026-02-11 10:07:07', fim: '2026-02-13 00:10:24', cupons: 96, faturamento: 1486.37, meta: 1395, auto: 316.83, delivery: 0, viagem: 1169.54, balcao: 0},
             {loja: 63, data: '2026-02-12', inicio: '2026-02-12 10:57:04', fim: '2026-02-14 09:39:37', cupons: 89, faturamento: 1312.69, meta: 1215, auto: 32.8, delivery: 0, viagem: 1279.89, balcao: 0},
             {loja: 63, data: '2026-02-13', inicio: '2026-02-13 10:34:19', fim: '2026-02-13 21:34:04', cupons: 76, faturamento: 1111.57, meta: 2055, auto: 237.48, delivery: 0, viagem: 1111.57, balcao: 0},
-            {loja: 63, data: '2026-02-14', inicio: '2026-02-14 10:36:25', fim: '2026-02-14 16:49:13', cupons: 62, faturamento: 984.35, meta: 1650, auto: 72.02, delivery: 0, viagem: 984.35, balcao: 0},
+            // Loja 63 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 63, data: '2026-02-14', inicio: '2026-02-14 10:36:25', fim: '2026-02-14 21:55:34', cupons: 104, faturamento: 1614.57, meta: 1650, auto: 133.67, delivery: 0, viagem: 1614.57, balcao: 0},
 
-            // Loja 69 - PERUS (GABRIELA)
+            // Loja 69 - PERUS (GABRIELA) - DIAS 01 A 13 IGUAIS
             {loja: 69, data: '2026-02-01', inicio: '2026-02-01 11:06:12', fim: '2026-02-01 19:39:56', cupons: 108, faturamento: 3860.99, meta: 4405, auto: 0, delivery: 3254.21, viagem: 525.85, balcao: 0},
             {loja: 69, data: '2026-02-02', inicio: '2026-02-02 09:28:33', fim: '2026-02-02 21:42:30', cupons: 228, faturamento: 5546.96, meta: 5495, auto: 0, delivery: 3983.44, viagem: 1539.55, balcao: 0},
             {loja: 69, data: '2026-02-03', inicio: '2026-02-03 09:31:42', fim: '2026-02-03 21:28:37', cupons: 150, faturamento: 3212.27, meta: 4265, auto: 0, delivery: 1995.65, viagem: 1216.62, balcao: 0},
@@ -1545,9 +1543,10 @@
             {loja: 69, data: '2026-02-11', inicio: '2026-02-11 09:19:07', fim: '2026-02-11 21:44:17', cupons: 152, faturamento: 3059.9, meta: 3325, auto: 0, delivery: 1723.06, viagem: 1325.84, balcao: 0},
             {loja: 69, data: '2026-02-12', inicio: '2026-02-12 09:30:47', fim: '2026-02-12 21:42:04', cupons: 141, faturamento: 2807.88, meta: 4270, auto: 0, delivery: 1674.81, viagem: 1053.19, balcao: 0},
             {loja: 69, data: '2026-02-13', inicio: '2026-02-13 09:02:09', fim: '2026-02-13 21:42:18', cupons: 211, faturamento: 5193.42, meta: 4570, auto: 0, delivery: 3876.7, viagem: 1394.96, balcao: 0},
-            {loja: 69, data: '2026-02-14', inicio: '2026-02-14 09:49:52', fim: '2026-02-14 16:55:09', cupons: 120, faturamento: 2565.47, meta: 5095, auto: 0, delivery: 1283.24, viagem: 1283.21, balcao: 0},
+            // Loja 69 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 69, data: '2026-02-14', inicio: '2026-02-14 09:49:52', fim: '2026-02-14 20:28:55', cupons: 201, faturamento: 5557.29, meta: 5095, auto: 0, delivery: 3700.72, viagem: 1778.01, balcao: 0},
 
-            // Loja 73 - BRIGADEIRO JARDINS (HEDLA)
+            // Loja 73 - BRIGADEIRO JARDINS (HEDLA) - DIAS 01 A 13 IGUAIS
             {loja: 73, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 830, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 73, data: '2026-02-02', inicio: '2026-02-02 11:01:52', fim: '2026-02-02 18:28:44', cupons: 86, faturamento: 1514.26, meta: 2705, auto: 1023.35, delivery: 319.49, viagem: 171.42, balcao: 0},
             {loja: 73, data: '2026-02-03', inicio: '2026-02-03 09:59:49', fim: '2026-02-03 18:54:24', cupons: 95, faturamento: 1498.34, meta: 3405, auto: 968.12, delivery: 293.42, viagem: 236.8, balcao: 0},
@@ -1561,9 +1560,10 @@
             {loja: 73, data: '2026-02-11', inicio: '2026-02-11 10:26:04', fim: '2026-02-11 18:41:10', cupons: 139, faturamento: 2429.94, meta: 3440, auto: 1432.74, delivery: 659.82, viagem: 337.38, balcao: 0},
             {loja: 73, data: '2026-02-12', inicio: '2026-02-12 09:28:32', fim: '2026-02-12 18:30:01', cupons: 128, faturamento: 2728.68, meta: 3395, auto: 772.89, delivery: 1496.77, viagem: 459.02, balcao: 0},
             {loja: 73, data: '2026-02-13', inicio: '2026-02-13 10:38:27', fim: '2026-02-13 18:28:18', cupons: 86, faturamento: 2147.35, meta: 2815, auto: 795.02, delivery: 1097.72, viagem: 254.61, balcao: 0},
-            {loja: 73, data: '2026-02-14', inicio: '2026-02-14 10:37:54', fim: '2026-02-14 16:53:07', cupons: 62, faturamento: 1307.81, meta: 2285, auto: 713.44, delivery: 484.91, viagem: 109.46, balcao: 0},
+            // Loja 73 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 73, data: '2026-02-14', inicio: '2026-02-14 10:37:54', fim: '2026-02-14 20:30:39', cupons: 77, faturamento: 1845.52, meta: 2285, auto: 877.09, delivery: 829.17, viagem: 139.26, balcao: 0},
 
-            // Loja 82 - TEODORO SAMPAIO (HEDLA)
+            // Loja 82 - TEODORO SAMPAIO (HEDLA) - DIAS 01 A 13 IGUAIS
             {loja: 82, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 82, data: '2026-02-02', inicio: '2026-02-02 09:40:17', fim: '2026-02-02 16:13:59', cupons: 78, faturamento: 1563.04, meta: 2315, auto: 291.78, delivery: 1102.88, viagem: 0, balcao: 168.38},
             {loja: 82, data: '2026-02-03', inicio: '2026-02-03 12:37:31', fim: '2026-02-04 12:23:43', cupons: 109, faturamento: 1994.85, meta: 2460, auto: 593.04, delivery: 1270.44, viagem: 0, balcao: 131.37},
@@ -1577,9 +1577,10 @@
             {loja: 82, data: '2026-02-11', inicio: '2026-02-11 09:03:46', fim: '2026-02-11 19:50:56', cupons: 165, faturamento: 3613.11, meta: 2245, auto: 0, delivery: 2859.72, viagem: 0, balcao: 753.39},
             {loja: 82, data: '2026-02-12', inicio: '2026-02-12 09:09:07', fim: '2026-02-12 19:56:07', cupons: 181, faturamento: 3517.07, meta: 3435, auto: 770.24, delivery: 2015.65, viagem: 0, balcao: 731.18},
             {loja: 82, data: '2026-02-13', inicio: '2026-02-13 09:03:37', fim: '2026-02-13 19:52:21', cupons: 177, faturamento: 3106.1, meta: 2995, auto: 421.82, delivery: 2029.92, viagem: 0, balcao: 654.36},
-            {loja: 82, data: '2026-02-14', inicio: '2026-02-14 09:03:11', fim: '2026-02-14 16:50:36', cupons: 97, faturamento: 2199.74, meta: 2100, auto: 262.27, delivery: 1520.82, viagem: 0, balcao: 416.65},
+            // Loja 82 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 82, data: '2026-02-14', inicio: '2026-02-14 09:03:11', fim: '2026-02-14 19:37:13', cupons: 129, faturamento: 2951.7, meta: 2100, auto: 507.48, delivery: 1960.32, viagem: 0, balcao: 483.9},
 
-            // Loja 86 - REX RAFAEL DE BARROS (HEDLA)
+            // Loja 86 - REX RAFAEL DE BARROS (HEDLA) - DIAS 01 A 13 IGUAIS
             {loja: 86, data: '2026-02-01', inicio: '2026-02-01 13:31:09', fim: '2026-02-02 12:16:50', cupons: 69, faturamento: 2678.91, meta: 4760, auto: 636.02, delivery: 653.15, viagem: 92.06, balcao: 1297.68},
             {loja: 86, data: '2026-02-02', inicio: '2026-02-01 18:04:12', fim: '2026-02-02 21:33:24', cupons: 170, faturamento: 3791.97, meta: 3825, auto: 1684.06, delivery: 926.67, viagem: 200.47, balcao: 980.77},
             {loja: 86, data: '2026-02-03', inicio: '2026-02-03 10:58:05', fim: '2026-02-03 21:11:40', cupons: 76, faturamento: 2322.02, meta: 5565, auto: 857.32, delivery: 426.54, viagem: 239.59, balcao: 795.08},
@@ -1593,9 +1594,10 @@
             {loja: 86, data: '2026-02-11', inicio: '2026-02-11 09:12:36', fim: '2026-02-11 21:41:12', cupons: 147, faturamento: 3156.09, meta: 5715, auto: 1968.05, delivery: 453.43, viagem: 255.98, balcao: 478.63},
             {loja: 86, data: '2026-02-12', inicio: '2026-02-12 12:20:34', fim: '2026-02-12 21:17:38', cupons: 124, faturamento: 3056.73, meta: 5075, auto: 1924.85, delivery: 295.53, viagem: 319.02, balcao: 517.33},
             {loja: 86, data: '2026-02-13', inicio: '2026-02-13 10:06:18', fim: '2026-02-13 21:30:40', cupons: 108, faturamento: 3642.71, meta: 6405, auto: 1485.02, delivery: 641.94, viagem: 152.48, balcao: 1363.27},
-            {loja: 86, data: '2026-02-14', inicio: '2026-02-14 10:08:15', fim: '2026-02-14 16:15:06', cupons: 51, faturamento: 1301.29, meta: 5635, auto: 691.9, delivery: 205.5, viagem: 151.16, balcao: 118.78},
+            // Loja 86 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 86, data: '2026-02-14', inicio: '2026-02-14 10:08:15', fim: '2026-02-14 21:21:29', cupons: 103, faturamento: 3296.86, meta: 5635, auto: 1522.81, delivery: 387.71, viagem: 518.63, balcao: 729.31},
 
-            // Loja 90 - SHOPPING PARQUE BARUERI (MARCIA)
+            // Loja 90 - SHOPPING PARQUE BARUERI (MARCIA) - DIAS 01 A 13 IGUAIS
             {loja: 90, data: '2026-02-01', inicio: '2026-02-01 10:47:52', fim: '2026-02-01 21:46:17', cupons: 224, faturamento: 5436.43, meta: 4415, auto: 1962.1, delivery: 403.45, viagem: 636.77, balcao: 0},
             {loja: 90, data: '2026-02-02', inicio: '2026-02-02 10:06:54', fim: '2026-02-02 21:40:30', cupons: 175, faturamento: 4015.55, meta: 3710, auto: 1598.76, delivery: 238.5, viagem: 252.87, balcao: 0},
             {loja: 90, data: '2026-02-03', inicio: '2026-02-03 10:15:23', fim: '2026-02-03 21:57:42', cupons: 177, faturamento: 3977.67, meta: 4020, auto: 2104.49, delivery: 245.4, viagem: 156.3, balcao: 0},
@@ -1609,9 +1611,10 @@
             {loja: 90, data: '2026-02-11', inicio: '2026-02-11 10:31:14', fim: '2026-02-11 22:12:38', cupons: 166, faturamento: 3875.82, meta: 4420, auto: 1901.1, delivery: 229.51, viagem: 688.12, balcao: 0},
             {loja: 90, data: '2026-02-12', inicio: '2026-02-12 13:44:37', fim: '2026-02-12 21:47:36', cupons: 126, faturamento: 2547.23, meta: 3370, auto: 1429.24, delivery: 80.79, viagem: 192.24, balcao: 0},
             {loja: 90, data: '2026-02-13', inicio: '2026-02-13 10:25:47', fim: '2026-02-13 22:02:20', cupons: 198, faturamento: 4673.55, meta: 4345, auto: 1752.34, delivery: 217.27, viagem: 746.4, balcao: 0},
-            {loja: 90, data: '2026-02-14', inicio: '2026-02-14 10:47:06', fim: '2026-02-14 16:51:02', cupons: 93, faturamento: 1926.52, meta: 4955, auto: 1076.89, delivery: 29.5, viagem: 134.72, balcao: 0},
+            // Loja 90 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 90, data: '2026-02-14', inicio: '2026-02-14 10:47:06', fim: '2026-02-14 22:17:24', cupons: 233, faturamento: 5756.08, meta: 4955, auto: 2124.81, delivery: 478.74, viagem: 730.98, balcao: 0},
 
-            // Loja 97 - ASSAÍ JOÃO DIAS (THAIS)
+            // Loja 97 - ASSAÍ JOÃO DIAS (THAIS) - DIAS 01 A 13 IGUAIS
             {loja: 97, data: '2026-02-01', inicio: '2026-02-01 10:15:31', fim: '2026-02-01 19:40:14', cupons: 108, faturamento: 2285.08, meta: 3125, auto: 1728.49, delivery: 60.09, viagem: 283.79, balcao: 212.71},
             {loja: 97, data: '2026-02-02', inicio: '2026-02-02 10:47:55', fim: '2026-02-02 20:39:01', cupons: 150, faturamento: 3470.35, meta: 3475, auto: 1982.24, delivery: 576.52, viagem: 162.46, balcao: 749.13},
             {loja: 97, data: '2026-02-03', inicio: '2026-02-03 10:36:11', fim: '2026-02-03 21:50:41', cupons: 126, faturamento: 3386.48, meta: 3920, auto: 1757.65, delivery: 498.13, viagem: 463.7, balcao: 667},
@@ -1625,9 +1628,10 @@
             {loja: 97, data: '2026-02-11', inicio: '2026-02-11 10:22:21', fim: '2026-02-11 21:26:07', cupons: 162, faturamento: 3802.35, meta: 4485, auto: 2165.12, delivery: 582.84, viagem: 499.59, balcao: 554.8},
             {loja: 97, data: '2026-02-12', inicio: '2026-02-12 10:18:31', fim: '2026-02-12 21:42:21', cupons: 115, faturamento: 2515.55, meta: 3670, auto: 1323.7, delivery: 388, viagem: 458.21, balcao: 333.7},
             {loja: 97, data: '2026-02-13', inicio: '2026-02-13 10:24:02', fim: '2026-02-14 04:19:09', cupons: 155, faturamento: 4223.68, meta: 4100, auto: 2306.69, delivery: 133.1, viagem: 542.1, balcao: 1241.79},
-            {loja: 97, data: '2026-02-14', inicio: '2026-02-13 19:36:37', fim: '2026-02-14 16:06:21', cupons: 105, faturamento: 2046.39, meta: 6315, auto: 996.01, delivery: 382, viagem: 342.55, balcao: 1420.77},
+            // Loja 97 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 97, data: '2026-02-14', inicio: '2026-02-13 19:36:37', fim: '2026-02-14 21:45:48', cupons: 216, faturamento: 6659.71, meta: 6315, auto: 2413.49, delivery: 652.86, viagem: 589.97, balcao: 1827.91},
 
-            // Loja 98 - FRANCO DA ROCHA (GABRIELA)
+            // Loja 98 - FRANCO DA ROCHA (GABRIELA) - DIAS 01 A 13 IGUAIS
             {loja: 98, data: '2026-02-01', inicio: '2026-02-01 10:17:28', fim: '2026-02-01 21:31:21', cupons: 58, faturamento: 1183.14, meta: 2500, auto: 86.04, delivery: 319.1, viagem: 778, balcao: 0},
             {loja: 98, data: '2026-02-02', inicio: '2026-02-02 08:40:59', fim: '2026-02-02 22:18:52', cupons: 225, faturamento: 3871.63, meta: 3400, auto: 1084, delivery: 523.13, viagem: 2264.5, balcao: 0},
             {loja: 98, data: '2026-02-03', inicio: '2026-02-03 08:15:24', fim: '2026-02-03 22:20:17', cupons: 164, faturamento: 2390.96, meta: 3575, auto: 471.24, delivery: 539.92, viagem: 1379.8, balcao: 0},
@@ -1641,9 +1645,10 @@
             {loja: 98, data: '2026-02-11', inicio: '2026-02-11 09:40:26', fim: '2026-02-11 22:19:56', cupons: 222, faturamento: 3688.13, meta: 3600, auto: 1026.4, delivery: 606.08, viagem: 2055.65, balcao: 0},
             {loja: 98, data: '2026-02-12', inicio: '2026-02-12 08:48:37', fim: '2026-02-12 21:56:25', cupons: 208, faturamento: 3144.64, meta: 3970, auto: 999.72, delivery: 608.02, viagem: 1536.9, balcao: 0},
             {loja: 98, data: '2026-02-13', inicio: '2026-02-13 08:41:38', fim: '2026-02-13 19:26:46', cupons: 258, faturamento: 3493.53, meta: 4245, auto: 532.17, delivery: 586.56, viagem: 2374.8, balcao: 0},
-            {loja: 98, data: '2026-02-14', inicio: '2026-02-14 09:55:16', fim: '2026-02-14 16:53:43', cupons: 124, faturamento: 1893.14, meta: 3780, auto: 0, delivery: 269.39, viagem: 1623.75, balcao: 0},
+            // Loja 98 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 98, data: '2026-02-14', inicio: '2026-02-14 09:55:16', fim: '2026-02-14 21:49:24', cupons: 213, faturamento: 3846.4, meta: 3780, auto: 0, delivery: 853.19, viagem: 2993.21, balcao: 0},
 
-            // Loja 101 - CARREFOUR RAPOSO TAVARES (ELVES)
+            // Loja 101 - CARREFOUR RAPOSO TAVARES (ELVES) - DIAS 01 A 13 IGUAIS
             {loja: 101, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 2140, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 101, data: '2026-02-02', inicio: '2026-02-02 12:18:38', fim: '2026-02-02 19:50:56', cupons: 80, faturamento: 1964.78, meta: 2080, auto: 0, delivery: 1427.24, viagem: 537.54, balcao: 0},
             {loja: 101, data: '2026-02-03', inicio: '2026-02-03 12:33:56', fim: '2026-02-03 19:32:30', cupons: 64, faturamento: 1497.71, meta: 1850, auto: 0, delivery: 668, viagem: 829.71, balcao: 0},
@@ -1657,9 +1662,10 @@
             {loja: 101, data: '2026-02-11', inicio: '2026-02-11 10:23:13', fim: '2026-02-11 21:17:43', cupons: 130, faturamento: 2461.34, meta: 1900, auto: 0, delivery: 978.83, viagem: 1482.51, balcao: 0},
             {loja: 101, data: '2026-02-12', inicio: '2026-02-12 11:16:55', fim: '2026-02-12 21:42:55', cupons: 136, faturamento: 2696.94, meta: 1820, auto: 0, delivery: 1317.84, viagem: 1379.1, balcao: 0},
             {loja: 101, data: '2026-02-13', inicio: '2026-02-13 10:39:00', fim: '2026-02-13 20:53:41', cupons: 116, faturamento: 2575.19, meta: 2450, auto: 0, delivery: 1489.73, viagem: 1085.46, balcao: 0},
-            {loja: 101, data: '2026-02-14', inicio: '2026-02-14 10:05:39', fim: '2026-02-14 16:44:57', cupons: 88, faturamento: 2063.23, meta: 2980, auto: 351.1, delivery: 831.72, viagem: 880.41, balcao: 0},
+            // Loja 101 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 101, data: '2026-02-14', inicio: '2026-02-14 10:05:39', fim: '2026-02-14 21:01:55', cupons: 132, faturamento: 3374.5, meta: 2980, auto: 351.1, delivery: 1673.38, viagem: 1350.02, balcao: 0},
 
-            // Loja 118 - SHOPPING ITAPECERICA II (THAIS)
+            // Loja 118 - SHOPPING ITAPECERICA II (THAIS) - DIAS 01 A 13 IGUAIS
             {loja: 118, data: '2026-02-01', inicio: '2026-02-01 11:12:56', fim: '2026-02-01 21:48:59', cupons: 119, faturamento: 2521.98, meta: 2680, auto: 1214.88, delivery: 806.27, viagem: 500.83, balcao: 0},
             {loja: 118, data: '2026-02-02', inicio: '2026-02-02 11:09:56', fim: '2026-02-02 21:29:21', cupons: 103, faturamento: 2154.74, meta: 2420, auto: 1274.8, delivery: 436.3, viagem: 443.64, balcao: 0},
             {loja: 118, data: '2026-02-03', inicio: '2026-02-03 10:35:24', fim: '2026-02-03 21:56:38', cupons: 83, faturamento: 1811.52, meta: 2645, auto: 840.02, delivery: 547.94, viagem: 423.56, balcao: 0},
@@ -1673,9 +1679,10 @@
             {loja: 118, data: '2026-02-11', inicio: '2026-02-11 10:16:33', fim: '2026-02-11 21:39:19', cupons: 87, faturamento: 1700.14, meta: 2445, auto: 675.48, delivery: 496.99, viagem: 527.67, balcao: 0},
             {loja: 118, data: '2026-02-12', inicio: '2026-02-12 11:13:01', fim: '2026-02-12 21:34:00', cupons: 88, faturamento: 1911.59, meta: 2890, auto: 964.99, delivery: 439.15, viagem: 507.45, balcao: 0},
             {loja: 118, data: '2026-02-13', inicio: '2026-02-13 10:21:39', fim: '2026-02-13 21:58:28', cupons: 103, faturamento: 2239.19, meta: 2920, auto: 932.34, delivery: 540.76, viagem: 766.09, balcao: 0},
-            {loja: 118, data: '2026-02-14', inicio: '2026-02-14 10:34:34', fim: '2026-02-14 16:53:33', cupons: 40, faturamento: 946.35, meta: 3870, auto: 520.09, delivery: 195.91, viagem: 230.35, balcao: 0},
+            // Loja 118 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 118, data: '2026-02-14', inicio: '2026-02-14 10:34:34', fim: '2026-02-14 22:04:46', cupons: 102, faturamento: 2459.41, meta: 3870, auto: 1204.63, delivery: 630.78, viagem: 624, balcao: 0},
 
-            // Loja 126 - OSASCO JOÃO DE ANDRADE (WAGNER)
+            // Loja 126 - OSASCO JOÃO DE ANDRADE (WAGNER) - DIAS 01 A 13 IGUAIS
             {loja: 126, data: '2026-02-01', inicio: '2026-02-01 14:44:39', fim: '2026-02-01 21:08:09', cupons: 11, faturamento: 318.83, meta: 8370, auto: 0, delivery: 0, viagem: 318.83, balcao: 0},
             {loja: 126, data: '2026-02-02', inicio: '2026-02-02 11:01:47', fim: '2026-02-02 21:30:52', cupons: 141, faturamento: 4302.9, meta: 8195, auto: 142.26, delivery: 2213.2, viagem: 0, balcao: 1947.44},
             {loja: 126, data: '2026-02-03', inicio: '2026-02-03 10:22:32', fim: '2026-02-03 21:35:30', cupons: 148, faturamento: 5487.26, meta: 9380, auto: 694.15, delivery: 3562.84, viagem: 0, balcao: 1230.27},
@@ -1689,9 +1696,10 @@
             {loja: 126, data: '2026-02-11', inicio: '2026-02-11 10:04:20', fim: '2026-02-11 21:32:40', cupons: 208, faturamento: 6573.07, meta: 8045, auto: 554.69, delivery: 3836.18, viagem: 40.32, balcao: 2141.88},
             {loja: 126, data: '2026-02-12', inicio: '2026-02-12 10:25:45', fim: '2026-02-12 21:24:18', cupons: 293, faturamento: 5778.66, meta: 8990, auto: 327.02, delivery: 3312.49, viagem: 10.47, balcao: 2128.68},
             {loja: 126, data: '2026-02-13', inicio: '2026-02-13 10:15:00', fim: '2026-02-13 21:30:11', cupons: 396, faturamento: 10997.7, meta: 11555, auto: 643.84, delivery: 6195.35, viagem: 31.07, balcao: 4127.44},
-            {loja: 126, data: '2026-02-14', inicio: '2026-02-14 13:14:43', fim: '2026-02-14 16:16:42', cupons: 103, faturamento: 2839.15, meta: 13025, auto: 394.59, delivery: 0, viagem: 38.37, balcao: 0},
+            // Loja 126 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 126, data: '2026-02-14', inicio: '2026-02-14 11:14:44', fim: '2026-02-14 21:32:19', cupons: 290, faturamento: 11462.34, meta: 13025, auto: 957.06, delivery: 3821.8, viagem: 71.77, balcao: 4046.38},
 
-            // Loja 133 - PARQUE TIETÊ (GABRIELA)
+            // Loja 133 - PARQUE TIETÊ (GABRIELA) - DIAS 01 A 13 IGUAIS
             {loja: 133, data: '2026-02-01', inicio: '2026-02-01 11:02:16', fim: '2026-02-01 18:27:53', cupons: 109, faturamento: 3247.49, meta: 0, auto: 51.45, delivery: 2814.27, viagem: 381.77, balcao: 0},
             {loja: 133, data: '2026-02-02', inicio: '2026-02-02 10:34:08', fim: '2026-02-02 21:58:31', cupons: 243, faturamento: 5745.94, meta: 4635, auto: 49.7, delivery: 4844.57, viagem: 851.67, balcao: 0},
             {loja: 133, data: '2026-02-03', inicio: '2026-02-03 10:23:35', fim: '2026-02-03 22:00:20', cupons: 159, faturamento: 4246.76, meta: 4980, auto: 178.23, delivery: 2863.13, viagem: 1188.66, balcao: 0},
@@ -1705,9 +1713,10 @@
             {loja: 133, data: '2026-02-11', inicio: '2026-02-11 10:22:14', fim: '2026-02-11 22:40:48', cupons: 175, faturamento: 4698.39, meta: 5585, auto: 183.94, delivery: 3489.38, viagem: 1025.07, balcao: 0},
             {loja: 133, data: '2026-02-12', inicio: '2026-02-12 10:04:20', fim: '2026-02-12 22:31:44', cupons: 196, faturamento: 4821.72, meta: 5140, auto: 0, delivery: 3674.77, viagem: 1146.95, balcao: 0},
             {loja: 133, data: '2026-02-13', inicio: '2026-02-13 10:08:42', fim: '2026-02-13 21:47:58', cupons: 164, faturamento: 5198.91, meta: 5875, auto: 278.37, delivery: 4016.21, viagem: 904.33, balcao: 0},
-            {loja: 133, data: '2026-02-14', inicio: '2026-02-14 10:09:38', fim: '2026-02-14 16:54:43', cupons: 87, faturamento: 2556.53, meta: 6680, auto: 131.33, delivery: 1984.64, viagem: 440.56, balcao: 0},
+            // Loja 133 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 133, data: '2026-02-14', inicio: '2026-02-14 10:09:38', fim: '2026-02-14 22:00:16', cupons: 182, faturamento: 6173.52, meta: 6680, auto: 293.67, delivery: 5171.23, viagem: 708.62, balcao: 0},
 
-            // Loja 145 - ITASHOPPING (ELVES)
+            // Loja 145 - ITASHOPPING (ELVES) - DIAS 01 A 13 IGUAIS
             {loja: 145, data: '2026-02-01', inicio: '2026-02-01 09:55:30', fim: '2026-02-02 09:13:20', cupons: 64, faturamento: 1967.02, meta: 3170, auto: 43.88, delivery: 1539.41, viagem: 383.73, balcao: 0},
             {loja: 145, data: '2026-02-02', inicio: '2026-02-02 09:54:59', fim: '2026-02-03 08:50:14', cupons: 127, faturamento: 2337.02, meta: 3010, auto: 504.17, delivery: 729.4, viagem: 1037.85, balcao: 0},
             {loja: 145, data: '2026-02-03', inicio: '2026-02-03 09:40:43', fim: '2026-02-05 00:26:05', cupons: 132, faturamento: 2400.01, meta: 3095, auto: 569.77, delivery: 678, viagem: 1152.24, balcao: 0},
@@ -1721,9 +1730,10 @@
             {loja: 145, data: '2026-02-11', inicio: '2026-02-11 08:47:30', fim: '2026-02-13 08:28:42', cupons: 181, faturamento: 3060.92, meta: 3345, auto: 1494.1, delivery: 946.15, viagem: 620.67, balcao: 0},
             {loja: 145, data: '2026-02-12', inicio: '2026-02-12 10:16:14', fim: '2026-02-13 08:33:19', cupons: 155, faturamento: 2427.45, meta: 3315, auto: 432.54, delivery: 740.65, viagem: 1247.28, balcao: 0},
             {loja: 145, data: '2026-02-13', inicio: '2026-02-13 09:05:30', fim: '2026-02-14 09:19:24', cupons: 142, faturamento: 2451.98, meta: 4270, auto: 732, delivery: 736.95, viagem: 979.54, balcao: 0},
-            {loja: 145, data: '2026-02-14', inicio: '2026-02-14 09:28:50', fim: '2026-02-14 16:51:02', cupons: 76, faturamento: 1052.12, meta: 4375, auto: 321.26, delivery: 246.09, viagem: 790.23, balcao: 0},
+            // Loja 145 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 145, data: '2026-02-14', inicio: '2026-02-14 09:28:50', fim: '2026-02-14 21:28:58', cupons: 144, faturamento: 2438.53, meta: 4375, auto: 321.26, delivery: 802.75, viagem: 1619.98, balcao: 0},
 
-            // Loja 157 - JARDIM SÃO LUIZ (THAIS)
+            // Loja 157 - JARDIM SÃO LUIZ (THAIS) - DIAS 01 A 13 IGUAIS
             {loja: 157, data: '2026-02-01', inicio: '2026-02-01 10:24:08', fim: '2026-02-01 20:31:21', cupons: 91, faturamento: 2497.37, meta: 0, auto: 0, delivery: 1797.97, viagem: 699.4, balcao: 0},
             {loja: 157, data: '2026-02-02', inicio: '2026-02-02 09:24:29', fim: '2026-02-02 20:22:44', cupons: 139, faturamento: 2924.73, meta: 3025, auto: 0, delivery: 2010.46, viagem: 914.27, balcao: 0},
             {loja: 157, data: '2026-02-03', inicio: '2026-02-03 09:28:18', fim: '2026-02-03 21:10:29', cupons: 119, faturamento: 2295.59, meta: 2705, auto: 0, delivery: 1327.64, viagem: 967.95, balcao: 0},
@@ -1737,9 +1747,10 @@
             {loja: 157, data: '2026-02-11', inicio: '2026-02-11 09:29:59', fim: '2026-02-11 21:35:16', cupons: 117, faturamento: 2539.06, meta: 3225, auto: 0, delivery: 1718.99, viagem: 820.07, balcao: 0},
             {loja: 157, data: '2026-02-12', inicio: '2026-02-12 09:43:50', fim: '2026-02-12 21:36:33', cupons: 120, faturamento: 2199.54, meta: 3405, auto: 0, delivery: 1018.34, viagem: 1181.2, balcao: 0},
             {loja: 157, data: '2026-02-13', inicio: '2026-02-13 10:22:28', fim: '2026-02-13 21:20:26', cupons: 107, faturamento: 2516.24, meta: 3405, auto: 0, delivery: 1644.09, viagem: 872.15, balcao: 0},
-            {loja: 157, data: '2026-02-14', inicio: '2026-02-14 10:28:40', fim: '2026-02-14 16:52:14', cupons: 55, faturamento: 1230.79, meta: 3365, auto: 0, delivery: 719.57, viagem: 511.22, balcao: 0},
+            // Loja 157 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 157, data: '2026-02-14', inicio: '2026-02-14 10:28:40', fim: '2026-02-14 21:34:20', cupons: 121, faturamento: 3493.84, meta: 3365, auto: 0, delivery: 2371.64, viagem: 1122.2, balcao: 0},
 
-            // Loja 158 - ASSAÍ CARAPICUÍBA (MARCIA)
+            // Loja 158 - ASSAÍ CARAPICUÍBA (MARCIA) - DIAS 01 A 13 IGUAIS
             {loja: 158, data: '2026-02-01', inicio: '2026-02-01 09:10:23', fim: '2026-02-01 21:04:06', cupons: 192, faturamento: 5708, meta: 4900, auto: 2919.55, delivery: 2453.57, viagem: 334.88, balcao: 0},
             {loja: 158, data: '2026-02-02', inicio: '2026-02-02 09:06:53', fim: '2026-02-02 21:29:41', cupons: 198, faturamento: 4820.3, meta: 3875, auto: 2014.92, delivery: 2180.35, viagem: 625.03, balcao: 0},
             {loja: 158, data: '2026-02-03', inicio: '2026-02-03 09:49:41', fim: '2026-02-03 21:43:53', cupons: 149, faturamento: 3751.82, meta: 2625, auto: 2009.35, delivery: 1551.76, viagem: 190.71, balcao: 0},
@@ -1753,9 +1764,10 @@
             {loja: 158, data: '2026-02-11', inicio: '2026-02-11 09:42:58', fim: '2026-02-11 21:32:49', cupons: 122, faturamento: 2463.76, meta: 3930, auto: 1933.42, delivery: 94.19, viagem: 436.15, balcao: 0},
             {loja: 158, data: '2026-02-12', inicio: '2026-02-12 09:48:26', fim: '2026-02-12 19:25:45', cupons: 69, faturamento: 1278.61, meta: 3490, auto: 1019.94, delivery: 11.45, viagem: 247.22, balcao: 0},
             {loja: 158, data: '2026-02-13', inicio: '2026-02-13 09:50:15', fim: '2026-02-13 21:40:35', cupons: 168, faturamento: 4512.33, meta: 4425, auto: 2490.5, delivery: 1741.45, viagem: 280.38, balcao: 0},
-            {loja: 158, data: '2026-02-14', inicio: '2026-02-14 09:23:03', fim: '2026-02-14 16:55:33', cupons: 82, faturamento: 1816.81, meta: 4655, auto: 1179.27, delivery: 348.5, viagem: 289.04, balcao: 0},
+            // Loja 158 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 158, data: '2026-02-14', inicio: '2026-02-14 09:23:03', fim: '2026-02-14 22:03:32', cupons: 190, faturamento: 4982.67, meta: 4655, auto: 2783.13, delivery: 1654.14, viagem: 545.4, balcao: 0},
 
-            // Loja 162 - MARQUESA TAIPAS (GABRIELA)
+            // Loja 162 - MARQUESA TAIPAS (GABRIELA) - DIAS 01 A 13 IGUAIS
             {loja: 162, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 162, data: '2026-02-02', inicio: '2026-02-02 09:53:46', fim: '2026-02-02 19:51:06', cupons: 121, faturamento: 2740.74, meta: 2395, auto: 0, delivery: 0, viagem: 0, balcao: 927.67},
             {loja: 162, data: '2026-02-03', inicio: '2026-02-03 09:56:41', fim: '2026-02-03 19:52:20', cupons: 92, faturamento: 2643.99, meta: 2765, auto: 0, delivery: 0, viagem: 0, balcao: 522.83},
@@ -1769,9 +1781,10 @@
             {loja: 162, data: '2026-02-11', inicio: '2026-02-11 09:21:10', fim: '2026-02-11 20:33:41', cupons: 129, faturamento: 2606.87, meta: 3335, auto: 0, delivery: 0, viagem: 0, balcao: 1244.5},
             {loja: 162, data: '2026-02-12', inicio: '2026-02-12 09:41:17', fim: '2026-02-12 20:48:21', cupons: 124, faturamento: 2476.76, meta: 2905, auto: 0, delivery: 0, viagem: 0, balcao: 1155.83},
             {loja: 162, data: '2026-02-13', inicio: '2026-02-13 09:23:08', fim: '2026-02-13 20:42:18', cupons: 91, faturamento: 2951.27, meta: 3090, auto: 0, delivery: 0, viagem: 0, balcao: 693.02},
-            {loja: 162, data: '2026-02-14', inicio: '2026-02-14 09:42:12', fim: '2026-02-14 16:53:04', cupons: 60, faturamento: 1427.82, meta: 2985, auto: 0, delivery: 0, viagem: 0, balcao: 532.89},
+            // Loja 162 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 162, data: '2026-02-14', inicio: '2026-02-14 09:42:12', fim: '2026-02-14 21:24:04', cupons: 104, faturamento: 3272.72, meta: 2985, auto: 0, delivery: 0, viagem: 0, balcao: 809.08},
 
-            // Loja 178 - EXTRA CARAPICUÍBA (MARCIA)
+            // Loja 178 - EXTRA CARAPICUÍBA (MARCIA) - DIAS 01 A 13 IGUAIS
             {loja: 178, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 800, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 178, data: '2026-02-02', inicio: '2026-02-02 12:39:03', fim: '2026-02-04 02:07:37', cupons: 79, faturamento: 2144.23, meta: 1710, auto: 0, delivery: 1508.19, viagem: 0, balcao: 506.47},
             {loja: 178, data: '2026-02-03', inicio: '2026-02-03 12:47:26', fim: '2026-02-03 19:33:20', cupons: 59, faturamento: 1943.19, meta: 2260, auto: 0, delivery: 1495.29, viagem: 0, balcao: 377.42},
@@ -1785,9 +1798,10 @@
             {loja: 178, data: '2026-02-11', inicio: '2026-02-11 12:22:53', fim: '2026-02-11 21:34:32', cupons: 113, faturamento: 2598.1, meta: 1565, auto: 0, delivery: 1625.2, viagem: 0, balcao: 972.9},
             {loja: 178, data: '2026-02-12', inicio: '2026-02-12 09:18:13', fim: '2026-02-12 21:48:53', cupons: 154, faturamento: 3808.91, meta: 1785, auto: 0, delivery: 2774.94, viagem: 0, balcao: 838.84},
             {loja: 178, data: '2026-02-13', inicio: '2026-02-13 09:28:18', fim: '2026-02-13 22:11:29', cupons: 124, faturamento: 3964.04, meta: 2270, auto: 0, delivery: 2933.02, viagem: 0, balcao: 1015.04},
-            {loja: 178, data: '2026-02-14', inicio: '2026-02-14 09:26:40', fim: '2026-02-14 16:49:36', cupons: 66, faturamento: 1449.88, meta: 2165, auto: 0, delivery: 988.86, viagem: 0, balcao: 461.02},
+            // Loja 178 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 178, data: '2026-02-14', inicio: '2026-02-14 09:26:40', fim: '2026-02-14 21:39:38', cupons: 140, faturamento: 4225.65, meta: 2165, auto: 0, delivery: 3348.46, viagem: 0, balcao: 877.19},
 
-            // Loja 183 - FRANCO DA ROCHA 2 (GABRIELA)
+            // Loja 183 - FRANCO DA ROCHA 2 (GABRIELA) - DIAS 01 A 13 IGUAIS
             {loja: 183, data: '2026-02-01', inicio: '2026-02-01 11:18:54', fim: '2026-02-01 21:21:27', cupons: 34, faturamento: 951.44, meta: 1165, auto: 35.7, delivery: 204.7, viagem: 711.04, balcao: 0},
             {loja: 183, data: '2026-02-02', inicio: '2026-02-02 09:20:38', fim: '2026-02-02 22:10:05', cupons: 129, faturamento: 1944.59, meta: 2545, auto: 346.52, delivery: 295.3, viagem: 1302.77, balcao: 0},
             {loja: 183, data: '2026-02-03', inicio: '2026-02-03 09:51:33', fim: '2026-02-03 20:51:53', cupons: 76, faturamento: 1418.1, meta: 2480, auto: 35.7, delivery: 230.07, viagem: 1092.73, balcao: 0},
@@ -1801,9 +1815,10 @@
             {loja: 183, data: '2026-02-11', inicio: '2026-02-11 10:09:50', fim: '2026-02-11 22:00:37', cupons: 120, faturamento: 1736.86, meta: 2540, auto: 522.49, delivery: 178.83, viagem: 999.6, balcao: 0},
             {loja: 183, data: '2026-02-12', inicio: '2026-02-12 09:44:42', fim: '2026-02-12 21:44:54', cupons: 129, faturamento: 1808.69, meta: 2480, auto: 617.94, delivery: 115.14, viagem: 1067.61, balcao: 0},
             {loja: 183, data: '2026-02-13', inicio: '2026-02-13 09:36:54', fim: '2026-02-13 19:26:13', cupons: 126, faturamento: 2092.38, meta: 3020, auto: 912.16, delivery: 542.95, viagem: 629.27, balcao: 0},
-            {loja: 183, data: '2026-02-14', inicio: '2026-02-14 10:54:40', fim: '2026-02-14 16:43:55', cupons: 40, faturamento: 670.8, meta: 2540, auto: 0, delivery: 88.33, viagem: 582.47, balcao: 0},
+            // Loja 183 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 183, data: '2026-02-14', inicio: '2026-02-14 10:54:40', fim: '2026-02-14 22:23:26', cupons: 60, faturamento: 1163.29, meta: 2540, auto: 0, delivery: 268.91, viagem: 856.93, balcao: 0},
 
-            // Loja 189 - SHOPPING PATIO CIANÊ (ELVES)
+            // Loja 189 - SHOPPING PATIO CIANÊ (ELVES) - DIAS 01 A 13 IGUAIS
             {loja: 189, data: '2026-02-01', inicio: '2026-02-01 12:06:52', fim: '2026-02-01 20:48:10', cupons: 102, faturamento: 1707.46, meta: 1330, auto: 466.58, delivery: 292.68, viagem: 948.2, balcao: 0},
             {loja: 189, data: '2026-02-02', inicio: '2026-02-02 10:28:18', fim: '2026-02-02 21:28:22', cupons: 171, faturamento: 2103.41, meta: 2555, auto: 698.04, delivery: 150.55, viagem: 1188.07, balcao: 0},
             {loja: 189, data: '2026-02-03', inicio: '2026-02-03 09:49:26', fim: '2026-02-03 21:45:20', cupons: 172, faturamento: 2008.12, meta: 2450, auto: 776.19, delivery: 107.75, viagem: 1124.18, balcao: 0},
@@ -1817,9 +1832,10 @@
             {loja: 189, data: '2026-02-11', inicio: '2026-02-11 09:10:09', fim: '2026-02-11 21:11:40', cupons: 174, faturamento: 2076.87, meta: 2495, auto: 749.33, delivery: 200.04, viagem: 1127.5, balcao: 0},
             {loja: 189, data: '2026-02-12', inicio: '2026-02-12 10:05:08', fim: '2026-02-12 21:51:06', cupons: 192, faturamento: 2564.1, meta: 2670, auto: 718, delivery: 240.47, viagem: 1596.72, balcao: 0},
             {loja: 189, data: '2026-02-13', inicio: '2026-02-13 09:53:31', fim: '2026-02-13 21:54:04', cupons: 203, faturamento: 2519.29, meta: 2830, auto: 737.6, delivery: 379.76, viagem: 1401.93, balcao: 0},
-            {loja: 189, data: '2026-02-14', inicio: '2026-02-14 10:06:37', fim: '2026-02-14 16:53:56', cupons: 114, faturamento: 1271.1, meta: 2665, auto: 270.11, delivery: 166.79, viagem: 834.2, balcao: 0},
+            // Loja 189 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 189, data: '2026-02-14', inicio: '2026-02-14 10:06:37', fim: '2026-02-14 21:21:26', cupons: 167, faturamento: 2184.4, meta: 2665, auto: 514.64, delivery: 473.63, viagem: 1196.13, balcao: 0},
 
-            // Loja 195 - EXTRA JARAGUÁ (GABRIELA)
+            // Loja 195 - EXTRA JARAGUÁ (GABRIELA) - DIAS 01 A 13 IGUAIS
             {loja: 195, data: '2026-02-01', inicio: '2026-02-01 11:36:07', fim: '2026-02-01 19:34:36', cupons: 131, faturamento: 4973.41, meta: 0, auto: 0, delivery: 4610.59, viagem: 362.82, balcao: 0},
             {loja: 195, data: '2026-02-02', inicio: '2026-02-02 11:05:26', fim: '2026-02-02 21:48:00', cupons: 223, faturamento: 5456.33, meta: 5920, auto: 0, delivery: 3764.65, viagem: 1691.68, balcao: 0},
             {loja: 195, data: '2026-02-03', inicio: '2026-02-03 10:48:58', fim: '2026-02-03 21:46:13', cupons: 210, faturamento: 4607.07, meta: 5325, auto: 0, delivery: 3074.6, viagem: 1532.47, balcao: 0},
@@ -1833,9 +1849,10 @@
             {loja: 195, data: '2026-02-11', inicio: '2026-02-11 10:15:02', fim: '2026-02-11 21:43:28', cupons: 230, faturamento: 4579.81, meta: 5325, auto: 0, delivery: 2729.09, viagem: 1850.72, balcao: 0},
             {loja: 195, data: '2026-02-12', inicio: '2026-02-12 09:49:22', fim: '2026-02-12 21:43:27', cupons: 265, faturamento: 5162.11, meta: 5470, auto: 0, delivery: 2873.42, viagem: 2288.69, balcao: 0},
             {loja: 195, data: '2026-02-13', inicio: '2026-02-13 10:16:42', fim: '2026-02-13 21:25:39', cupons: 256, faturamento: 6232.95, meta: 6590, auto: 0, delivery: 4180.13, viagem: 2052.82, balcao: 0},
-            {loja: 195, data: '2026-02-14', inicio: '2026-02-14 09:51:55', fim: '2026-02-14 16:55:03', cupons: 120, faturamento: 2938.33, meta: 5780, auto: 0, delivery: 1691.32, viagem: 1247.01, balcao: 0},
+            // Loja 195 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 195, data: '2026-02-14', inicio: '2026-02-14 09:51:55', fim: '2026-02-14 21:41:52', cupons: 236, faturamento: 7277.22, meta: 5780, auto: 0, delivery: 5369.03, viagem: 1908.19, balcao: 0},
 
-            // Loja 210 - ASSAÍ ABOLIÇÃO CAMPINAS (FERNANDO)
+            // Loja 210 - ASSAÍ ABOLIÇÃO CAMPINAS (FERNANDO) - DIAS 01 A 13 IGUAIS
             {loja: 210, data: '2026-02-01', inicio: '2026-02-01 13:00:48', fim: '2026-02-01 18:33:30', cupons: 63, faturamento: 1028.99, meta: 1895, auto: 0, delivery: 0, viagem: 0, balcao: 1028.99},
             {loja: 210, data: '2026-02-02', inicio: '2026-02-02 11:47:13', fim: '2026-02-02 19:47:52', cupons: 64, faturamento: 977.73, meta: 2605, auto: 0, delivery: 0, viagem: 0, balcao: 977.73},
             {loja: 210, data: '2026-02-03', inicio: '2026-02-03 10:32:34', fim: '2026-02-03 20:54:31', cupons: 159, faturamento: 3167.04, meta: 2565, auto: 0, delivery: 1202.66, viagem: 0, balcao: 1964.38},
@@ -1849,9 +1866,10 @@
             {loja: 210, data: '2026-02-11', inicio: '2026-02-11 00:00:00', fim: '2026-02-11 20:36:08', cupons: 160, faturamento: 2840.45, meta: 3490, auto: 0, delivery: 1279.57, viagem: 0, balcao: 1545},
             {loja: 210, data: '2026-02-12', inicio: '2026-02-12 08:16:05', fim: '2026-02-12 21:19:27', cupons: 188, faturamento: 3774.26, meta: 3715, auto: 0, delivery: 1360.56, viagem: 0, balcao: 2413.7},
             {loja: 210, data: '2026-02-13', inicio: '2026-02-13 08:45:43', fim: '2026-02-13 20:49:28', cupons: 128, faturamento: 2899.39, meta: 3815, auto: 0, delivery: 1176.61, viagem: 0, balcao: 1722.78},
-            {loja: 210, data: '2026-02-14', inicio: '2026-02-14 08:31:14', fim: '2026-02-14 16:55:20', cupons: 125, faturamento: 2483.99, meta: 4025, auto: 0, delivery: 827.3, viagem: 0, balcao: 1636.89},
+            // Loja 210 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 210, data: '2026-02-14', inicio: '2026-02-14 08:31:14', fim: '2026-02-14 21:26:00', cupons: 179, faturamento: 4057.87, meta: 4025, auto: 0, delivery: 1757.81, viagem: 0, balcao: 2280.26},
 
-            // Loja 247 - METRÔ CCR VILA DAS BELEZAS (THAIS)
+            // Loja 247 - METRÔ CCR VILA DAS BELEZAS (THAIS) - DIAS 01 A 13 IGUAIS
             {loja: 247, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 247, data: '2026-02-02', inicio: '2026-02-02 08:44:37', fim: '2026-02-02 20:48:31', cupons: 111, faturamento: 1495.06, meta: 1735, auto: 0, delivery: 508.47, viagem: 986.59, balcao: 0},
             {loja: 247, data: '2026-02-03', inicio: '2026-02-03 08:53:12', fim: '2026-02-03 20:42:03', cupons: 124, faturamento: 1770.59, meta: 1460, auto: 0, delivery: 527.63, viagem: 1242.96, balcao: 0},
@@ -1865,9 +1883,10 @@
             {loja: 247, data: '2026-02-11', inicio: '2026-02-11 00:00:00', fim: '2026-02-11 20:12:04', cupons: 186, faturamento: 2309.18, meta: 1505, auto: 0, delivery: 341.55, viagem: 1949.72, balcao: 0},
             {loja: 247, data: '2026-02-12', inicio: '2026-02-12 08:33:11', fim: '2026-02-12 20:41:22', cupons: 127, faturamento: 1716.16, meta: 1755, auto: 0, delivery: 418.56, viagem: 1297.6, balcao: 0},
             {loja: 247, data: '2026-02-13', inicio: '2026-02-13 08:46:09', fim: '2026-02-13 20:31:57', cupons: 112, faturamento: 1768.7, meta: 2050, auto: 0, delivery: 632.17, viagem: 1136.53, balcao: 0},
-            {loja: 247, data: '2026-02-14', inicio: '2026-02-14 08:26:49', fim: '2026-02-14 16:51:54', cupons: 73, faturamento: 986.61, meta: 1700, auto: 0, delivery: 78.76, viagem: 907.85, balcao: 0},
+            // Loja 247 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 247, data: '2026-02-14', inicio: '2026-02-14 08:26:49', fim: '2026-02-14 20:24:23', cupons: 103, faturamento: 1522.11, meta: 1700, auto: 0, delivery: 317.92, viagem: 1204.19, balcao: 0},
 
-            // Loja 248 - METRÔ CCR CAPÃO REDONDO (THAIS)
+            // Loja 248 - METRÔ CCR CAPÃO REDONDO (THAIS) - DIAS 01 A 13 IGUAIS
             {loja: 248, data: '2026-02-01', inicio: '2026-02-01 07:38:49', fim: '2026-02-01 19:29:22', cupons: 163, faturamento: 4447.69, meta: 3975, auto: 312.28, delivery: 2905.07, viagem: 999.75, balcao: 230.59},
             {loja: 248, data: '2026-02-02', inicio: '2026-02-02 07:21:48', fim: '2026-02-02 18:43:18', cupons: 164, faturamento: 3067.52, meta: 5460, auto: 137.37, delivery: 1342.58, viagem: 1507, balcao: 80.57},
             {loja: 248, data: '2026-02-03', inicio: '2026-02-03 13:10:23', fim: '2026-02-03 23:24:22', cupons: 203, faturamento: 4937.8, meta: 5620, auto: 0, delivery: 3164.96, viagem: 1772.84, balcao: 0},
@@ -1881,9 +1900,10 @@
             {loja: 248, data: '2026-02-11', inicio: '2026-02-11 07:41:10', fim: '2026-02-11 23:22:44', cupons: 297, faturamento: 5632.03, meta: 4920, auto: 448.07, delivery: 2928.1, viagem: 1581.37, balcao: 674.49},
             {loja: 248, data: '2026-02-12', inicio: '2026-02-12 07:27:51', fim: '2026-02-12 23:44:37', cupons: 312, faturamento: 5481.55, meta: 5175, auto: 684.93, delivery: 2347.62, viagem: 1842.88, balcao: 606.12},
             {loja: 248, data: '2026-02-13', inicio: '2026-02-13 07:34:39', fim: '2026-02-13 23:51:53', cupons: 277, faturamento: 6052.05, meta: 5735, auto: 387.87, delivery: 3040.98, viagem: 1978.3, balcao: 644.9},
-            {loja: 248, data: '2026-02-14', inicio: '2026-02-14 07:13:28', fim: '2026-02-14 16:54:04', cupons: 144, faturamento: 2624.66, meta: 5725, auto: 0, delivery: 980.55, viagem: 939.33, balcao: 704.78},
+            // Loja 248 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 248, data: '2026-02-14', inicio: '2026-02-14 07:13:28', fim: '2026-02-14 22:26:59', cupons: 235, faturamento: 5053.3, meta: 5725, auto: 0, delivery: 2464.22, viagem: 1624, balcao: 965.08},
 
-            // Loja 251 - SOROCABA CENTRO (ELVES)
+            // Loja 251 - SOROCABA CENTRO (ELVES) - DIAS 01 A 13 IGUAIS
             {loja: 251, data: '2026-02-01', inicio: null, fim: null, cupons: 0, faturamento: 0, meta: 0, auto: 0, delivery: 0, viagem: 0, balcao: 0},
             {loja: 251, data: '2026-02-02', inicio: '2026-02-02 09:32:52', fim: '2026-02-02 18:29:28', cupons: 74, faturamento: 1265.67, meta: 1360, auto: 0, delivery: 110.98, viagem: 1129.8, balcao: 0},
             {loja: 251, data: '2026-02-03', inicio: '2026-02-03 10:01:01', fim: '2026-02-03 19:03:25', cupons: 103, faturamento: 1211.09, meta: 1950, auto: 0, delivery: 178.57, viagem: 1032.52, balcao: 0},
@@ -1897,9 +1917,10 @@
             {loja: 251, data: '2026-02-11', inicio: '2026-02-11 08:20:24', fim: '2026-02-11 16:54:47', cupons: 68, faturamento: 763.76, meta: 1530, auto: 0, delivery: 99.84, viagem: 663.92, balcao: 0},
             {loja: 251, data: '2026-02-12', inicio: '2026-02-12 09:16:02', fim: '2026-02-12 19:59:17', cupons: 74, faturamento: 874.23, meta: 1865, auto: 0, delivery: 55.72, viagem: 818.51, balcao: 0},
             {loja: 251, data: '2026-02-13', inicio: '2026-02-13 08:37:51', fim: '2026-02-13 15:58:44', cupons: 88, faturamento: 1072.78, meta: 1935, auto: 0, delivery: 59.8, viagem: 1012.98, balcao: 0},
+            // Loja 251 - 14/02 ATUALIZADO (conforme nova base)
             {loja: 251, data: '2026-02-14', inicio: '2026-02-14 08:31:34', fim: '2026-02-14 14:43:07', cupons: 57, faturamento: 785.68, meta: 1705, auto: 0, delivery: 0, viagem: 785.68, balcao: 0},
 
-            // Loja 262 - ASSAÍ INDAIATUBA (FERNANDO)
+            // Loja 262 - ASSAÍ INDAIATUBA (FERNANDO) - DIAS 01 A 13 IGUAIS
             {loja: 262, data: '2026-02-01', inicio: '2026-02-01 10:37:50', fim: '2026-02-01 16:24:03', cupons: 50, faturamento: 1023.77, meta: 1205, auto: 0, delivery: 178.02, viagem: 815.83, balcao: 0},
             {loja: 262, data: '2026-02-02', inicio: '2026-02-02 08:33:25', fim: '2026-02-02 16:58:55', cupons: 91, faturamento: 1785.02, meta: 2375, auto: 0, delivery: 738.78, viagem: 960.5, balcao: 0},
             {loja: 262, data: '2026-02-03', inicio: '2026-02-03 08:21:52', fim: '2026-02-03 21:11:07', cupons: 112, faturamento: 1834.13, meta: 2240, auto: 0, delivery: 442.74, viagem: 1327.52, balcao: 0},
@@ -1913,9 +1934,10 @@
             {loja: 262, data: '2026-02-11', inicio: '2026-02-11 08:31:18', fim: '2026-02-11 21:30:25', cupons: 111, faturamento: 1951.63, meta: 1950, auto: 0, delivery: 992.95, viagem: 947.23, balcao: 0},
             {loja: 262, data: '2026-02-12', inicio: '2026-02-12 08:16:08', fim: '2026-02-12 21:33:51', cupons: 111, faturamento: 2244.44, meta: 2480, auto: 0, delivery: 1177.77, viagem: 1055.22, balcao: 0},
             {loja: 262, data: '2026-02-13', inicio: '2026-02-13 08:31:08', fim: '2026-02-13 21:17:39', cupons: 96, faturamento: 2489.25, meta: 2355, auto: 0, delivery: 1262.64, viagem: 1099.12, balcao: 0},
-            {loja: 262, data: '2026-02-14', inicio: '2026-02-14 08:28:24', fim: '2026-02-14 16:51:57', cupons: 75, faturamento: 1496.3, meta: 2615, auto: 0, delivery: 609.78, viagem: 878.52, balcao: 0},
+            // Loja 262 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 262, data: '2026-02-14', inicio: '2026-02-14 08:28:24', fim: '2026-02-14 20:17:35', cupons: 125, faturamento: 2664.51, meta: 2615, auto: 0, delivery: 1164.74, viagem: 1491.77, balcao: 0},
 
-            // Loja 285 - EXTRA JARDIM ÂNGELA (THAIS)
+            // Loja 285 - EXTRA JARDIM ÂNGELA (THAIS) - DIAS 01 A 13 IGUAIS
             {loja: 285, data: '2026-02-01', inicio: '2026-02-01 16:28:49', fim: '2026-02-01 21:08:47', cupons: 45, faturamento: 1210.16, meta: 2525, auto: 0, delivery: 473.44, viagem: 736.72, balcao: 0},
             {loja: 285, data: '2026-02-02', inicio: '2026-02-02 13:34:36', fim: '2026-02-02 21:30:36', cupons: 93, faturamento: 1859.73, meta: 2825, auto: 0, delivery: 827.85, viagem: 1031.88, balcao: 0},
             {loja: 285, data: '2026-02-03', inicio: '2026-02-03 09:55:18', fim: '2026-02-03 21:30:13', cupons: 102, faturamento: 2752.36, meta: 2120, auto: 0, delivery: 1689.72, viagem: 1062.64, balcao: 0},
@@ -1929,9 +1951,10 @@
             {loja: 285, data: '2026-02-11', inicio: '2026-02-11 09:27:22', fim: '2026-02-11 21:51:39', cupons: 141, faturamento: 2743.92, meta: 2505, auto: 0, delivery: 1083.77, viagem: 1660.15, balcao: 0},
             {loja: 285, data: '2026-02-12', inicio: '2026-02-12 09:46:48', fim: '2026-02-12 21:49:16', cupons: 144, faturamento: 2975.66, meta: 2280, auto: 0, delivery: 1471.84, viagem: 1503.82, balcao: 0},
             {loja: 285, data: '2026-02-13', inicio: '2026-02-13 10:46:41', fim: '2026-02-13 21:44:59', cupons: 91, faturamento: 1741.23, meta: 3375, auto: 0, delivery: 546.45, viagem: 1194.78, balcao: 0},
-            {loja: 285, data: '2026-02-14', inicio: '2026-02-14 08:38:51', fim: '2026-02-14 16:55:32', cupons: 72, faturamento: 1537.05, meta: 2585, auto: 0, delivery: 518.3, viagem: 1018.75, balcao: 0},
+            // Loja 285 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 285, data: '2026-02-14', inicio: '2026-02-14 08:38:51', fim: '2026-02-14 21:37:44', cupons: 133, faturamento: 3403.67, meta: 2585, auto: 0, delivery: 1634.56, viagem: 1769.11, balcao: 0},
 
-            // Loja 294 - SHOPPING RAPOSO (ELVES)
+            // Loja 294 - SHOPPING RAPOSO (ELVES) - DIAS 01 A 13 IGUAIS
             {loja: 294, data: '2026-02-01', inicio: '2026-02-01 13:46:47', fim: '2026-02-01 19:39:13', cupons: 54, faturamento: 1540.65, meta: 1655, auto: 225.5, delivery: 1043.87, viagem: 271.28, balcao: 0},
             {loja: 294, data: '2026-02-02', inicio: '2026-02-02 16:10:26', fim: '2026-02-02 21:21:02', cupons: 42, faturamento: 990.01, meta: 1965, auto: 0, delivery: 574.52, viagem: 415.49, balcao: 0},
             {loja: 294, data: '2026-02-03', inicio: '2026-02-03 14:39:02', fim: '2026-02-03 21:22:05', cupons: 49, faturamento: 1083, meta: 2015, auto: 0, delivery: 456.95, viagem: 589.4, balcao: 0},
@@ -1945,7 +1968,8 @@
             {loja: 294, data: '2026-02-11', inicio: '2026-02-11 11:03:32', fim: '2026-02-11 21:42:36', cupons: 102, faturamento: 1459.64, meta: 1620, auto: 463.21, delivery: 228.83, viagem: 767.6, balcao: 0},
             {loja: 294, data: '2026-02-12', inicio: '2026-02-12 11:58:13', fim: '2026-02-12 21:41:44', cupons: 115, faturamento: 1823.93, meta: 1690, auto: 335.78, delivery: 705.42, viagem: 782.73, balcao: 0},
             {loja: 294, data: '2026-02-13', inicio: '2026-02-13 10:34:01', fim: '2026-02-13 21:31:55', cupons: 120, faturamento: 2254.62, meta: 1990, auto: 360.98, delivery: 792.59, viagem: 1101.05, balcao: 0},
-            {loja: 294, data: '2026-02-14', inicio: '2026-02-14 11:50:21', fim: '2026-02-14 16:55:04', cupons: 52, faturamento: 972.08, meta: 2390, auto: 53.85, delivery: 390.89, viagem: 527.34, balcao: 0}
+            // Loja 294 - 14/02 ATUALIZADO (conforme nova base)
+            {loja: 294, data: '2026-02-14', inicio: '2026-02-14 11:50:21', fim: '2026-02-14 21:31:45', cupons: 138, faturamento: 3115.5, meta: 2390, auto: 133.94, delivery: 1532.89, viagem: 1448.67, balcao: 0}
         ];
 
         // Função para processar todos os registros e organizar por data
