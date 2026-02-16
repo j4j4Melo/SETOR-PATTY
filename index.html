@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Ragazzo Express - Setor Patty | Dashboard</title>
+    <title>REX - Setor Patty | Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -49,17 +49,42 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: clamp(10px, 2vw, 20px);
+            position: relative;
         }
 
+        /* Logo de fundo Ragazzo com movimento */
         body::before {
             content: '';
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" opacity="0.03"><path fill="%232e7d32" d="M80 40 L320 40 L360 140 L200 200 L40 140 L80 40 Z"/><text x="120" y="100" font-family="Arial Black" font-size="48" fill="%232e7d32" font-weight="900">RAGAZZO</text><text x="160" y="160" font-family="Arial Black" font-size="48" fill="%232e7d32" font-weight="900">EXPRESS</text></svg>') repeat;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" opacity="0.1"><path fill="%232e7d32" d="M80 40 L320 40 L360 140 L200 200 L40 140 L80 40 Z"/><text x="120" y="100" font-family="Arial Black" font-size="48" fill="%232e7d32" font-weight="900">RAGAZZO</text><text x="150" y="150" font-family="Arial" font-size="20" fill="%232e7d32" font-weight="500">Tudo que é gostoso</text></svg>');
+            background-repeat: repeat;
+            background-size: 400px 200px;
+            background-position: 0 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.12;
+            animation: floatLogo 120s linear infinite;
+        }
+
+        @keyframes floatLogo {
+            0% { background-position: 0 0; }
+            100% { background-position: 800px 400px; }
+        }
+
+        /* Overlay suave para melhor contraste */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
             pointer-events: none;
             z-index: 0;
         }
@@ -69,25 +94,25 @@
             max-width: 1440px;
             margin: 0 auto;
             position: relative;
-            z-index: 1;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(20px);
+            z-index: 2;
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(8px);
             border-radius: var(--border-radius);
-            padding: 24px;
+            padding: clamp(16px, 3vw, 24px);
             box-shadow: var(--shadow);
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
-        /* Glassmorphism Header */
         .header {
             background: var(--gradient-1);
-            padding: 24px 28px;
+            padding: clamp(16px, 3vw, 24px) clamp(20px, 4vw, 28px);
             border-radius: var(--border-radius);
-            margin-bottom: 20px;
+            margin-bottom: clamp(12px, 2vw, 20px);
             color: white;
             box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
+            z-index: 10;
         }
 
         .header::before {
@@ -106,123 +131,102 @@
             to { transform: rotate(360deg); }
         }
 
+        .header::after {
+            content: 'RAGAZZO!';
+            position: absolute;
+            bottom: 5px;
+            right: 15px;
+            font-size: clamp(30px, 5vw, 50px);
+            font-weight: 900;
+            opacity: 0.1;
+            color: white;
+            letter-spacing: 2px;
+            transform: rotate(-5deg);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
         .header-content {
             position: relative;
-            z-index: 1;
+            z-index: 11;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: clamp(10px, 2vw, 15px);
         }
 
         .header-title h1 {
-            font-size: 26px;
+            font-size: clamp(20px, 4vw, 26px);
             font-weight: 800;
             letter-spacing: -0.5px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: clamp(8px, 2vw, 12px);
         }
 
         .header-title p {
-            font-size: 14px;
+            font-size: clamp(12px, 2vw, 14px);
             opacity: 0.9;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: clamp(6px, 1.5vw, 8px);
             margin-top: 4px;
+            flex-wrap: wrap;
         }
 
         .header-date {
             background: rgba(255,255,255,0.15);
             backdrop-filter: blur(10px);
-            padding: 12px 24px;
+            padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 24px);
             border-radius: 60px;
             text-align: center;
             border: 1px solid rgba(255,255,255,0.2);
         }
 
         .header-date .day {
-            font-size: 24px;
+            font-size: clamp(18px, 3.5vw, 24px);
             font-weight: 800;
             line-height: 1;
         }
 
         .header-date .month {
-            font-size: 13px;
+            font-size: clamp(10px, 2vw, 13px);
             opacity: 0.9;
             letter-spacing: 1px;
         }
 
-        /* Upload Area Moderna */
+        /* Área de Upload Minimalista */
         .upload-area {
-            background: white;
-            border-radius: 60px;
-            padding: 8px 16px 8px 20px;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .upload-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--primary);
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .upload-info i {
-            font-size: 18px;
-            color: var(--primary);
+            justify-content: flex-end;
+            gap: clamp(12px, 2vw, 16px);
+            margin-bottom: clamp(16px, 3vw, 20px);
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 20;
         }
 
         .update-log {
             background: var(--primary-light);
-            padding: 6px 16px;
+            padding: clamp(6px, 1.2vw, 8px) clamp(14px, 2.5vw, 18px);
             border-radius: 40px;
-            font-size: 13px;
+            font-size: clamp(12px, 2vw, 13px);
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: clamp(6px, 1.2vw, 8px);
             font-weight: 500;
-        }
-
-        .btn-upload {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 22px;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            box-shadow: 0 4px 10px rgba(46,125,96,0.3);
-        }
-
-        .btn-upload:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(46,125,96,0.4);
         }
 
         .btn-clear {
             background: white;
             color: var(--gray);
             border: 1px solid var(--gray-light);
-            padding: 8px 18px;
+            padding: clamp(6px, 1.2vw, 8px) clamp(14px, 2.5vw, 18px);
             border-radius: 40px;
-            font-size: 13px;
+            font-size: clamp(12px, 2vw, 13px);
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
@@ -233,18 +237,46 @@
             border-color: var(--gray);
         }
 
-        /* Filtros de Período Modernos */
+        .btn-upload {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: clamp(6px, 1.2vw, 8px) clamp(16px, 3vw, 22px);
+            border-radius: 40px;
+            font-size: clamp(12px, 2vw, 13px);
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: clamp(6px, 1.2vw, 8px);
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(46,125,96,0.2);
+        }
+
+        .btn-upload:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(46,125,96,0.3);
+        }
+
+        .btn-upload i {
+            font-size: clamp(12px, 2vw, 14px);
+        }
+
         .period-filters {
-            background: white;
-            padding: 8px 16px;
+            background: rgba(255,255,255,0.9);
+            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
             border-radius: 60px;
-            margin-bottom: 20px;
+            margin-bottom: clamp(12px, 2vw, 20px);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 12px;
+            gap: clamp(8px, 1.5vw, 12px);
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 30;
         }
 
         .period-group {
@@ -253,18 +285,20 @@
             background: var(--light);
             padding: 4px;
             border-radius: 40px;
+            flex-wrap: wrap;
         }
 
         .period-btn {
-            padding: 8px 18px;
+            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 18px);
             border: none;
             border-radius: 40px;
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             font-weight: 500;
             cursor: pointer;
             background: transparent;
             color: var(--gray);
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .period-btn:hover {
@@ -280,77 +314,90 @@
 
         .date-range {
             display: flex;
-            gap: 10px;
+            gap: clamp(6px, 1.5vw, 10px);
             margin-left: auto;
+            flex-wrap: wrap;
         }
 
         .date-range-item {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             background: var(--light);
-            padding: 6px 12px;
+            padding: clamp(4px, 1vw, 6px) clamp(8px, 1.5vw, 12px);
             border-radius: 40px;
         }
 
         .date-range-item input {
             border: none;
             background: transparent;
-            font-size: 12px;
-            width: 110px;
+            font-size: clamp(10px, 1.8vw, 12px);
+            width: min(90px, 20vw);
             padding: 4px;
         }
 
-        /* Filtros Principais com Design Moderno */
+        /* Container dos filtros com z-index alto */
         .filters {
-            background: white;
-            padding: 18px 20px;
+            background: rgba(255,255,255,0.9);
+            padding: clamp(12px, 2.5vw, 18px) clamp(16px, 3vw, 20px);
             border-radius: var(--border-radius-sm);
-            margin-bottom: 24px;
+            margin-bottom: clamp(16px, 3vw, 24px);
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 15px;
+            gap: clamp(10px, 2vw, 15px);
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0,0,0,0.05);
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 100;
         }
 
         .filter-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: clamp(6px, 1.5vw, 10px);
             background: var(--light);
-            padding: 5px 12px 5px 16px;
+            padding: clamp(4px, 1vw, 5px) clamp(8px, 1.5vw, 12px) clamp(4px, 1vw, 5px) clamp(12px, 2.5vw, 16px);
             border-radius: 40px;
             border: 1px solid rgba(0,0,0,0.05);
+            flex: 1 1 auto;
+            min-width: 250px;
+            position: relative;
+            z-index: 101;
         }
 
         .filter-group label {
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             font-weight: 600;
             color: var(--dark);
+            white-space: nowrap;
         }
 
-        /* Multi-select Moderno */
+        /* Multi-select com z-index altíssimo */
         .multi-select {
             position: relative;
-            min-width: 300px;
+            width: 100%;
+            min-width: 250px;
+            z-index: 1000;
         }
 
         .select-btn {
             background: white;
-            padding: 10px 18px;
+            padding: clamp(8px, 1.5vw, 10px) clamp(14px, 2.5vw, 18px);
             border-radius: 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: clamp(6px, 1.5vw, 10px);
             cursor: pointer;
             border: 1px solid rgba(0,0,0,0.05);
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             font-weight: 500;
             transition: all 0.2s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            position: relative;
+            z-index: 1001;
         }
 
         .select-btn:hover {
@@ -363,7 +410,7 @@
             color: white;
             padding: 3px 10px;
             border-radius: 30px;
-            font-size: 11px;
+            font-size: clamp(10px, 1.8vw, 11px);
             font-weight: 700;
         }
 
@@ -376,10 +423,11 @@
             border-radius: 20px;
             margin-top: 8px;
             box-shadow: var(--shadow-lg);
-            z-index: 1000;
+            z-index: 9999;
             display: none;
             border: 1px solid rgba(0,0,0,0.05);
             overflow: hidden;
+            max-height: 400px;
         }
 
         .dropdown-menu.show {
@@ -393,17 +441,17 @@
         }
 
         .search-box {
-            padding: 15px;
+            padding: clamp(10px, 2vw, 15px);
             border-bottom: 1px solid var(--gray-light);
             position: relative;
         }
 
         .search-box input {
             width: 100%;
-            padding: 10px 40px 10px 16px;
+            padding: clamp(8px, 1.5vw, 10px) clamp(35px, 5vw, 40px) clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
             border: 1px solid var(--gray-light);
             border-radius: 40px;
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             transition: all 0.2s;
         }
 
@@ -415,22 +463,22 @@
 
         .search-box i {
             position: absolute;
-            right: 28px;
+            right: clamp(20px, 3vw, 28px);
             top: 50%;
             transform: translateY(-50%);
             color: var(--gray);
-            font-size: 14px;
+            font-size: clamp(12px, 2vw, 14px);
         }
 
         .select-all {
-            padding: 12px 15px;
+            padding: clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 15px);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: clamp(8px, 1.5vw, 10px);
             cursor: pointer;
             color: var(--primary);
             font-weight: 600;
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             border-bottom: 1px solid var(--gray-light);
             transition: background 0.2s;
         }
@@ -440,18 +488,18 @@
         }
 
         .options-list {
-            max-height: 250px;
+            max-height: min(250px, 40vh);
             overflow-y: auto;
             padding: 8px 0;
         }
 
         .option-item {
-            padding: 8px 15px;
+            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 15px);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: clamp(8px, 1.5vw, 10px);
             cursor: pointer;
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             transition: all 0.2s;
             border-left: 3px solid transparent;
         }
@@ -467,13 +515,15 @@
         }
 
         .option-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
+            width: clamp(14px, 2.5vw, 16px);
+            height: clamp(14px, 2.5vw, 16px);
+            cursor: pointer;
             accent-color: var(--primary);
+            pointer-events: none;
         }
 
         .dropdown-close {
-            padding: 12px 15px;
+            padding: clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 15px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -481,7 +531,7 @@
             border-top: 1px solid var(--gray-light);
             cursor: pointer;
             color: var(--primary);
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             font-weight: 600;
             background: var(--primary-light);
             transition: all 0.2s;
@@ -494,116 +544,47 @@
 
         select {
             background: white;
-            padding: 10px 24px 10px 18px;
+            padding: clamp(8px, 1.5vw, 10px) clamp(20px, 3vw, 24px) clamp(8px, 1.5vw, 10px) clamp(14px, 2.5vw, 18px);
             border-radius: 40px;
             border: 1px solid rgba(0,0,0,0.05);
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             font-weight: 500;
-            min-width: 150px;
+            min-width: 140px;
             cursor: pointer;
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475669' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 12px center;
+            position: relative;
+            z-index: 101;
         }
 
         select:hover {
             border-color: var(--primary);
         }
 
-        /* Botões de Ação Modernos */
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-left: auto;
-        }
-
-        .btn-action {
-            padding: 10px 22px;
-            border: none;
-            border-radius: 40px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            background: white;
-            color: var(--dark);
-            border: 1px solid rgba(0,0,0,0.05);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-
-        .btn-action:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-action i {
-            font-size: 15px;
-            color: var(--gray);
-            transition: all 0.2s;
-        }
-
-        .btn-action:hover i {
-            color: var(--primary);
-        }
-
-        .btn-action.primary {
-            background: var(--gradient-1);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 10px rgba(46,125,96,0.3);
-        }
-
-        .btn-action.primary:hover {
-            background: linear-gradient(135deg, #1b5e20, #2e7d32);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(46,125,96,0.4);
-        }
-
-        .btn-action.primary i {
-            color: white;
-        }
-
-        .btn-action.success {
-            background: linear-gradient(135deg, #06d6a0, #05b586);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 10px rgba(6,214,160,0.3);
-        }
-
-        .btn-action.success:hover {
-            background: linear-gradient(135deg, #05b586, #049f76);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(6,214,160,0.4);
-        }
-
-        .btn-action.success i {
-            color: white;
-        }
-
-        /* KPIs com Design Moderno */
+        /* Garantir que os cards tenham z-index menor que o dropdown */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: clamp(12px, 2vw, 16px);
+            margin-bottom: clamp(16px, 3vw, 24px);
+            position: relative;
+            z-index: 1;
         }
 
         .kpi-card {
-            background: white;
+            background: rgba(255,255,255,0.9);
             border-radius: var(--border-radius-sm);
-            padding: 20px;
+            padding: clamp(16px, 3vw, 20px);
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0,0,0,0.03);
             transition: all 0.3s;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(5px);
+            z-index: 1;
         }
 
         .kpi-card::after {
@@ -631,14 +612,14 @@
             transform: translateX(-50%);
             background: var(--dark);
             color: white;
-            padding: 10px 16px;
+            padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
             border-radius: 12px;
-            font-size: 12px;
+            font-size: clamp(11px, 2vw, 12px);
             white-space: nowrap;
             z-index: 100;
             margin-bottom: 10px;
             box-shadow: var(--shadow);
-            max-width: 300px;
+            max-width: min(300px, 80vw);
             white-space: normal;
             word-wrap: break-word;
         }
@@ -650,18 +631,18 @@
         .kpi-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 12px;
+            gap: clamp(8px, 1.5vw, 10px);
+            margin-bottom: clamp(8px, 1.5vw, 12px);
         }
 
         .kpi-icon {
-            width: 40px;
-            height: 40px;
+            width: clamp(32px, 5vw, 40px);
+            height: clamp(32px, 5vw, 40px);
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: clamp(16px, 2.5vw, 18px);
         }
 
         .kpi-icon.green { background: var(--primary-light); color: var(--primary); }
@@ -670,7 +651,7 @@
         .kpi-icon.purple { background: #f0e7ff; color: #9b5de5; }
 
         .kpi-label {
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             color: var(--gray);
             font-weight: 500;
         }
@@ -678,13 +659,13 @@
         .kpi-main {
             display: flex;
             align-items: baseline;
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: clamp(6px, 1.5vw, 8px);
+            margin-bottom: clamp(8px, 1.5vw, 12px);
             flex-wrap: wrap;
         }
 
         .kpi-value {
-            font-size: 24px;
+            font-size: clamp(18px, 3.5vw, 24px);
             font-weight: 800;
             color: var(--dark);
             letter-spacing: -0.5px;
@@ -694,22 +675,23 @@
         .kpi-value.danger { color: var(--danger) !important; }
 
         .kpi-sub {
-            font-size: 11px;
+            font-size: clamp(10px, 1.8vw, 11px);
             color: var(--gray);
             background: var(--light);
-            padding: 3px 10px;
+            padding: 3px clamp(8px, 1.5vw, 10px);
             border-radius: 30px;
             font-weight: 500;
         }
 
         .kpi-comparison {
-            font-size: 12px;
+            font-size: clamp(11px, 2vw, 12px);
             color: var(--gray);
-            padding-top: 10px;
+            padding-top: clamp(8px, 1.5vw, 10px);
             border-top: 1px solid var(--gray-light);
             display: flex;
             align-items: center;
             gap: 5px;
+            flex-wrap: wrap;
         }
 
         .progress-bar {
@@ -718,7 +700,7 @@
             background: var(--gray-light);
             border-radius: 10px;
             overflow: hidden;
-            margin-top: 8px;
+            margin-top: clamp(6px, 1.5vw, 8px);
         }
 
         .progress-fill {
@@ -728,18 +710,19 @@
             transition: width 0.3s;
         }
 
-        /* Status Cards Modernos */
         .lojas-status-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: clamp(12px, 2vw, 16px);
+            margin-bottom: clamp(16px, 3vw, 24px);
+            position: relative;
+            z-index: 1;
         }
 
         .status-card {
-            background: white;
+            background: rgba(255,255,255,0.9);
             border-radius: var(--border-radius-sm);
-            padding: 20px;
+            padding: clamp(16px, 3vw, 20px);
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0,0,0,0.03);
             text-align: center;
@@ -747,6 +730,8 @@
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(5px);
+            z-index: 1;
         }
 
         .status-card:hover {
@@ -763,14 +748,14 @@
             transform: translateX(-50%);
             background: var(--dark);
             color: white;
-            padding: 10px 16px;
+            padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
             border-radius: 12px;
-            font-size: 12px;
+            font-size: clamp(11px, 2vw, 12px);
             white-space: nowrap;
             z-index: 100;
             margin-bottom: 10px;
             box-shadow: var(--shadow);
-            max-width: 300px;
+            max-width: min(300px, 80vw);
             white-space: normal;
             word-wrap: break-word;
         }
@@ -780,9 +765,9 @@
         }
 
         .status-titulo {
-            font-size: 15px;
+            font-size: clamp(13px, 2.5vw, 15px);
             color: var(--gray);
-            margin-bottom: 12px;
+            margin-bottom: clamp(8px, 1.5vw, 12px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -790,11 +775,11 @@
         }
 
         .status-valor {
-            font-size: 36px;
+            font-size: clamp(28px, 5vw, 36px);
             font-weight: 800;
             color: var(--dark);
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: clamp(6px, 1.5vw, 8px);
         }
 
         .status-valor.success { color: var(--success); }
@@ -802,28 +787,71 @@
         .status-valor.primary { color: var(--primary); }
 
         .status-percentual {
-            font-size: 15px;
+            font-size: clamp(13px, 2.5vw, 15px);
             font-weight: 500;
         }
 
         .status-percentual.success { color: var(--success); }
         .status-percentual.danger { color: var(--danger); }
 
-        /* Cards de Gráficos Modernos */
+        .lojas-fechadas-container {
+            background: var(--danger-light);
+            border-radius: var(--border-radius-sm);
+            padding: clamp(16px, 3vw, 20px);
+            margin-bottom: clamp(16px, 3vw, 24px);
+            border: 1px solid rgba(239,71,111,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .lojas-fechadas-titulo {
+            font-size: clamp(14px, 2.5vw, 16px);
+            font-weight: 600;
+            color: var(--danger);
+            margin-bottom: clamp(10px, 2vw, 15px);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lojas-fechadas-lista {
+            font-size: clamp(12px, 2.2vw, 14px);
+            color: var(--dark);
+            line-height: 1.8;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .loja-fechada-item {
+            background: white;
+            padding: 4px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            font-weight: 500;
+            font-size: clamp(11px, 2vw, 13px);
+        }
+
         .charts-grid-2col {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: clamp(15px, 2.5vw, 20px);
+            margin-bottom: clamp(16px, 3vw, 24px);
+            position: relative;
+            z-index: 1;
         }
 
         .chart-card {
-            background: white;
+            background: rgba(255,255,255,0.9);
             border-radius: var(--border-radius-sm);
-            padding: 20px;
+            padding: clamp(16px, 3vw, 20px);
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0,0,0,0.03);
             transition: all 0.3s;
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 1;
         }
 
         .chart-card:hover {
@@ -835,13 +863,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
+            margin-bottom: clamp(12px, 2vw, 16px);
+            padding-bottom: clamp(8px, 1.5vw, 12px);
             border-bottom: 1px solid var(--gray-light);
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .chart-header h3 {
-            font-size: 16px;
+            font-size: clamp(14px, 2.5vw, 16px);
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -855,61 +885,67 @@
 
         .chart-header .badge {
             background: var(--light);
-            padding: 5px 14px;
+            padding: 5px clamp(10px, 2vw, 14px);
             border-radius: 40px;
-            font-size: 12px;
+            font-size: clamp(11px, 2vw, 12px);
             font-weight: 600;
             color: var(--gray);
         }
 
         .chart-wrapper {
-            height: 240px;
+            height: clamp(200px, 30vw, 240px);
             position: relative;
         }
 
         .charts-grid-3col {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: clamp(15px, 2.5vw, 20px);
+            margin-bottom: clamp(16px, 3vw, 24px);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Ranking de ADMs Moderno */
         .melhores-adm-container {
-            background: white;
+            background: rgba(255,255,255,0.9);
             border-radius: var(--border-radius-sm);
-            padding: 20px;
+            padding: clamp(16px, 3vw, 20px);
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(0,0,0,0.03);
-            margin-bottom: 24px;
+            margin-bottom: clamp(16px, 3vw, 24px);
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 1;
         }
 
         .melhores-adm-header {
-            font-size: 18px;
+            font-size: clamp(16px, 3vw, 18px);
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 16px;
-            padding-bottom: 12px;
+            margin-bottom: clamp(12px, 2vw, 16px);
+            padding-bottom: clamp(8px, 1.5vw, 12px);
             border-bottom: 2px solid var(--primary);
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .adm-ranking-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: clamp(8px, 1.5vw, 10px);
         }
 
         .adm-ranking-item {
             display: flex;
             align-items: center;
-            padding: 14px 16px;
+            padding: clamp(12px, 2vw, 14px) clamp(14px, 2.5vw, 16px);
             background: var(--light);
             border-radius: 14px;
             border-left: 5px solid;
             transition: all 0.2s;
+            flex-wrap: wrap;
         }
 
         .adm-ranking-item:hover {
@@ -918,8 +954,8 @@
         }
 
         .adm-ranking-posicao {
-            width: 36px;
-            height: 36px;
+            width: clamp(30px, 4vw, 36px);
+            height: clamp(30px, 4vw, 36px);
             background: var(--primary);
             color: white;
             border-radius: 50%;
@@ -927,25 +963,28 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
-            margin-right: 15px;
+            font-size: clamp(12px, 2vw, 14px);
+            margin-right: clamp(12px, 2vw, 15px);
+            flex-shrink: 0;
         }
 
         .adm-ranking-info {
             flex: 1;
+            min-width: 200px;
         }
 
         .adm-ranking-nome {
             font-weight: 700;
             color: var(--dark);
-            font-size: 15px;
+            font-size: clamp(13px, 2.5vw, 15px);
         }
 
         .adm-ranking-detalhes {
             display: flex;
-            gap: 20px;
+            gap: clamp(15px, 3vw, 20px);
             margin-top: 5px;
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
+            flex-wrap: wrap;
         }
 
         .adm-ranking-faturamento {
@@ -965,33 +1004,39 @@
         .adm-ranking-percentual.media { color: #f97316; }
         .adm-ranking-percentual.baixa { color: var(--danger); }
 
-        /* Tabela Moderna */
         .tables-section {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
-            margin-bottom: 24px;
+            gap: clamp(15px, 2.5vw, 20px);
+            margin-bottom: clamp(16px, 3vw, 24px);
+            position: relative;
+            z-index: 1;
         }
 
         .table-card {
-            background: white;
+            background: rgba(255,255,255,0.9);
             border-radius: var(--border-radius-sm);
-            padding: 20px;
+            padding: clamp(16px, 3vw, 20px);
             box-shadow: var(--shadow);
             border: 2px solid var(--primary);
+            backdrop-filter: blur(5px);
+            position: relative;
+            z-index: 1;
         }
 
         .table-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
+            margin-bottom: clamp(12px, 2vw, 16px);
+            padding-bottom: clamp(8px, 1.5vw, 12px);
             border-bottom: 2px solid var(--primary);
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .table-header h2 {
-            font-size: 16px;
+            font-size: clamp(14px, 2.5vw, 16px);
             font-weight: 700;
             color: var(--primary);
             display: flex;
@@ -1003,29 +1048,31 @@
             overflow-x: auto;
             border-radius: 12px;
             border: 1px solid var(--gray-light);
-            max-height: 400px;
+            max-height: min(400px, 50vh);
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 13px;
+            font-size: clamp(11px, 2vw, 13px);
             min-width: 1100px;
         }
 
         th {
             background: var(--light);
-            padding: 14px 8px;
+            padding: clamp(10px, 1.8vw, 14px) clamp(6px, 1.2vw, 8px);
             position: sticky;
             top: 0;
             border-bottom: 2px solid var(--primary);
             cursor: pointer;
             font-weight: 700;
-            font-size: 12px;
+            font-size: clamp(10px, 1.8vw, 12px);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--dark);
+            white-space: nowrap;
         }
 
         th:hover {
@@ -1033,7 +1080,7 @@
         }
 
         td {
-            padding: 12px 8px;
+            padding: clamp(8px, 1.5vw, 12px) clamp(6px, 1.2vw, 8px);
             border-bottom: 1px solid var(--gray-light);
             text-align: center;
         }
@@ -1049,7 +1096,7 @@
 
         .hora-cell {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            font-size: clamp(10px, 1.8vw, 12px);
             color: var(--gray);
         }
 
@@ -1061,8 +1108,9 @@
             color: var(--success);
             padding: 4px 12px;
             border-radius: 30px;
-            font-size: 11px;
+            font-size: clamp(10px, 1.8vw, 11px);
             font-weight: 600;
+            display: inline-block;
         }
 
         .meta-nao {
@@ -1070,8 +1118,9 @@
             color: var(--danger);
             padding: 4px 12px;
             border-radius: 30px;
-            font-size: 11px;
+            font-size: clamp(10px, 1.8vw, 11px);
             font-weight: 600;
+            display: inline-block;
         }
 
         .loja-fechada {
@@ -1079,23 +1128,25 @@
             color: var(--gray);
             padding: 4px 12px;
             border-radius: 30px;
-            font-size: 11px;
+            font-size: clamp(10px, 1.8vw, 11px);
             font-weight: 600;
+            display: inline-block;
         }
 
         .footer {
-            margin-top: 30px;
+            margin-top: clamp(20px, 4vw, 30px);
             text-align: center;
-            font-size: 12px;
+            font-size: clamp(11px, 2vw, 12px);
             color: var(--gray);
             padding: 20px 0 10px;
             border-top: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
         }
 
-        /* Scrollbar Moderna */
         ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
         }
 
         ::-webkit-scrollbar-track {
@@ -1112,7 +1163,7 @@
             background: var(--primary);
         }
 
-        /* Responsividade */
+        /* Media Queries para Responsividade */
         @media (max-width: 1200px) {
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
             .charts-grid-2col { grid-template-columns: 1fr; }
@@ -1123,26 +1174,37 @@
             .charts-grid-3col { grid-template-columns: 1fr; }
             .lojas-status-grid { grid-template-columns: 1fr; }
             .filters { flex-direction: column; align-items: stretch; }
+            .filter-group { width: 100%; }
             .multi-select { min-width: 100%; }
-            .action-buttons { margin-left: 0; width: 100%; justify-content: flex-end; }
             .period-filters { flex-direction: column; }
             .date-range { margin-left: 0; width: 100%; }
+            .date-range-item { flex: 1; }
+            .date-range-item input { width: 100%; }
         }
 
         @media (max-width: 600px) {
             .kpi-grid { grid-template-columns: 1fr; }
-            .action-buttons { flex-wrap: wrap; }
-            .upload-area { flex-direction: column; align-items: flex-start; }
+            .upload-area { flex-direction: column; align-items: flex-end; }
+            .period-group { width: 100%; justify-content: center; }
+            .period-btn { flex: 1; text-align: center; }
+        }
+
+        @media (max-width: 480px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .header-date { width: 100%; }
+            .adm-ranking-detalhes { flex-direction: column; gap: 5px; }
+            .adm-ranking-item { flex-direction: column; align-items: flex-start; }
+            .adm-ranking-posicao { margin-bottom: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- Header Moderno -->
+        <!-- Header com nome REX e logo de fundo -->
         <div class="header">
             <div class="header-content">
                 <div class="header-title">
-                    <h1><i class="fas fa-store-alt"></i> Ragazzo Express</h1>
+                    <h1><i class="fas fa-store-alt"></i> REX - Setor Patty</h1>
                     <p>
                         <i class="fas fa-store"></i> <span id="totalLojasHeader">0</span> Lojas em operação
                         <i class="fas fa-circle" style="font-size: 6px;"></i>
@@ -1156,34 +1218,28 @@
             </div>
         </div>
 
-        <!-- Upload Area Moderna -->
+        <!-- Upload Area Minimalista -->
         <div class="upload-area">
-            <div class="upload-info">
-                <i class="fas fa-file-excel"></i>
-                <span>Planilha de vendas</span>
-                <span class="update-log">
-                    <i class="fas fa-clock"></i>
-                    <span id="dataAtualizacao">Aguardando upload</span>
-                </span>
+            <div class="update-log">
+                <i class="fas fa-clock"></i>
+                <span id="dataAtualizacao">15/02/2026, 22:43:28</span>
             </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-clear" onclick="limparDadosSalvos()">
-                    <i class="fas fa-trash"></i> Limpar
-                </button>
-                <button class="btn-upload" onclick="document.getElementById('fileInput').click()">
-                    <i class="fas fa-cloud-upload-alt"></i> Atualizar Dados
-                </button>
-                <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="processarPlanilha(this)" style="display: none;">
-            </div>
+            <button class="btn-clear" onclick="limparDadosSalvos()">
+                <i class="fas fa-trash"></i> Limpar
+            </button>
+            <button class="btn-upload" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-upload"></i> Atualizar
+            </button>
+            <input type="file" id="fileInput" accept=".xlsx, .xls, .csv" onchange="processarPlanilha(this)" style="display: none;">
         </div>
 
-        <!-- Filtros de Período Modernos -->
+        <!-- Filtros de Período -->
         <div class="period-filters">
             <div class="period-group">
                 <button class="period-btn" onclick="setPeriodo('hoje')">Hoje</button>
                 <button class="period-btn" onclick="setPeriodo('ontem')">Ontem</button>
-                <button class="period-btn" onclick="setPeriodo('7d')">7 dias</button>
-                <button class="period-btn" onclick="setPeriodo('15d')">15 dias</button>
+                <button class="period-btn" onclick="setPeriodo('7d')">7d</button>
+                <button class="period-btn" onclick="setPeriodo('15d')">15d</button>
                 <button class="period-btn" onclick="setPeriodo('mes')">Mês</button>
                 <button class="period-btn" onclick="setPeriodo('custom')">Período</button>
             </div>
@@ -1199,7 +1255,7 @@
             </div>
         </div>
 
-        <!-- Filtros com Botões Modernos -->
+        <!-- Filtros com Multi-select - Z-INDEX ALTÍSSIMO -->
         <div class="filters">
             <div class="filter-group">
                 <label><i class="fas fa-store"></i> Lojas:</label>
@@ -1240,22 +1296,9 @@
                     <option value="FECHADA">🔴 Loja Fechada</option>
                 </select>
             </div>
-
-            <!-- Botões de Ação Modernos -->
-            <div class="action-buttons">
-                <button class="btn-action" onclick="aplicarFiltrosAutomático()">
-                    <i class="fas fa-sync-alt"></i> Atualizar
-                </button>
-                <button class="btn-action" onclick="recarregarDados()">
-                    <i class="fas fa-database"></i> Recarregar
-                </button>
-                <button class="btn-action success" onclick="exportarExcel()">
-                    <i class="fas fa-file-excel"></i> Exportar Excel
-                </button>
-            </div>
         </div>
 
-        <!-- KPIs Modernos -->
+        <!-- KPIs -->
         <div class="kpi-grid">
             <div class="kpi-card" onclick="filtrarPorStatus('')">
                 <div class="tooltip" id="tooltipTotalLojas">Total de lojas no período</div>
@@ -1273,7 +1316,7 @@
             <div class="kpi-card" onclick="filtrarPorStatus('')">
                 <div class="kpi-header">
                     <div class="kpi-icon green"><i class="fas fa-dollar-sign"></i></div>
-                    <span class="kpi-label">Faturamento Total</span>
+                    <span class="kpi-label">Faturamento</span>
                 </div>
                 <div class="kpi-main">
                     <span class="kpi-value" id="totalFaturamento">R$ 0</span>
@@ -1328,24 +1371,24 @@
                     <span class="kpi-value success" id="metasAtingidasValor">0</span>
                     <span class="kpi-sub" id="metasPercentual">0%</span>
                 </div>
-                <div class="kpi-comparison">das lojas ativas</div>
+                <div class="kpi-comparison">das ativas</div>
             </div>
 
             <div class="kpi-card" onclick="filtrarPorStatus('NÃO')">
                 <div class="tooltip" id="tooltipMetasNao">Lojas abaixo da meta</div>
                 <div class="kpi-header">
                     <div class="kpi-icon red"><i class="fas fa-times-circle"></i></div>
-                    <span class="kpi-label">Abaixo da Meta</span>
+                    <span class="kpi-label">Abaixo</span>
                 </div>
                 <div class="kpi-main">
                     <span class="kpi-value danger" id="metasNaoValor">0</span>
                     <span class="kpi-sub" id="metasNaoPercentual">0%</span>
                 </div>
-                <div class="kpi-comparison">das lojas ativas</div>
+                <div class="kpi-comparison">das ativas</div>
             </div>
 
             <div class="kpi-card" onclick="filtrarPorStatus('FECHADA')">
-                <div class="tooltip" id="tooltipFechadas">Lojas fechadas no período</div>
+                <div class="tooltip" id="tooltipFechadas">Lojas fechadas</div>
                 <div class="kpi-header">
                     <div class="kpi-icon red"><i class="fas fa-store-slash"></i></div>
                     <span class="kpi-label">Fechadas</span>
@@ -1358,7 +1401,7 @@
             </div>
         </div>
 
-        <!-- Status Cards Modernos -->
+        <!-- Status Cards -->
         <div class="lojas-status-grid">
             <div class="status-card" onclick="filtrarPorStatus('OPERACAO')">
                 <div class="tooltip" id="tooltipOperacao">Lojas que realizaram vendas</div>
@@ -1370,7 +1413,7 @@
             </div>
 
             <div class="status-card" onclick="filtrarPorStatus('FECHADA')">
-                <div class="tooltip" id="tooltipFechadas2">Lojas sem vendas no período</div>
+                <div class="tooltip" id="tooltipFechadas2">Lojas sem vendas</div>
                 <div class="status-titulo">
                     <i class="fas fa-store-slash" style="color: var(--danger);"></i> Lojas Fechadas
                 </div>
@@ -1379,7 +1422,17 @@
             </div>
         </div>
 
-        <!-- Grid de Gráficos Modernos -->
+        <!-- Lista de Lojas Fechadas -->
+        <div class="lojas-fechadas-container">
+            <div class="lojas-fechadas-titulo">
+                <i class="fas fa-door-closed"></i> Lojas Fechadas no Período:
+            </div>
+            <div class="lojas-fechadas-lista" id="listaFechadasCompleta">
+                Carregando...
+            </div>
+        </div>
+
+        <!-- Grid de Gráficos -->
         <div class="charts-grid-2col">
             <div class="chart-card">
                 <div class="chart-header">
@@ -1434,7 +1487,7 @@
             </div>
         </div>
 
-        <!-- Ranking de Performance Moderno -->
+        <!-- Ranking de Performance -->
         <div class="melhores-adm-container">
             <div class="melhores-adm-header">
                 <i class="fas fa-trophy"></i> Ranking de Performance por ADM
@@ -1442,11 +1495,11 @@
             <div class="adm-ranking-list" id="admRankingList"></div>
         </div>
 
-        <!-- Tabela Detalhamento Moderna -->
+        <!-- Tabela Detalhamento -->
         <div class="tables-section">
             <div class="table-card">
                 <div class="table-header">
-                    <h2><i class="fas fa-list"></i> Detalhamento de Vendas por Loja</h2>
+                    <h2><i class="fas fa-list"></i> Detalhamento de Vendas</h2>
                     <span class="badge"><span id="registrosCount">0</span> registros</span>
                 </div>
                 <div class="table-wrapper">
@@ -1472,19 +1525,8 @@
             </div>
         </div>
 
-        <!-- Lista de Lojas Fechadas (escondida) -->
-        <div id="listaFechadasExpandida" style="display: none; margin-bottom: 20px; background: var(--danger-light); padding: 20px; border-radius: var(--border-radius-sm);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <h4 style="color: var(--danger); font-weight: 700;"><i class="fas fa-door-closed"></i> Lojas Fechadas no Período:</h4>
-                <button onclick="document.getElementById('listaFechadasExpandida').style.display='none'" style="background: none; border: none; cursor: pointer; color: var(--gray); font-size: 18px;">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="listaFechadasCompleta" style="font-size: 14px; color: var(--dark); line-height: 1.6;"></div>
-        </div>
-
         <div class="footer">
-            <p>© 2026 Ragazzo Express - Dashboard Moderno v2.0 - Dados persistidos no navegador</p>
+            <p>© 2026 REX - Setor Patty | Ragazzo! Tudo que é gostoso</p>
         </div>
     </div>
 
@@ -1534,7 +1576,7 @@
             5: "Wagner", 126: "Wagner", 10: "Wagner"
         };
 
-        // Variáveis (mantido igual)
+        // Variáveis
         let dadosCompletos = [];
         const dadosPorData = {};
         let dataInicio = "", dataFim = "";
@@ -1545,7 +1587,6 @@
         let ordemAtual = { coluna: -1, ascendente: true };
         let termoBuscaLojas = '';
 
-        // Funções (mantidas iguais)
         document.addEventListener('DOMContentLoaded', carregarDadosSalvos);
 
         function carregarDadosSalvos() {
@@ -1597,10 +1638,6 @@
             }
         }
 
-        function recarregarDados() {
-            carregarDadosSalvos();
-        }
-
         function filtrarPorStatus(status) {
             const select = document.getElementById('statusFilter');
             if (!select) return;
@@ -1613,6 +1650,7 @@
             aplicarFiltrosAutomático();
         }
 
+        // FUNÇÕES DO DROPDOWN CORRIGIDAS
         window.toggleLojaDropdown = function() {
             const dropdown = document.getElementById('lojaDropdown');
             if (dropdown) dropdown.classList.add('show');
@@ -1627,8 +1665,10 @@
         window.fecharDropdownLojas = function() {
             const dropdown = document.getElementById('lojaDropdown');
             if (dropdown) dropdown.classList.remove('show');
+            aplicarFiltrosAutomático();
         };
 
+        // SÓ FECHA SE CLICAR FORA OU NO BOTÃO FECHAR
         document.addEventListener('click', function(e) {
             const dropdown = document.getElementById('lojaDropdown');
             const multiSelect = document.getElementById('lojaMultiSelect');
@@ -1636,6 +1676,7 @@
             if (dropdown && multiSelect) {
                 if (!multiSelect.contains(e.target) && !dropdown.contains(e.target)) {
                     dropdown.classList.remove('show');
+                    aplicarFiltrosAutomático();
                 }
             }
         });
@@ -1666,14 +1707,12 @@
             else lojasSelecionadas.splice(index, 1);
             atualizarTextoSelecionadas();
             preencherOpcoesLojas();
-            aplicarFiltrosAutomático();
         };
 
         window.toggleAllLojas = function() {
             lojasSelecionadas = lojasSelecionadas.length === todasLojas.length ? [] : [...todasLojas];
             atualizarTextoSelecionadas();
             preencherOpcoesLojas();
-            aplicarFiltrosAutomático();
         };
 
         function aplicarFiltrosAutomático() {
@@ -1857,7 +1896,7 @@
                 const checked = lojasSelecionadas.includes(loja) ? 'checked' : '';
                 const selectedClass = lojasSelecionadas.includes(loja) ? 'selected' : '';
                 html += `<div class="option-item ${selectedClass}" onclick="toggleLoja(${loja})">
-                    <input type="checkbox" ${checked} onchange="toggleLoja(${loja})">
+                    <input type="checkbox" ${checked} onchange="toggleLoja(${loja})" ${checked}>
                     <span><strong>${loja}</strong> - ${nome} (${adm})</span>
                 </div>`;
             });
@@ -1885,7 +1924,7 @@
             
             if (countSpan) countSpan.innerText = count;
             if (textSpan) {
-                textSpan.innerText = count === 0 ? 'Nenhuma loja' : count === todasLojas.length ? 'Todas as Lojas' : `${count} lojas selecionadas`;
+                textSpan.innerText = count === 0 ? 'Nenhuma loja' : count === todasLojas.length ? 'Todas as Lojas' : `${count} lojas`;
             }
         }
 
@@ -2036,7 +2075,7 @@
             });
             const tableBody = document.getElementById('tableBody');
             if (tableBody) {
-                tableBody.innerHTML = html || '<tr><td colspan="11">Nenhum registro encontrado</td></tr>';
+                tableBody.innerHTML = html || '<tr><td colspan="11">Nenhum registro</td></tr>';
             }
             
             const registrosCount = document.getElementById('registrosCount');
@@ -2092,7 +2131,7 @@
             if (totalLojas) totalLojas.innerText = total;
             
             const totalLojasPeriodo = document.getElementById('totalLojasPeriodo');
-            if (totalLojasPeriodo) totalLojasPeriodo.innerText = `${dias} dia${dias > 1 ? 's' : ''}`;
+            if (totalLojasPeriodo) totalLojasPeriodo.innerText = `${dias}d`;
             
             const diferencaEmoji = document.getElementById('diferencaEmoji');
             if (diferencaEmoji) diferencaEmoji.innerText = dif >= 0 ? '✅' : '❌';
@@ -2109,7 +2148,7 @@
             if (ticketMedio) ticketMedio.innerText = `R$ ${formatMoney(ticket)}`;
             
             const ticketPeriodo = document.getElementById('ticketPeriodo');
-            if (ticketPeriodo) ticketPeriodo.innerText = dias===1?'hoje':`média ${dias} dias`;
+            if (ticketPeriodo) ticketPeriodo.innerText = dias===1?'hoje':`média ${dias}d`;
             
             const metasAtingidas = document.getElementById('metasAtingidas');
             if (metasAtingidas) metasAtingidas.innerHTML = `${metasSim}/${total}`;
@@ -2155,18 +2194,21 @@
             if (lojasOperacaoValor) lojasOperacaoValor.innerText = ativas;
             
             const lojasOperacaoPercentual = document.getElementById('lojasOperacaoPercentual');
-            if (lojasOperacaoPercentual) lojasOperacaoPercentual.innerText = `${((ativas/total)*100).toFixed(1)}%`;
+            if (lojasOperacaoPercentual) lojasOperacaoPercentual.innerText = `(${((ativas/total)*100).toFixed(1)}%)`;
             
             const lojasFechadasValor = document.getElementById('lojasFechadasValor');
             if (lojasFechadasValor) lojasFechadasValor.innerText = fechadas;
             
             const lojasFechadasPercentual = document.getElementById('lojasFechadasPercentual');
-            if (lojasFechadasPercentual) lojasFechadasPercentual.innerText = `${((fechadas/total)*100).toFixed(1)}%`;
+            if (lojasFechadasPercentual) lojasFechadasPercentual.innerText = `(${((fechadas/total)*100).toFixed(1)}%)`;
             
-            const fechadasList = dados.filter(l=>l.status==='FECHADA').map(l=>`${l.loja} - ${lojaNomes[l.loja]}`).join(' · ');
+            const fechadasList = dados.filter(l=>l.status==='FECHADA').map(l => 
+                `<span class="loja-fechada-item">${lojaNomes[l.loja]}</span>`
+            ).join('');
+            
             const listaFechadasCompleta = document.getElementById('listaFechadasCompleta');
             if (listaFechadasCompleta) {
-                listaFechadasCompleta.innerHTML = fechadasList || 'Nenhuma loja fechada no período';
+                listaFechadasCompleta.innerHTML = fechadasList || '<span>Nenhuma loja fechada no período</span>';
             }
         }
 
@@ -2408,7 +2450,7 @@
             const wb = XLSX.utils.book_new();
             
             const det = [
-                ['RAGAZZO EXPRESS - SETOR PATTY'],
+                ['REX - SETOR PATTY'],
                 [`Período: ${dataInicio} a ${dataFim}`],
                 [`Exportado: ${new Date().toLocaleString('pt-BR')}`],
                 [],
@@ -2423,7 +2465,7 @@
             });
             
             XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(det), 'Detalhamento');
-            XLSX.writeFile(wb, `Ragazzo_${dataInicio.replace(/\//g,'-')}.xlsx`);
+            XLSX.writeFile(wb, `REX_${dataInicio.replace(/\//g,'-')}.xlsx`);
         }
 
         function destruirGraficos() {
@@ -2443,7 +2485,7 @@
                 canalPieChart = new Chart(canalCanvas, {
                     type: 'doughnut',
                     data: { 
-                        labels: ['Auto-Atendimento', 'Delivery', 'Viagem', 'Balcão'], 
+                        labels: ['Auto', 'Delivery', 'Viagem', 'Balcão'], 
                         datasets: [{ 
                             data: [0,0,0,0], 
                             backgroundColor: ['#4361ee', '#f72585', '#4cc9f0', '#ffd166'],
@@ -2459,7 +2501,7 @@
                         plugins: { 
                             legend: { 
                                 position: 'bottom',
-                                labels: { usePointStyle: true, boxWidth: 10, padding: 15 }
+                                labels: { usePointStyle: true, boxWidth: 10, padding: 15, font: { size: 11 } }
                             } 
                         },
                         tooltip: {
