@@ -35,11 +35,8 @@
             --shadow-sm: 0 10px 15px -3px rgba(0,0,0,0.1);
             --shadow-lg: 0 30px 60px -15px rgba(46,125,96,0.3);
             --gradient-1: linear-gradient(135deg, #2e7d32, #1b5e20);
-            --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-3: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --border-radius: 32px;
             --border-radius-sm: 20px;
-            --border-radius-lg: 40px;
         }
 
         body {
@@ -53,7 +50,7 @@
             position: relative;
         }
 
-        /* Logo de fundo Ragazzo com movimento */
+        /* Logo de fundo Ragazzo */
         body::before {
             content: '';
             position: fixed;
@@ -64,7 +61,6 @@
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" opacity="0.1"><path fill="%232e7d32" d="M80 40 L320 40 L360 140 L200 200 L40 140 L80 40 Z"/><text x="120" y="100" font-family="Arial Black" font-size="48" fill="%232e7d32" font-weight="900">RAGAZZO</text><text x="150" y="150" font-family="Arial" font-size="20" fill="%232e7d32" font-weight="500">Tudo que é gostoso</text></svg>');
             background-repeat: repeat;
             background-size: 400px 200px;
-            background-position: 0 0;
             pointer-events: none;
             z-index: 0;
             opacity: 0.12;
@@ -76,7 +72,6 @@
             100% { background-position: 800px 400px; }
         }
 
-        /* Overlay suave para melhor contraste */
         body::after {
             content: '';
             position: fixed;
@@ -196,7 +191,7 @@
             letter-spacing: 1px;
         }
 
-        /* Área de Upload Minimalista */
+        /* Área de Upload */
         .upload-area {
             display: flex;
             align-items: center;
@@ -259,10 +254,7 @@
             box-shadow: 0 4px 10px rgba(46,125,96,0.3);
         }
 
-        .btn-upload i {
-            font-size: clamp(12px, 2vw, 14px);
-        }
-
+        /* FILTROS DE PERÍODO */
         .period-filters {
             background: rgba(255,255,255,0.9);
             padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 16px);
@@ -336,98 +328,112 @@
             padding: 4px;
         }
 
-        /* Container dos filtros com z-index alto */
+        /* FILTRO DE LOJAS - DESTACADO */
         .filters {
             background: rgba(255,255,255,0.9);
-            padding: clamp(12px, 2.5vw, 18px) clamp(16px, 3vw, 20px);
+            padding: clamp(16px, 2.5vw, 20px);
             border-radius: var(--border-radius-sm);
             margin-bottom: clamp(16px, 3vw, 24px);
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: clamp(10px, 2vw, 15px);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.05);
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--primary);
             backdrop-filter: blur(5px);
             position: relative;
             z-index: 100;
         }
 
-        .filter-group {
+        .filter-row {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: clamp(6px, 1.5vw, 10px);
-            background: var(--light);
-            padding: clamp(4px, 1vw, 5px) clamp(8px, 1.5vw, 12px) clamp(4px, 1vw, 5px) clamp(12px, 2.5vw, 16px);
-            border-radius: 40px;
-            border: 1px solid rgba(0,0,0,0.05);
-            flex: 1 1 auto;
-            min-width: 250px;
-            position: relative;
-            z-index: 101;
+            gap: 12px;
         }
 
-        .filter-group label {
-            font-size: clamp(11px, 2vw, 13px);
-            font-weight: 600;
+        .filter-row:first-child {
+            border-bottom: 1px solid var(--gray-light);
+            padding-bottom: 12px;
+        }
+
+        .filter-label {
+            font-size: 14px;
+            font-weight: 700;
             color: var(--dark);
-            white-space: nowrap;
+            min-width: 60px;
         }
 
-        /* Multi-select com z-index altíssimo */
+        .filter-label i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+
+        .loja-filter-container {
+            flex: 3;
+            min-width: 400px;
+        }
+
+        .filter-select {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        /* Multi-select aprimorado */
         .multi-select {
             position: relative;
             width: 100%;
-            min-width: 250px;
             z-index: 1000;
         }
 
         .select-btn {
             background: white;
-            padding: clamp(8px, 1.5vw, 10px) clamp(14px, 2.5vw, 18px);
+            padding: 12px 18px;
             border-radius: 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: clamp(6px, 1.5vw, 10px);
+            gap: 10px;
             cursor: pointer;
-            border: 1px solid rgba(0,0,0,0.05);
-            font-size: clamp(11px, 2vw, 13px);
-            font-weight: 500;
+            border: 2px solid var(--primary);
+            font-size: 13px;
+            font-weight: 600;
             transition: all 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px rgba(46,125,96,0.1);
             position: relative;
             z-index: 1001;
         }
 
         .select-btn:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 4px var(--primary-light);
+            transform: translateY(-1px);
         }
 
         .select-btn .selected-count {
             background: var(--primary);
             color: white;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 30px;
-            font-size: clamp(10px, 1.8vw, 11px);
+            font-size: 12px;
             font-weight: 700;
+            min-width: 35px;
+            text-align: center;
         }
 
         .dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 5px);
             left: 0;
             right: 0;
             background: white;
             border-radius: 20px;
-            margin-top: 8px;
-            box-shadow: var(--shadow-lg);
-            z-index: 9999;
+            margin-top: 5px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 999999;
             display: none;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 2px solid var(--primary);
             overflow: hidden;
-            max-height: 400px;
+            max-height: 500px;
         }
 
         .dropdown-menu.show {
@@ -441,67 +447,104 @@
         }
 
         .search-box {
-            padding: clamp(10px, 2vw, 15px);
-            border-bottom: 1px solid var(--gray-light);
+            padding: 15px;
+            border-bottom: 2px solid var(--primary-light);
             position: relative;
+            background: white;
         }
 
         .search-box input {
             width: 100%;
-            padding: clamp(8px, 1.5vw, 10px) clamp(35px, 5vw, 40px) clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
-            border: 1px solid var(--gray-light);
+            padding: 14px 45px 14px 18px;
+            border: 2px solid var(--primary);
             border-radius: 40px;
-            font-size: clamp(11px, 2vw, 13px);
+            font-size: 14px;
             transition: all 0.2s;
+            background: #f8fafc;
         }
 
         .search-box input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 4px var(--primary-light);
+            background: white;
         }
 
         .search-box i {
             position: absolute;
-            right: clamp(20px, 3vw, 28px);
+            right: 28px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--gray);
-            font-size: clamp(12px, 2vw, 14px);
+            color: var(--primary);
+            font-size: 16px;
         }
 
-        .select-all {
-            padding: clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 15px);
+        .dropdown-actions {
+            display: flex;
+            gap: 12px;
+            padding: 15px;
+            border-bottom: 2px solid var(--primary-light);
+            background: var(--light);
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 14px 10px;
+            border: none;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: clamp(8px, 1.5vw, 10px);
-            cursor: pointer;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: clamp(11px, 2vw, 13px);
-            border-bottom: 1px solid var(--gray-light);
-            transition: background 0.2s;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .select-all:hover {
-            background: var(--primary-light);
+        .action-btn.select-all {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(46,125,96,0.3);
+        }
+
+        .action-btn.select-all:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46,125,96,0.4);
+        }
+
+        .action-btn.clear-all {
+            background: white;
+            color: var(--danger);
+            border: 2px solid var(--danger);
+        }
+
+        .action-btn.clear-all:hover {
+            background: var(--danger-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(239,71,111,0.2);
         }
 
         .options-list {
-            max-height: min(250px, 40vh);
+            max-height: 300px;
             overflow-y: auto;
-            padding: 8px 0;
+            padding: 10px 0;
+            background: white;
         }
 
         .option-item {
-            padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2.5vw, 15px);
+            padding: 12px 18px;
             display: flex;
             align-items: center;
-            gap: clamp(8px, 1.5vw, 10px);
+            gap: 15px;
             cursor: pointer;
-            font-size: clamp(11px, 2vw, 13px);
+            font-size: 14px;
             transition: all 0.2s;
-            border-left: 3px solid transparent;
+            border-left: 4px solid transparent;
+            border-bottom: 1px solid var(--gray-light);
         }
 
         .option-item:hover {
@@ -510,60 +553,73 @@
         }
 
         .option-item.selected {
-            background: rgba(46,125,96,0.05);
+            background: rgba(46,125,96,0.1);
             border-left-color: var(--primary);
+            font-weight: 500;
         }
 
         .option-item input[type="checkbox"] {
-            width: clamp(14px, 2.5vw, 16px);
-            height: clamp(14px, 2.5vw, 16px);
+            width: 20px;
+            height: 20px;
             cursor: pointer;
             accent-color: var(--primary);
-            pointer-events: none;
         }
 
         .dropdown-close {
-            padding: clamp(10px, 2vw, 12px) clamp(12px, 2.5vw, 15px);
+            padding: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            border-top: 1px solid var(--gray-light);
+            gap: 12px;
+            border-top: 3px solid var(--primary);
             cursor: pointer;
-            color: var(--primary);
-            font-size: clamp(11px, 2vw, 13px);
-            font-weight: 600;
-            background: var(--primary-light);
+            color: white;
+            font-size: 16px;
+            font-weight: 800;
+            background: var(--primary);
             transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .dropdown-close:hover {
-            background: var(--primary);
-            color: white;
+            background: var(--primary-dark);
+            transform: scale(1.02);
         }
 
-        select {
+        .dropdown-close i {
+            font-size: 18px;
+        }
+
+        .filter-select select {
             background: white;
-            padding: clamp(8px, 1.5vw, 10px) clamp(20px, 3vw, 24px) clamp(8px, 1.5vw, 10px) clamp(14px, 2.5vw, 18px);
+            padding: 12px 40px 12px 18px;
             border-radius: 40px;
-            border: 1px solid rgba(0,0,0,0.05);
-            font-size: clamp(11px, 2vw, 13px);
+            border: 2px solid var(--gray-light);
+            font-size: 13px;
             font-weight: 500;
-            min-width: 140px;
+            min-width: 180px;
+            width: 100%;
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23475669' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%232e7d32' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 12px center;
-            position: relative;
-            z-index: 101;
+            background-position: right 15px center;
+            transition: all 0.2s;
         }
 
-        select:hover {
+        .filter-select select:hover {
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
         }
 
-        /* Garantir que os cards tenham z-index menor que o dropdown */
+        .filter-select select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        /* KPIs */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -587,45 +643,10 @@
             z-index: 1;
         }
 
-        .kpi-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, rgba(46,125,96,0.05) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-
         .kpi-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow);
             border-color: var(--primary);
-        }
-
-        .kpi-card .tooltip {
-            visibility: hidden;
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--dark);
-            color: white;
-            padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
-            border-radius: 12px;
-            font-size: clamp(11px, 2vw, 12px);
-            white-space: nowrap;
-            z-index: 100;
-            margin-bottom: 10px;
-            box-shadow: var(--shadow);
-            max-width: min(300px, 80vw);
-            white-space: normal;
-            word-wrap: break-word;
-        }
-
-        .kpi-card:hover .tooltip {
-            visibility: visible;
         }
 
         .kpi-header {
@@ -646,9 +667,7 @@
         }
 
         .kpi-icon.green { background: var(--primary-light); color: var(--primary); }
-        .kpi-icon.red { background: var(--danger-light); color: var(--danger); }
         .kpi-icon.blue { background: #e6f0ff; color: #2563eb; }
-        .kpi-icon.purple { background: #f0e7ff; color: #9b5de5; }
 
         .kpi-label {
             font-size: clamp(11px, 2vw, 13px);
@@ -688,10 +707,6 @@
             color: var(--gray);
             padding-top: clamp(8px, 1.5vw, 10px);
             border-top: 1px solid var(--gray-light);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            flex-wrap: wrap;
         }
 
         .progress-bar {
@@ -715,8 +730,6 @@
             grid-template-columns: repeat(2, 1fr);
             gap: clamp(12px, 2vw, 16px);
             margin-bottom: clamp(16px, 3vw, 24px);
-            position: relative;
-            z-index: 1;
         }
 
         .status-card {
@@ -728,40 +741,13 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
             backdrop-filter: blur(5px);
-            z-index: 1;
         }
 
         .status-card:hover {
             transform: translateY(-4px);
             box-shadow: var(--shadow);
             border-color: var(--primary);
-        }
-
-        .status-card .tooltip {
-            visibility: hidden;
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--dark);
-            color: white;
-            padding: clamp(8px, 1.5vw, 10px) clamp(12px, 2.5vw, 16px);
-            border-radius: 12px;
-            font-size: clamp(11px, 2vw, 12px);
-            white-space: nowrap;
-            z-index: 100;
-            margin-bottom: 10px;
-            box-shadow: var(--shadow);
-            max-width: min(300px, 80vw);
-            white-space: normal;
-            word-wrap: break-word;
-        }
-
-        .status-card:hover .tooltip {
-            visibility: visible;
         }
 
         .status-titulo {
@@ -784,7 +770,6 @@
 
         .status-valor.success { color: var(--success); }
         .status-valor.danger { color: var(--danger); }
-        .status-valor.primary { color: var(--primary); }
 
         .status-percentual {
             font-size: clamp(13px, 2.5vw, 15px);
@@ -800,8 +785,6 @@
             padding: clamp(16px, 3vw, 20px);
             margin-bottom: clamp(16px, 3vw, 24px);
             border: 1px solid rgba(239,71,111,0.2);
-            position: relative;
-            z-index: 1;
         }
 
         .lojas-fechadas-titulo {
@@ -833,13 +816,19 @@
             font-size: clamp(11px, 2vw, 13px);
         }
 
+        /* GRÁFICOS */
         .charts-grid-2col {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: clamp(15px, 2.5vw, 20px);
             margin-bottom: clamp(16px, 3vw, 24px);
-            position: relative;
-            z-index: 1;
+        }
+
+        .charts-grid-3col {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(15px, 2.5vw, 20px);
+            margin-bottom: clamp(16px, 3vw, 24px);
         }
 
         .chart-card {
@@ -850,8 +839,6 @@
             border: 1px solid rgba(0,0,0,0.03);
             transition: all 0.3s;
             backdrop-filter: blur(5px);
-            position: relative;
-            z-index: 1;
         }
 
         .chart-card:hover {
@@ -897,120 +884,233 @@
             position: relative;
         }
 
-        .charts-grid-3col {
+        /* RANKING DE PERFORMANCE POR ADM - NOVO LAYOUT PROFISSIONAL */
+        .rankings-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
             gap: clamp(15px, 2.5vw, 20px);
             margin-bottom: clamp(16px, 3vw, 24px);
-            position: relative;
-            z-index: 1;
         }
 
-        .melhores-adm-container {
+        .ranking-card {
             background: rgba(255,255,255,0.9);
             border-radius: var(--border-radius-sm);
             padding: clamp(16px, 3vw, 20px);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.03);
-            margin-bottom: clamp(16px, 3vw, 24px);
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--primary);
             backdrop-filter: blur(5px);
-            position: relative;
-            z-index: 1;
+            transition: all 0.3s;
         }
 
-        .melhores-adm-header {
-            font-size: clamp(16px, 3vw, 18px);
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: clamp(12px, 2vw, 16px);
-            padding-bottom: clamp(8px, 1.5vw, 12px);
-            border-bottom: 2px solid var(--primary);
+        .ranking-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .ranking-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
         }
 
-        .adm-ranking-list {
+        .ranking-header i {
+            font-size: 24px;
+            color: var(--primary);
+            background: var(--primary-light);
+            padding: 12px;
+            border-radius: 50%;
+        }
+
+        .ranking-header h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            flex: 1;
+        }
+
+        .ranking-header .badge {
+            background: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .podium {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 20px 10px;
+            background: linear-gradient(180deg, var(--primary-light) 0%, transparent 100%);
+            border-radius: 20px;
+        }
+
+        .podium-item {
             display: flex;
             flex-direction: column;
-            gap: clamp(8px, 1.5vw, 10px);
+            align-items: center;
+            text-align: center;
+            position: relative;
         }
 
-        .adm-ranking-item {
+        .podium-1 {
+            order: 2;
+            transform: scale(1.1);
+        }
+
+        .podium-2 {
+            order: 1;
+        }
+
+        .podium-3 {
+            order: 3;
+        }
+
+        .podium-medalha {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            padding: clamp(12px, 2vw, 14px) clamp(14px, 2.5vw, 16px);
-            background: var(--light);
-            border-radius: 14px;
-            border-left: 5px solid;
-            transition: all 0.2s;
-            flex-wrap: wrap;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .adm-ranking-item:hover {
+        .podium-1 .podium-medalha {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            box-shadow: 0 10px 20px rgba(255,215,0,0.3);
+        }
+
+        .podium-2 .podium-medalha {
+            background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+            box-shadow: 0 10px 20px rgba(192,192,192,0.3);
+        }
+
+        .podium-3 .podium-medalha {
+            background: linear-gradient(135deg, #CD7F32, #B87333);
+            box-shadow: 0 10px 20px rgba(205,127,50,0.3);
+        }
+
+        .podium-nome {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .podium-valor {
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--primary);
+        }
+
+        .podium-1 .podium-valor {
+            font-size: 18px;
+        }
+
+        .ranking-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--light);
+            border-radius: 12px;
+            border-left: 4px solid;
+            transition: all 0.2s;
+        }
+
+        .ranking-item:hover {
             transform: translateX(5px);
             box-shadow: var(--shadow-sm);
         }
 
-        .adm-ranking-posicao {
-            width: clamp(30px, 4vw, 36px);
-            height: clamp(30px, 4vw, 36px);
-            background: var(--primary);
-            color: white;
+        .ranking-posicao {
+            width: 30px;
+            height: 30px;
+            background: var(--gray-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: clamp(12px, 2vw, 14px);
-            margin-right: clamp(12px, 2vw, 15px);
-            flex-shrink: 0;
+            font-size: 14px;
+            color: var(--gray);
+            margin-right: 12px;
         }
 
-        .adm-ranking-info {
+        .ranking-posicao.top-1 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+        }
+
+        .ranking-posicao.top-2 {
+            background: linear-gradient(135deg, #C0C0C0, #A0A0A0);
+            color: white;
+        }
+
+        .ranking-posicao.top-3 {
+            background: linear-gradient(135deg, #CD7F32, #B87333);
+            color: white;
+        }
+
+        .ranking-info {
             flex: 1;
-            min-width: 200px;
         }
 
-        .adm-ranking-nome {
+        .ranking-nome {
             font-weight: 700;
             color: var(--dark);
-            font-size: clamp(13px, 2.5vw, 15px);
-        }
-
-        .adm-ranking-detalhes {
+            font-size: 14px;
             display: flex;
-            gap: clamp(15px, 3vw, 20px);
-            margin-top: 5px;
-            font-size: clamp(11px, 2vw, 13px);
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
         }
 
-        .adm-ranking-faturamento {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .adm-ranking-meta {
+        .ranking-detalhes {
+            display: flex;
+            gap: 15px;
+            margin-top: 3px;
+            font-size: 12px;
             color: var(--gray);
         }
 
-        .adm-ranking-percentual {
+        .ranking-valor {
             font-weight: 700;
+            color: var(--primary);
         }
 
-        .adm-ranking-percentual.alta { color: var(--success); }
-        .adm-ranking-percentual.media { color: #f97316; }
-        .adm-ranking-percentual.baixa { color: var(--danger); }
+        .ranking-percentual {
+            font-weight: 600;
+        }
 
+        .ranking-percentual.alta { color: var(--success); }
+        .ranking-percentual.media { color: #f97316; }
+        .ranking-percentual.baixa { color: var(--danger); }
+
+        .ranking-icone {
+            font-size: 20px;
+            margin-left: 10px;
+        }
+
+        /* Tabela Detalhamento */
         .tables-section {
             display: grid;
             grid-template-columns: 1fr;
             gap: clamp(15px, 2.5vw, 20px);
             margin-bottom: clamp(16px, 3vw, 24px);
-            position: relative;
-            z-index: 1;
         }
 
         .table-card {
@@ -1020,8 +1120,6 @@
             box-shadow: var(--shadow);
             border: 2px solid var(--primary);
             backdrop-filter: blur(5px);
-            position: relative;
-            z-index: 1;
         }
 
         .table-header {
@@ -1050,7 +1148,6 @@
             border: 1px solid var(--gray-light);
             max-height: min(400px, 50vh);
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -1140,67 +1237,33 @@
             color: var(--gray);
             padding: 20px 0 10px;
             border-top: 1px solid rgba(0,0,0,0.05);
-            position: relative;
-            z-index: 1;
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--light);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gray-light);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
-
-        /* Media Queries para Responsividade */
         @media (max-width: 1200px) {
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
             .charts-grid-2col { grid-template-columns: 1fr; }
             .charts-grid-3col { grid-template-columns: repeat(2, 1fr); }
+            .rankings-container { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 900px) {
             .charts-grid-3col { grid-template-columns: 1fr; }
-            .lojas-status-grid { grid-template-columns: 1fr; }
-            .filters { flex-direction: column; align-items: stretch; }
-            .filter-group { width: 100%; }
-            .multi-select { min-width: 100%; }
-            .period-filters { flex-direction: column; }
-            .date-range { margin-left: 0; width: 100%; }
-            .date-range-item { flex: 1; }
-            .date-range-item input { width: 100%; }
+            .filter-row { flex-direction: column; align-items: stretch; }
+            .loja-filter-container { min-width: 100%; }
+            .filter-select { width: 100%; }
+            .podium { flex-direction: column; align-items: center; }
+            .podium-item { transform: scale(1); }
+            .podium-1 { order: 1; }
         }
 
         @media (max-width: 600px) {
             .kpi-grid { grid-template-columns: 1fr; }
-            .upload-area { flex-direction: column; align-items: flex-end; }
-            .period-group { width: 100%; justify-content: center; }
-            .period-btn { flex: 1; text-align: center; }
-        }
-
-        @media (max-width: 480px) {
-            .header-content { flex-direction: column; text-align: center; }
-            .header-date { width: 100%; }
-            .adm-ranking-detalhes { flex-direction: column; gap: 5px; }
-            .adm-ranking-item { flex-direction: column; align-items: flex-start; }
-            .adm-ranking-posicao { margin-bottom: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- Header com nome REX e logo de fundo -->
+        <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <div class="header-title">
@@ -1218,7 +1281,7 @@
             </div>
         </div>
 
-        <!-- Upload Area Minimalista -->
+        <!-- Upload Area -->
         <div class="upload-area">
             <div class="update-log">
                 <i class="fas fa-clock"></i>
@@ -1238,8 +1301,8 @@
             <div class="period-group">
                 <button class="period-btn" onclick="setPeriodo('hoje')">Hoje</button>
                 <button class="period-btn" onclick="setPeriodo('ontem')">Ontem</button>
-                <button class="period-btn" onclick="setPeriodo('7d')">7d</button>
-                <button class="period-btn" onclick="setPeriodo('15d')">15d</button>
+                <button class="period-btn" onclick="setPeriodo('7d')">Últimos 7 dias</button>
+                <button class="period-btn" onclick="setPeriodo('15d')">Últimos 15 dias</button>
                 <button class="period-btn" onclick="setPeriodo('mes')">Mês</button>
                 <button class="period-btn" onclick="setPeriodo('custom')">Período</button>
             </div>
@@ -1255,53 +1318,70 @@
             </div>
         </div>
 
-        <!-- Filtros com Multi-select - Z-INDEX ALTÍSSIMO -->
+        <!-- FILTROS -->
         <div class="filters">
-            <div class="filter-group">
-                <label><i class="fas fa-store"></i> Lojas:</label>
-                <div class="multi-select" id="lojaMultiSelect">
-                    <div class="select-btn" onclick="toggleLojaDropdown()">
-                        <span id="selectedLojasText">Todas as Lojas</span>
-                        <span class="selected-count" id="selectedCount">0</span>
-                    </div>
-                    <div class="dropdown-menu" id="lojaDropdown">
-                        <div class="search-box">
-                            <input type="text" id="lojaSearch" placeholder="Buscar loja por nome ou código...">
-                            <i class="fas fa-search"></i>
+            <!-- Primeira linha: Lojas -->
+            <div class="filter-row">
+                <span class="filter-label"><i class="fas fa-store"></i> Lojas:</span>
+                <div class="loja-filter-container">
+                    <div class="multi-select" id="lojaMultiSelect">
+                        <div class="select-btn" onclick="toggleLojaDropdown()">
+                            <span id="selectedLojasText">Todas as Lojas</span>
+                            <span class="selected-count" id="selectedCount">0</span>
                         </div>
-                        <div class="select-all" onclick="toggleAllLojas()">
-                            <i class="fas fa-check-square"></i> Selecionar Todas
-                        </div>
-                        <div class="options-list" id="lojaOptions"></div>
-                        <div class="dropdown-close" onclick="fecharDropdownLojas()">
-                            <i class="fas fa-check-circle"></i> Concluir Seleção
+                        <div class="dropdown-menu" id="lojaDropdown">
+                            <!-- Campo de busca -->
+                            <div class="search-box">
+                                <input type="text" id="lojaSearch" placeholder="Buscar loja por nome ou código...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            
+                            <!-- Ações: Selecionar Todas e Limpar Todas -->
+                            <div class="dropdown-actions">
+                                <button class="action-btn select-all" onclick="selecionarTodasLojas()">
+                                    <i class="fas fa-check-square"></i> Selecionar Todas
+                                </button>
+                                <button class="action-btn clear-all" onclick="limparTodasLojas()">
+                                    <i class="fas fa-times-square"></i> Limpar Todas
+                                </button>
+                            </div>
+                            
+                            <!-- Lista de lojas -->
+                            <div class="options-list" id="lojaOptions"></div>
+                            
+                            <!-- Botão Concluir Seleção -->
+                            <div class="dropdown-close" onclick="fecharDropdownLojas()">
+                                <i class="fas fa-check-circle"></i> CONCLUIR SELEÇÃO
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="filter-group">
-                <label><i class="fas fa-user-tie"></i> ADM:</label>
-                <select id="admFilter" onchange="aplicarFiltrosAutomático()">
-                    <option value="">Todos os ADMs</option>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label><i class="fas fa-flag"></i> Status:</label>
-                <select id="statusFilter" onchange="aplicarFiltrosAutomático()">
-                    <option value="">Todos os Status</option>
-                    <option value="SIM">✅ Meta Atingida</option>
-                    <option value="NÃO">❌ Abaixo da Meta</option>
-                    <option value="FECHADA">🔴 Loja Fechada</option>
-                </select>
+            <!-- Segunda linha: ADM e Status -->
+            <div class="filter-row">
+                <span class="filter-label"><i class="fas fa-user-tie"></i> ADM:</span>
+                <div class="filter-select">
+                    <select id="admFilter" onchange="aplicarFiltros()">
+                        <option value="">Todos os ADMs</option>
+                    </select>
+                </div>
+                
+                <span class="filter-label"><i class="fas fa-flag"></i> Status:</span>
+                <div class="filter-select">
+                    <select id="statusFilter" onchange="aplicarFiltros()">
+                        <option value="">Todos os Status</option>
+                        <option value="SIM">✅ Meta Atingida</option>
+                        <option value="NÃO">❌ Abaixo da Meta</option>
+                        <option value="FECHADA">🔴 Loja Fechada</option>
+                    </select>
+                </div>
             </div>
         </div>
 
         <!-- KPIs -->
         <div class="kpi-grid">
-            <div class="kpi-card" onclick="filtrarPorStatus('')">
-                <div class="tooltip" id="tooltipTotalLojas">Total de lojas no período</div>
+            <div class="kpi-card">
                 <div class="kpi-header">
                     <div class="kpi-icon blue"><i class="fas fa-store"></i></div>
                     <span class="kpi-label">Total de Lojas</span>
@@ -1313,7 +1393,7 @@
                 <div class="kpi-comparison" id="lojasAtivas"></div>
             </div>
 
-            <div class="kpi-card" onclick="filtrarPorStatus('')">
+            <div class="kpi-card">
                 <div class="kpi-header">
                     <div class="kpi-icon green"><i class="fas fa-dollar-sign"></i></div>
                     <span class="kpi-label">Faturamento</span>
@@ -1324,33 +1404,20 @@
                 <div class="kpi-comparison" id="percentualMeta">0% vs meta</div>
             </div>
 
-            <div class="kpi-card" onclick="filtrarPorStatus('')">
+            <div class="kpi-card">
                 <div class="kpi-header">
                     <div class="kpi-icon green"><i class="fas fa-bullseye"></i></div>
                     <span class="kpi-label">Meta Total</span>
                 </div>
                 <div class="kpi-main">
                     <span class="kpi-value" id="totalMeta">R$ 0</span>
-                    <span class="kpi-sub" id="metasAtingidas">0/0</span>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressoMeta" style="width:0%"></div>
                 </div>
             </div>
 
-            <div class="kpi-card" onclick="filtrarPorStatus('')">
-                <div class="kpi-header">
-                    <div class="kpi-icon red"><i class="fas fa-balance-scale"></i></div>
-                    <span class="kpi-label">Diferença</span>
-                </div>
-                <div class="kpi-main">
-                    <span class="kpi-value" id="totalDiferenca">R$ 0</span>
-                    <span class="emoji-indicator" id="diferencaEmoji"></span>
-                </div>
-                <div class="kpi-comparison" id="diferencaText">0%</div>
-            </div>
-
-            <div class="kpi-card" onclick="filtrarPorStatus('')">
+            <div class="kpi-card">
                 <div class="kpi-header">
                     <div class="kpi-icon green"><i class="fas fa-ticket-alt"></i></div>
                     <span class="kpi-label">Ticket Médio</span>
@@ -1360,51 +1427,11 @@
                 </div>
                 <div class="kpi-comparison" id="ticketPeriodo">hoje</div>
             </div>
-
-            <div class="kpi-card" onclick="filtrarPorStatus('SIM')">
-                <div class="tooltip" id="tooltipMetasOK">Lojas que atingiram a meta</div>
-                <div class="kpi-header">
-                    <div class="kpi-icon green"><i class="fas fa-trophy"></i></div>
-                    <span class="kpi-label">Metas OK</span>
-                </div>
-                <div class="kpi-main">
-                    <span class="kpi-value success" id="metasAtingidasValor">0</span>
-                    <span class="kpi-sub" id="metasPercentual">0%</span>
-                </div>
-                <div class="kpi-comparison">das ativas</div>
-            </div>
-
-            <div class="kpi-card" onclick="filtrarPorStatus('NÃO')">
-                <div class="tooltip" id="tooltipMetasNao">Lojas abaixo da meta</div>
-                <div class="kpi-header">
-                    <div class="kpi-icon red"><i class="fas fa-times-circle"></i></div>
-                    <span class="kpi-label">Abaixo</span>
-                </div>
-                <div class="kpi-main">
-                    <span class="kpi-value danger" id="metasNaoValor">0</span>
-                    <span class="kpi-sub" id="metasNaoPercentual">0%</span>
-                </div>
-                <div class="kpi-comparison">das ativas</div>
-            </div>
-
-            <div class="kpi-card" onclick="filtrarPorStatus('FECHADA')">
-                <div class="tooltip" id="tooltipFechadas">Lojas fechadas</div>
-                <div class="kpi-header">
-                    <div class="kpi-icon red"><i class="fas fa-store-slash"></i></div>
-                    <span class="kpi-label">Fechadas</span>
-                </div>
-                <div class="kpi-main">
-                    <span class="kpi-value danger" id="lojasFechadas">0</span>
-                    <span class="kpi-sub" id="percentualFechadas">0%</span>
-                </div>
-                <div class="kpi-comparison">do total</div>
-            </div>
         </div>
 
         <!-- Status Cards -->
         <div class="lojas-status-grid">
-            <div class="status-card" onclick="filtrarPorStatus('OPERACAO')">
-                <div class="tooltip" id="tooltipOperacao">Lojas que realizaram vendas</div>
+            <div class="status-card">
                 <div class="status-titulo">
                     <i class="fas fa-store-alt" style="color: var(--success);"></i> Lojas em Operação
                 </div>
@@ -1412,8 +1439,7 @@
                 <div class="status-percentual success" id="lojasOperacaoPercentual">0%</div>
             </div>
 
-            <div class="status-card" onclick="filtrarPorStatus('FECHADA')">
-                <div class="tooltip" id="tooltipFechadas2">Lojas sem vendas</div>
+            <div class="status-card">
                 <div class="status-titulo">
                     <i class="fas fa-store-slash" style="color: var(--danger);"></i> Lojas Fechadas
                 </div>
@@ -1432,7 +1458,7 @@
             </div>
         </div>
 
-        <!-- Grid de Gráficos -->
+        <!-- GRÁFICOS -->
         <div class="charts-grid-2col">
             <div class="chart-card">
                 <div class="chart-header">
@@ -1487,12 +1513,37 @@
             </div>
         </div>
 
-        <!-- Ranking de Performance -->
-        <div class="melhores-adm-container">
-            <div class="melhores-adm-header">
-                <i class="fas fa-trophy"></i> Ranking de Performance por ADM
+        <!-- RANKINGS PROFISSIONAIS - 2 COLUNAS -->
+        <div class="rankings-container">
+            <!-- Ranking por Faturamento -->
+            <div class="ranking-card" id="rankingFaturamento">
+                <div class="ranking-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Top 3 Faturamento</h3>
+                    <span class="badge">R$</span>
+                </div>
+                <div class="podium" id="podiumFaturamento">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+                <div class="ranking-lista" id="listaFaturamento">
+                    <!-- Preenchido via JavaScript -->
+                </div>
             </div>
-            <div class="adm-ranking-list" id="admRankingList"></div>
+
+            <!-- Ranking por Performance (% Meta) -->
+            <div class="ranking-card" id="rankingPerformance">
+                <div class="ranking-header">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Top 3 Performance</h3>
+                    <span class="badge">% Meta</span>
+                </div>
+                <div class="podium" id="podiumPerformance">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+                <div class="ranking-lista" id="listaPerformance">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
         </div>
 
         <!-- Tabela Detalhamento -->
@@ -1531,7 +1582,7 @@
     </div>
 
     <script>
-        // Mapeamento (mantido igual)
+        // MAPEAMENTO DAS LOJAS
         const lojaNomes = {
             5: "ANTONIO AGU",
             10: "OSASCO PLAZA",
@@ -1576,99 +1627,71 @@
             5: "Wagner", 126: "Wagner", 10: "Wagner"
         };
 
-        // Variáveis
+        // Variáveis globais
         let dadosCompletos = [];
         const dadosPorData = {};
         let dataInicio = "", dataFim = "";
         let periodoSelecionado = "hoje";
-        let canalPieChart, top10BarChart, desempenhoBarChart, admRankingChart, canaisPorAdmChart;
         let lojasSelecionadas = [];
         let todasLojas = [];
-        let ordemAtual = { coluna: -1, ascendente: true };
         let termoBuscaLojas = '';
+        
+        // Gráficos
+        let canalPieChart, top10BarChart, desempenhoBarChart, admRankingChart, canaisPorAdmChart;
+        let ordemAtual = { coluna: -1, ascendente: true };
 
-        document.addEventListener('DOMContentLoaded', carregarDadosSalvos);
-
-        function carregarDadosSalvos() {
-            const dadosSalvos = localStorage.getItem('ragazzoDados');
+        // Carregar dados salvos no HTML ao iniciar
+        (function() {
+            const dadosSalvos = document.getElementById('dados-embedded')?.textContent;
             if (dadosSalvos) {
                 try {
                     const parsed = JSON.parse(dadosSalvos);
                     if (parsed?.dadosCompletos?.length) {
                         dadosCompletos = parsed.dadosCompletos;
-                        document.getElementById('dataAtualizacao').innerText = parsed.dataAtualizacao || new Date().toLocaleString('pt-BR');
-                        
-                        for (let key in dadosPorData) delete dadosPorData[key];
-                        dadosCompletos.forEach(reg => {
-                            if (reg.data) {
-                                if (!dadosPorData[reg.data]) dadosPorData[reg.data] = [];
-                                dadosPorData[reg.data].push(reg);
-                            }
-                        });
-
-                        todasLojas = [...new Set(dadosCompletos.map(d => d.loja))].sort((a,b)=>a-b);
-                        lojasSelecionadas = [...todasLojas];
-                        
-                        document.getElementById('totalLojasHeader').innerText = todasLojas.length;
-                        document.getElementById('selectedCount').innerText = todasLojas.length;
-                        
-                        const datas = Object.keys(dadosPorData).sort();
-                        if (datas.length) dataInicio = dataFim = datas[0];
-                        
-                        preencherOpcoesLojas();
-                        preencherADMFilter();
-                        atualizarTextoSelecionadas();
-                        setPeriodo('hoje');
+                        processarDadosCarregados();
                     }
-                } catch (e) { console.error(e); }
+                } catch (e) {}
             }
-        }
+        })();
 
-        function salvarDados(nomeArquivo) {
-            localStorage.setItem('ragazzoDados', JSON.stringify({
-                dadosCompletos,
-                dataAtualizacao: new Date().toLocaleString('pt-BR')
-            }));
-        }
+        function processarDadosCarregados() {
+            // Organizar dados por data
+            for (let key in dadosPorData) delete dadosPorData[key];
+            dadosCompletos.forEach(reg => {
+                if (reg.data) {
+                    if (!dadosPorData[reg.data]) dadosPorData[reg.data] = [];
+                    dadosPorData[reg.data].push(reg);
+                }
+            });
 
-        function limparDadosSalvos() {
-            if (confirm('Limpar dados salvos?')) {
-                localStorage.removeItem('ragazzoDados');
-                location.reload();
-            }
-        }
-
-        function filtrarPorStatus(status) {
-            const select = document.getElementById('statusFilter');
-            if (!select) return;
+            todasLojas = [...new Set(dadosCompletos.map(d => d.loja))].sort((a,b)=>a-b);
+            lojasSelecionadas = [...todasLojas];
             
-            if (status === 'OPERACAO') {
-                select.value = '';
-            } else {
-                select.value = status;
-            }
-            aplicarFiltrosAutomático();
+            document.getElementById('totalLojasHeader').innerText = todasLojas.length;
+            document.getElementById('selectedCount').innerText = todasLojas.length;
+            
+            const datas = Object.keys(dadosPorData).sort();
+            if (datas.length) dataInicio = dataFim = datas[0];
+            
+            preencherOpcoesLojas();
+            preencherADMFilter();
+            atualizarTextoSelecionadas();
+            setPeriodo('hoje');
         }
 
-        // FUNÇÕES DO DROPDOWN CORRIGIDAS
+        // FUNÇÕES DO FILTRO DE LOJAS
         window.toggleLojaDropdown = function() {
-            const dropdown = document.getElementById('lojaDropdown');
-            if (dropdown) dropdown.classList.add('show');
-            const search = document.getElementById('lojaSearch');
-            if (search) {
-                search.value = termoBuscaLojas;
-                search.focus();
-            }
+            document.getElementById('lojaDropdown').classList.add('show');
+            document.getElementById('lojaSearch').focus();
             filtrarLojas();
         };
 
         window.fecharDropdownLojas = function() {
-            const dropdown = document.getElementById('lojaDropdown');
-            if (dropdown) dropdown.classList.remove('show');
-            aplicarFiltrosAutomático();
+            document.getElementById('lojaDropdown').classList.remove('show');
+            aplicarFiltros();
         };
 
-        // SÓ FECHA SE CLICAR FORA OU NO BOTÃO FECHAR
+        // Fechar ao clicar fora
         document.addEventListener('click', function(e) {
             const dropdown = document.getElementById('lojaDropdown');
             const multiSelect = document.getElementById('lojaMultiSelect');
@@ -1676,11 +1699,11 @@
             if (dropdown && multiSelect) {
                 if (!multiSelect.contains(e.target) && !dropdown.contains(e.target)) {
                     dropdown.classList.remove('show');
-                    aplicarFiltrosAutomático();
                 }
             }
         });
 
+        // Busca de lojas
         window.filtrarLojas = function() {
             const searchInput = document.getElementById('lojaSearch');
             if (searchInput) {
@@ -1696,78 +1719,259 @@
             });
         };
 
-        const searchInput = document.getElementById('lojaSearch');
-        if (searchInput) {
-            searchInput.addEventListener('keyup', filtrarLojas);
+        document.getElementById('lojaSearch')?.addEventListener('keyup', filtrarLojas);
+
+        // Selecionar/deselecionar loja individual
+        window.toggleLoja = function(loja, event) {
+            if (event) event.stopPropagation();
+            
+            const index = lojasSelecionadas.indexOf(loja);
+            if (index === -1) {
+                lojasSelecionadas.push(loja);
+            } else {
+                lojasSelecionadas.splice(index, 1);
+            }
+            
+            atualizarTextoSelecionadas();
+            preencherOpcoesLojas();
+            aplicarFiltros();
+        };
+
+        // Selecionar todas as lojas
+        window.selecionarTodasLojas = function() {
+            lojasSelecionadas = [...todasLojas];
+            atualizarTextoSelecionadas();
+            preencherOpcoesLojas();
+            aplicarFiltros();
+        };
+
+        // Limpar todas as lojas
+        window.limparTodasLojas = function() {
+            lojasSelecionadas = [];
+            atualizarTextoSelecionadas();
+            preencherOpcoesLojas();
+            aplicarFiltros();
+        };
+
+        // Preencher lista de lojas
+        function preencherOpcoesLojas() {
+            const optionsDiv = document.getElementById('lojaOptions');
+            if (!optionsDiv) return;
+            
+            let html = '';
+            todasLojas.forEach(loja => {
+                const nome = lojaNomes[loja] || `Loja ${loja}`;
+                const adm = admPorLoja[loja] || '?';
+                const checked = lojasSelecionadas.includes(loja) ? 'checked' : '';
+                const selectedClass = lojasSelecionadas.includes(loja) ? 'selected' : '';
+                
+                html += `<div class="option-item ${selectedClass}" onclick="toggleLoja(${loja}, event)">
+                    <input type="checkbox" ${checked} onchange="toggleLoja(${loja}, event)" onclick="event.stopPropagation()">
+                    <span><strong>${loja}</strong> - ${nome} (${adm})</span>
+                </div>`;
+            });
+            optionsDiv.innerHTML = html;
+            filtrarLojas();
         }
 
-        window.toggleLoja = function(loja) {
-            const index = lojasSelecionadas.indexOf(loja);
-            if (index === -1) lojasSelecionadas.push(loja);
-            else lojasSelecionadas.splice(index, 1);
-            atualizarTextoSelecionadas();
-            preencherOpcoesLojas();
-        };
-
-        window.toggleAllLojas = function() {
-            lojasSelecionadas = lojasSelecionadas.length === todasLojas.length ? [] : [...todasLojas];
-            atualizarTextoSelecionadas();
-            preencherOpcoesLojas();
-        };
-
-        function aplicarFiltrosAutomático() {
-            const dados = getDadosPeriodo();
-            const statusSelect = document.getElementById('statusFilter');
-            const admSelect = document.getElementById('admFilter');
+        // Preencher filtro de ADM
+        function preencherADMFilter() {
+            const select = document.getElementById('admFilter');
+            if (!select) return;
             
-            const status = statusSelect ? statusSelect.value : '';
-            const admFiltro = admSelect ? admSelect.value : '';
+            select.innerHTML = '<option value="">Todos os ADMs</option>';
+            const adms = [...new Set(dadosCompletos.map(d => d.adm))].sort();
+            adms.forEach(adm => {
+                if (adm && adm !== 'Não mapeado') {
+                    select.innerHTML += `<option value="${adm}">${adm}</option>`;
+                }
+            });
+        }
+
+        // Atualizar texto do botão de lojas
+        function atualizarTextoSelecionadas() {
+            const count = lojasSelecionadas.length;
+            document.getElementById('selectedCount').innerText = count;
+            
+            const textSpan = document.getElementById('selectedLojasText');
+            if (textSpan) {
+                textSpan.innerText = count === 0 ? 'Nenhuma loja' : 
+                                    count === todasLojas.length ? 'Todas as Lojas' : 
+                                    `${count} lojas`;
+            }
+        }
+
+        // Aplicar filtros e atualizar tudo
+        window.aplicarFiltros = function() {
+            const dados = getDadosPeriodo();
+            const status = document.getElementById('statusFilter').value;
+            const adm = document.getElementById('admFilter').value;
             
             const filtrados = dados.filter(l => {
                 if (lojasSelecionadas.length && !lojasSelecionadas.includes(l.loja)) return false;
                 if (status && l.status !== status) return false;
-                if (admFiltro && l.adm !== admFiltro) return false;
+                if (adm && l.adm !== adm) return false;
                 return true;
             });
             
-            carregarTabela();
-            atualizarLojasIndicadores(dados);
-            atualizarMelhoresADMs(filtrados);
+            atualizarKPIs(filtrados);
+            atualizarTabela(filtrados);
             atualizarGraficos(filtrados);
-            atualizarTooltips(dados);
+            atualizarLojasIndicadores(dados);
+            atualizarRankingsADM(filtrados);
+            
+            salvarDadosNoHTML();
+        };
+
+        // NOVA FUNÇÃO: Atualizar Rankings de ADM
+        function atualizarRankingsADM(dados) {
+            const admDados = {};
+            
+            // Agrupar dados por ADM
+            dados.forEach(l => {
+                if (!admDados[l.adm]) {
+                    admDados[l.adm] = {
+                        nome: l.adm,
+                        faturamento: 0,
+                        meta: 0,
+                        vendas: 0,
+                        lojas: new Set()
+                    };
+                }
+                admDados[l.adm].faturamento += l.faturamento;
+                admDados[l.adm].meta += l.meta;
+                if (l.faturamento > 0) admDados[l.adm].vendas++;
+                admDados[l.adm].lojas.add(l.loja);
+            });
+
+            // Converter para array e calcular percentual
+            const adms = Object.values(admDados).map(adm => ({
+                ...adm,
+                percentual: adm.meta > 0 ? (adm.faturamento / adm.meta * 100) : 0,
+                lojasAtivas: adm.lojas.size
+            }));
+
+            // Ranking por Faturamento
+            const rankingFaturamento = [...adms].sort((a, b) => b.faturamento - a.faturamento);
+            
+            // Ranking por Performance (% Meta)
+            const rankingPerformance = [...adms]
+                .filter(adm => adm.meta > 0) // Só considera quem tem meta
+                .sort((a, b) => b.percentual - a.percentual);
+
+            // Atualizar Podium e Lista de Faturamento
+            atualizarPodium('Faturamento', rankingFaturamento);
+            atualizarLista('Faturamento', rankingFaturamento);
+            
+            // Atualizar Podium e Lista de Performance
+            atualizarPodium('Performance', rankingPerformance);
+            atualizarLista('Performance', rankingPerformance);
         }
 
-        function atualizarTooltips(dados) {
-            const ativas = dados.filter(l => l.faturamento > 0).map(l => `${l.loja} - ${lojaNomes[l.loja]}`).join(', ');
-            const metasSim = dados.filter(l => l.status === 'SIM').map(l => `${l.loja} - ${lojaNomes[l.loja]}`).join(', ');
-            const metasNao = dados.filter(l => l.status === 'NÃO').map(l => `${l.loja} - ${lojaNomes[l.loja]}`).join(', ');
-            const fechadas = dados.filter(l => l.status === 'FECHADA').map(l => `${l.loja} - ${lojaNomes[l.loja]}`).join(', ');
+        function atualizarPodium(tipo, ranking) {
+            const podiumDiv = document.getElementById(`podium${tipo}`);
+            if (!podiumDiv) return;
+
+            const top3 = ranking.slice(0, 3);
+            if (top3.length === 0) {
+                podiumDiv.innerHTML = '<div style="text-align: center; color: var(--gray); padding: 20px;">Sem dados suficientes</div>';
+                return;
+            }
+
+            let html = '';
             
-            const tooltipTotal = document.getElementById('tooltipTotalLojas');
-            if (tooltipTotal) tooltipTotal.innerText = `Total: ${dados.length} lojas`;
-            
-            const tooltipMetasOK = document.getElementById('tooltipMetasOK');
-            if (tooltipMetasOK) tooltipMetasOK.innerText = metasSim || 'Nenhuma loja';
-            
-            const tooltipMetasNao = document.getElementById('tooltipMetasNao');
-            if (tooltipMetasNao) tooltipMetasNao.innerText = metasNao || 'Nenhuma loja';
-            
-            const tooltipFechadas = document.getElementById('tooltipFechadas');
-            if (tooltipFechadas) tooltipFechadas.innerText = fechadas || 'Nenhuma loja';
-            
-            const tooltipOperacao = document.getElementById('tooltipOperacao');
-            if (tooltipOperacao) tooltipOperacao.innerText = ativas || 'Nenhuma loja';
-            
-            const tooltipFechadas2 = document.getElementById('tooltipFechadas2');
-            if (tooltipFechadas2) tooltipFechadas2.innerText = fechadas || 'Nenhuma loja';
+            // Ajustar ordem do podium (2º, 1º, 3º)
+            const ordem = [1, 0, 2]; // índices para 2º, 1º, 3º
+            for (let i = 0; i < 3; i++) {
+                const idx = ordem[i];
+                if (idx >= top3.length) continue;
+                
+                const adm = top3[idx];
+                const posicao = idx + 1;
+                const medalha = posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : '🥉';
+                const valor = tipo === 'Faturamento' 
+                    ? `R$ ${formatMoney(adm.faturamento)}`
+                    : `${adm.percentual.toFixed(1)}%`;
+                
+                html += `
+                    <div class="podium-item podium-${posicao}">
+                        <div class="podium-medalha">${medalha}</div>
+                        <div class="podium-nome">${adm.nome}</div>
+                        <div class="podium-valor">${valor}</div>
+                    </div>
+                `;
+            }
+
+            podiumDiv.innerHTML = html;
         }
 
+        function atualizarLista(tipo, ranking) {
+            const listaDiv = document.getElementById(`lista${tipo}`);
+            if (!listaDiv) return;
+
+            let html = '';
+            ranking.forEach((adm, index) => {
+                const posicao = index + 1;
+                let classePosicao = '';
+                if (posicao === 1) classePosicao = 'top-1';
+                else if (posicao === 2) classePosicao = 'top-2';
+                else if (posicao === 3) classePosicao = 'top-3';
+
+                const valor = tipo === 'Faturamento'
+                    ? `R$ ${formatMoney(adm.faturamento)}`
+                    : `${adm.percentual.toFixed(1)}%`;
+
+                const detalheExtra = tipo === 'Faturamento'
+                    ? `<span class="ranking-percentual ${adm.percentual >= 100 ? 'alta' : adm.percentual >= 70 ? 'media' : 'baixa'}">${adm.percentual.toFixed(1)}% meta</span>`
+                    : `<span class="ranking-valor">R$ ${formatMoney(adm.faturamento)}</span>`;
+
+                html += `
+                    <div class="ranking-item" style="border-left-color: ${adm.percentual >= 100 ? '#06d6a0' : (adm.percentual >= 70 ? '#f97316' : '#ef476f')};">
+                        <div class="ranking-posicao ${classePosicao}">${posicao}</div>
+                        <div class="ranking-info">
+                            <div class="ranking-nome">
+                                ${adm.nome}
+                                <span class="ranking-icone">${posicao <= 3 ? (posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : '🥉') : ''}</span>
+                            </div>
+                            <div class="ranking-detalhes">
+                                <span class="ranking-valor">${valor}</span>
+                                <span>${adm.lojasAtivas} lojas</span>
+                                <span>${adm.vendas} vendas</span>
+                                ${detalheExtra}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            listaDiv.innerHTML = html;
+        }
+
+        // Salvar dados no HTML
+        function salvarDadosNoHTML() {
+            let embedded = document.getElementById('dados-embedded');
+            if (!embedded) {
+                embedded = document.createElement('script');
+                embedded.id = 'dados-embedded';
+                embedded.type = 'application/json';
+                document.body.appendChild(embedded);
+            }
+            
+            const dadosParaSalvar = {
+                dadosCompletos: dadosCompletos,
+                dataAtualizacao: new Date().toLocaleString('pt-BR')
+            };
+            
+            embedded.textContent = JSON.stringify(dadosParaSalvar);
+        }
+
+        // Processar planilha importada
         function processarPlanilha(input) {
             if (!input.files?.[0]) return;
             
             const arquivo = input.files[0];
-            
             const reader = new FileReader();
+            
             reader.onload = function(e) {
                 try {
                     const data = new Uint8Array(e.target.result);
@@ -1778,6 +1982,7 @@
                     if (dadosBrutos.length < 2) return alert('Planilha vazia');
 
                     dadosCompletos = [];
+                    
                     for (let i = 1; i < dadosBrutos.length; i++) {
                         const linha = dadosBrutos[i];
                         if (!linha?.length) continue;
@@ -1787,6 +1992,7 @@
                         if (typeof codigoLoja === 'string') codigoLoja = parseInt(codigoLoja.replace(/\D/g, ''));
                         if (!lojaNomes[codigoLoja]) continue;
                         
+                        // Processar data
                         let dataStr = linha[2];
                         if (dataStr && typeof dataStr === 'number') {
                             const d = XLSX.SSF.parse_date_code(dataStr);
@@ -1799,6 +2005,7 @@
                         const fat = parseFloat(linha[6]) || 0;
                         const meta = parseFloat(linha[7]) || 0;
                         
+                        // Extrair apenas a hora
                         let inicio = extrairHora(linha[3]);
                         let fim = extrairHora(linha[4]);
                         
@@ -1823,36 +2030,20 @@
                         });
                     }
 
-                    for (let key in dadosPorData) delete dadosPorData[key];
-                    dadosCompletos.forEach(reg => {
-                        if (reg.data) {
-                            if (!dadosPorData[reg.data]) dadosPorData[reg.data] = [];
-                            dadosPorData[reg.data].push(reg);
-                        }
-                    });
-
-                    todasLojas = [...new Set(dadosCompletos.map(d => d.loja))].sort((a,b)=>a-b);
-                    lojasSelecionadas = [...todasLojas];
-                    
-                    document.getElementById('totalLojasHeader').innerText = todasLojas.length;
-                    document.getElementById('selectedCount').innerText = todasLojas.length;
-                    
-                    const datas = Object.keys(dadosPorData).sort();
-                    if (datas.length) dataInicio = dataFim = datas[0];
+                    processarDadosCarregados();
                     
                     document.getElementById('dataAtualizacao').innerText = new Date().toLocaleString('pt-BR');
+                    alert('Dados importados com sucesso!');
                     
-                    preencherOpcoesLojas();
-                    preencherADMFilter();
-                    atualizarTextoSelecionadas();
-                    setPeriodo('hoje');
-                    salvarDados(arquivo.name);
-                    
-                } catch (error) { alert('Erro: ' + error.message); }
+                } catch (error) { 
+                    alert('Erro ao processar planilha: ' + error.message);
+                }
             };
+            
             reader.readAsArrayBuffer(arquivo);
         }
 
+        // Função para extrair hora
         function extrairHora(valor) {
             if (!valor || valor === 'NULL' || valor === null) return '-';
             
@@ -1885,49 +2076,22 @@
             return '-';
         }
 
-        function preencherOpcoesLojas() {
-            const optionsDiv = document.getElementById('lojaOptions');
-            if (!optionsDiv) return;
-            
-            let html = '';
-            todasLojas.forEach(loja => {
-                const nome = lojaNomes[loja] || `Loja ${loja}`;
-                const adm = admPorLoja[loja] || '?';
-                const checked = lojasSelecionadas.includes(loja) ? 'checked' : '';
-                const selectedClass = lojasSelecionadas.includes(loja) ? 'selected' : '';
-                html += `<div class="option-item ${selectedClass}" onclick="toggleLoja(${loja})">
-                    <input type="checkbox" ${checked} onchange="toggleLoja(${loja})" ${checked}>
-                    <span><strong>${loja}</strong> - ${nome} (${adm})</span>
-                </div>`;
-            });
-            optionsDiv.innerHTML = html;
-            filtrarLojas();
-        }
-
-        function preencherADMFilter() {
-            const select = document.getElementById('admFilter');
-            if (!select) return;
-            
-            select.innerHTML = '<option value="">Todos os ADMs</option>';
-            const adms = [...new Set(dadosCompletos.map(d => d.adm))].sort();
-            adms.forEach(adm => {
-                if (adm && adm !== 'Não mapeado') {
-                    select.innerHTML += `<option value="${adm}">${adm}</option>`;
-                }
-            });
-        }
-
-        function atualizarTextoSelecionadas() {
-            const count = lojasSelecionadas.length;
-            const countSpan = document.getElementById('selectedCount');
-            const textSpan = document.getElementById('selectedLojasText');
-            
-            if (countSpan) countSpan.innerText = count;
-            if (textSpan) {
-                textSpan.innerText = count === 0 ? 'Nenhuma loja' : count === todasLojas.length ? 'Todas as Lojas' : `${count} lojas`;
+        // Limpar dados salvos
+        function limparDadosSalvos() {
+            if (confirm('Limpar todos os dados salvos?')) {
+                dadosCompletos = [];
+                for (let key in dadosPorData) delete dadosPorData[key];
+                todasLojas = [];
+                lojasSelecionadas = [];
+                
+                const embedded = document.getElementById('dados-embedded');
+                if (embedded) embedded.remove();
+                
+                location.reload();
             }
         }
 
+        // Funções auxiliares
         function getDadosPeriodo() {
             if (!dataInicio || !dataFim || !Object.keys(dadosPorData).length) return [];
             const dados = [];
@@ -1953,7 +2117,15 @@
         function setPeriodo(tipo) {
             periodoSelecionado = tipo;
             document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-            const btn = document.querySelector(`.period-btn[onclick="setPeriodo('${tipo}')"]`);
+            
+            let btn;
+            if (tipo === 'hoje') btn = Array.from(document.querySelectorAll('.period-btn')).find(b => b.textContent.includes('Hoje'));
+            else if (tipo === 'ontem') btn = Array.from(document.querySelectorAll('.period-btn')).find(b => b.textContent.includes('Ontem'));
+            else if (tipo === '7d') btn = Array.from(document.querySelectorAll('.period-btn')).find(b => b.textContent.includes('Últimos 7 dias'));
+            else if (tipo === '15d') btn = Array.from(document.querySelectorAll('.period-btn')).find(b => b.textContent.includes('Últimos 15 dias'));
+            else if (tipo === 'mes') btn = Array.from(document.querySelectorAll('.period-btn')).find(b => b.textContent.includes('Mês'));
+            else if (tipo === 'custom') btn = Array.from(document.querySelectorAll('.period-btn')).find(b => b.textContent.includes('Período'));
+            
             if (btn) btn.classList.add('active');
             
             const datas = Object.keys(dadosPorData).sort((a,b) => {
@@ -1973,43 +2145,24 @@
             else if (tipo === '15d') { dataInicio = datas[Math.min(datas.length-1,14)] || primeira; dataFim = ultima; }
             else if (tipo === 'mes') { dataInicio = primeira; dataFim = ultima; }
             
-            const dateRange = document.getElementById('dateRangeInputs');
-            if (dateRange) dateRange.style.display = tipo === 'custom' ? 'flex' : 'none';
+            document.getElementById('dateRangeInputs').style.display = tipo === 'custom' ? 'flex' : 'none';
             
             atualizarPeriodoDisplay();
             recarregarTudo();
         }
 
-        function atualizarPorData() {
-            if (periodoSelecionado === 'custom') {
-                const inicio = document.getElementById('dataInicio');
-                const fim = document.getElementById('dataFim');
-                if (inicio && fim && inicio.value && fim.value) {
-                    const [aI,mI,dI] = inicio.value.split('-');
-                    const [aF,mF,dF] = fim.value.split('-');
-                    dataInicio = `${dI}/${mI}/${aI}`;
-                    dataFim = `${dF}/${mF}/${aF}`;
-                    atualizarPeriodoDisplay();
-                    recarregarTudo();
-                }
-            }
-        }
-
         function atualizarPeriodoDisplay() {
             if (!dataInicio) return;
             const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+            
             if (dataInicio === dataFim) {
                 const [d,m,a] = dataInicio.split('/');
-                const headerDay = document.getElementById('headerDay');
-                const headerMonth = document.getElementById('headerMonth');
-                if (headerDay) headerDay.innerText = d;
-                if (headerMonth) headerMonth.innerText = meses[m-1].toUpperCase() + ' ' + a;
+                document.getElementById('headerDay').innerText = d;
+                document.getElementById('headerMonth').innerText = meses[m-1].toUpperCase() + ' ' + a;
             } else {
                 const [dI,mI,aI] = dataInicio.split('/');
-                const headerDay = document.getElementById('headerDay');
-                const headerMonth = document.getElementById('headerMonth');
-                if (headerDay) headerDay.innerText = dI + '-' + dataFim.split('/')[0];
-                if (headerMonth) headerMonth.innerText = meses[mI-1].toUpperCase() + ' ' + aI;
+                document.getElementById('headerDay').innerText = dI + '-' + dataFim.split('/')[0];
+                document.getElementById('headerMonth').innerText = meses[mI-1].toUpperCase() + ' ' + aI;
             }
         }
 
@@ -2023,14 +2176,7 @@
             
             preencherOpcoesLojas();
             atualizarTextoSelecionadas();
-            carregarTabela();
-            destruirGraficos();
-            inicializarGraficos();
-            atualizarKPIs();
-            atualizarLojasIndicadores(dados);
-            atualizarMelhoresADMs(dados);
-            atualizarGraficos(dados);
-            atualizarTooltips(dados);
+            aplicarFiltros();
         }
 
         function formatMoney(v) {
@@ -2038,20 +2184,29 @@
             return v.toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');
         }
 
-        function carregarTabela() {
-            const statusSelect = document.getElementById('statusFilter');
-            const admSelect = document.getElementById('admFilter');
+        function atualizarKPIs(dados) {
+            let fat=0, meta=0, cupons=0;
+            dados.forEach(l => { fat+=l.faturamento; meta+=l.meta; cupons+=l.cupons; });
             
-            const status = statusSelect ? statusSelect.value : '';
-            const admFiltro = admSelect ? admSelect.value : '';
+            const total = [...new Set(dados.map(l=>l.loja))].length;
+            const ticket = cupons>0 ? fat/cupons : 0;
+            const dias = [...new Set(dados.map(l=>l.data))].length;
+            const ativas = dados.filter(l=>l.faturamento>0).length;
             
-            const dados = getDadosPeriodo().filter(l => {
-                if (lojasSelecionadas.length && !lojasSelecionadas.includes(l.loja)) return false;
-                if (status && l.status !== status) return false;
-                if (admFiltro && l.adm !== admFiltro) return false;
-                return true;
-            });
+            document.getElementById('totalLojas').innerText = total;
+            document.getElementById('totalLojasPeriodo').innerText = dias + 'd';
+            document.getElementById('totalFaturamento').innerText = `R$ ${formatMoney(fat)}`;
+            document.getElementById('totalMeta').innerText = `R$ ${formatMoney(meta)}`;
+            document.getElementById('ticketMedio').innerText = `R$ ${formatMoney(ticket)}`;
+            document.getElementById('ticketPeriodo').innerText = dias===1?'hoje':`média ${dias}d`;
             
+            const pctMeta = meta>0 ? (fat/meta*100) : 0;
+            document.getElementById('progressoMeta').style.width = Math.min(100, pctMeta) + '%';
+            document.getElementById('percentualMeta').innerHTML = pctMeta.toFixed(1) + '% vs meta';
+            document.getElementById('lojasAtivas').innerHTML = `${ativas} ativas (${total>0?((ativas/total)*100).toFixed(1):0}%)`;
+        }
+
+        function atualizarTabela(dados) {
             let html = '';
             dados.forEach(l => {
                 const nome = lojaNomes[l.loja] || `Loja ${l.loja}`;
@@ -2073,115 +2228,9 @@
                     <td><span class="${statusClass}">${l.status}</span></td>
                 </tr>`;
             });
-            const tableBody = document.getElementById('tableBody');
-            if (tableBody) {
-                tableBody.innerHTML = html || '<tr><td colspan="11">Nenhum registro</td></tr>';
-            }
             
-            const registrosCount = document.getElementById('registrosCount');
-            if (registrosCount) registrosCount.innerText = dados.length;
-            
-            atualizarKPIs(dados);
-        }
-
-        function atualizarKPIs(dadosFiltrados = null) {
-            const statusSelect = document.getElementById('statusFilter');
-            const admSelect = document.getElementById('admFilter');
-            
-            const status = statusSelect ? statusSelect.value : '';
-            const admFiltro = admSelect ? admSelect.value : '';
-            
-            const dados = dadosFiltrados || getDadosPeriodo().filter(l => {
-                if (lojasSelecionadas.length && !lojasSelecionadas.includes(l.loja)) return false;
-                if (status && l.status !== status) return false;
-                if (admFiltro && l.adm !== admFiltro) return false;
-                return true;
-            });
-            
-            let fat=0, meta=0, cupons=0;
-            dados.forEach(l => { fat+=l.faturamento; meta+=l.meta; cupons+=l.cupons; });
-            
-            const dif = fat - meta;
-            const pctDif = meta>0 ? (dif/meta*100) : 0;
-            const ticket = cupons>0 ? fat/cupons : 0;
-            
-            const lojasUnicas = [...new Set(dados.map(l=>l.loja))];
-            const total = lojasUnicas.length;
-            const dias = [...new Set(dados.map(l=>l.data))].length;
-            
-            const ativas = dados.filter(l=>l.faturamento>0).length;
-            const fechadas = dados.filter(l=>l.status==='FECHADA').length;
-            const metasSim = dados.filter(l=>l.status==='SIM').length;
-            const metasNao = dados.filter(l=>l.status==='NÃO').length;
-            
-            const totalFaturamento = document.getElementById('totalFaturamento');
-            if (totalFaturamento) totalFaturamento.innerText = `R$ ${formatMoney(fat)}`;
-            
-            const totalMeta = document.getElementById('totalMeta');
-            if (totalMeta) totalMeta.innerText = `R$ ${formatMoney(meta)}`;
-            
-            const totalDiferenca = document.getElementById('totalDiferenca');
-            if (totalDiferenca) {
-                totalDiferenca.innerText = `${dif >= 0 ? '+' : '-'} R$ ${formatMoney(Math.abs(dif))}`;
-                if (dif < 0) totalDiferenca.classList.add('danger');
-                else totalDiferenca.classList.remove('danger');
-            }
-            
-            const totalLojas = document.getElementById('totalLojas');
-            if (totalLojas) totalLojas.innerText = total;
-            
-            const totalLojasPeriodo = document.getElementById('totalLojasPeriodo');
-            if (totalLojasPeriodo) totalLojasPeriodo.innerText = `${dias}d`;
-            
-            const diferencaEmoji = document.getElementById('diferencaEmoji');
-            if (diferencaEmoji) diferencaEmoji.innerText = dif >= 0 ? '✅' : '❌';
-            
-            const diferencaText = document.getElementById('diferencaText');
-            if (diferencaText) diferencaText.innerText = (dif>=0?'+':'')+pctDif.toFixed(1)+'%';
-            
-            const percentualMeta = document.getElementById('percentualMeta');
-            if (percentualMeta) {
-                percentualMeta.innerHTML = `<span class="${dif>=0?'trend-up':'trend-down'}">${dif>=0?'+':''}${pctDif.toFixed(1)}%</span> vs meta`;
-            }
-            
-            const ticketMedio = document.getElementById('ticketMedio');
-            if (ticketMedio) ticketMedio.innerText = `R$ ${formatMoney(ticket)}`;
-            
-            const ticketPeriodo = document.getElementById('ticketPeriodo');
-            if (ticketPeriodo) ticketPeriodo.innerText = dias===1?'hoje':`média ${dias}d`;
-            
-            const metasAtingidas = document.getElementById('metasAtingidas');
-            if (metasAtingidas) metasAtingidas.innerHTML = `${metasSim}/${total}`;
-            
-            const metasAtingidasValor = document.getElementById('metasAtingidasValor');
-            if (metasAtingidasValor) metasAtingidasValor.innerText = metasSim;
-            
-            const metasPercentual = document.getElementById('metasPercentual');
-            if (metasPercentual) metasPercentual.innerText = ativas>0 ? ((metasSim/ativas)*100).toFixed(1)+'%' : '0%';
-            
-            const metasNaoValor = document.getElementById('metasNaoValor');
-            if (metasNaoValor) metasNaoValor.innerText = metasNao;
-            
-            const metasNaoPercentual = document.getElementById('metasNaoPercentual');
-            if (metasNaoPercentual) metasNaoPercentual.innerText = ativas>0 ? ((metasNao/ativas)*100).toFixed(1)+'%' : '0%';
-            
-            const lojasEmOperacao = document.getElementById('lojasEmOperacao');
-            if (lojasEmOperacao) lojasEmOperacao.innerText = ativas;
-            
-            const percentualOperacao = document.getElementById('percentualOperacao');
-            if (percentualOperacao) percentualOperacao.innerText = total>0 ? ((ativas/total)*100).toFixed(1)+'%' : '0%';
-            
-            const lojasAtivas = document.getElementById('lojasAtivas');
-            if (lojasAtivas) lojasAtivas.innerHTML = `${ativas} ativas (${total>0?((ativas/total)*100).toFixed(1):0}%)`;
-            
-            const lojasFechadas = document.getElementById('lojasFechadas');
-            if (lojasFechadas) lojasFechadas.innerText = fechadas;
-            
-            const percentualFechadas = document.getElementById('percentualFechadas');
-            if (percentualFechadas) percentualFechadas.innerText = total>0 ? ((fechadas/total)*100).toFixed(1)+'%' : '0%';
-            
-            const progressoMeta = document.getElementById('progressoMeta');
-            if (progressoMeta) progressoMeta.style.width = meta>0 ? Math.min(100, fat/meta*100)+'%' : '0%';
+            document.getElementById('tableBody').innerHTML = html || '<tr><td colspan="11">Nenhum registro</td></tr>';
+            document.getElementById('registrosCount').innerText = dados.length;
         }
 
         function atualizarLojasIndicadores(dados) {
@@ -2190,89 +2239,20 @@
             const ativas = dados.filter(l=>l.faturamento>0).length;
             const fechadas = dados.filter(l=>l.status==='FECHADA').length;
             
-            const lojasOperacaoValor = document.getElementById('lojasOperacaoValor');
-            if (lojasOperacaoValor) lojasOperacaoValor.innerText = ativas;
-            
-            const lojasOperacaoPercentual = document.getElementById('lojasOperacaoPercentual');
-            if (lojasOperacaoPercentual) lojasOperacaoPercentual.innerText = `(${((ativas/total)*100).toFixed(1)}%)`;
-            
-            const lojasFechadasValor = document.getElementById('lojasFechadasValor');
-            if (lojasFechadasValor) lojasFechadasValor.innerText = fechadas;
-            
-            const lojasFechadasPercentual = document.getElementById('lojasFechadasPercentual');
-            if (lojasFechadasPercentual) lojasFechadasPercentual.innerText = `(${((fechadas/total)*100).toFixed(1)}%)`;
+            document.getElementById('lojasOperacaoValor').innerText = ativas;
+            document.getElementById('lojasOperacaoPercentual').innerText = total>0 ? ((ativas/total)*100).toFixed(1)+'%' : '0%';
+            document.getElementById('lojasFechadasValor').innerText = fechadas;
+            document.getElementById('lojasFechadasPercentual').innerText = total>0 ? ((fechadas/total)*100).toFixed(1)+'%' : '0%';
             
             const fechadasList = dados.filter(l=>l.status==='FECHADA').map(l => 
                 `<span class="loja-fechada-item">${lojaNomes[l.loja]}</span>`
             ).join('');
             
-            const listaFechadasCompleta = document.getElementById('listaFechadasCompleta');
-            if (listaFechadasCompleta) {
-                listaFechadasCompleta.innerHTML = fechadasList || '<span>Nenhuma loja fechada no período</span>';
-            }
-        }
-
-        function atualizarMelhoresADMs(dados) {
-            const admDados = {};
-            dados.forEach(l => {
-                if (!admDados[l.adm]) admDados[l.adm] = { 
-                    lojas: new Set(), 
-                    fat: 0, 
-                    meta: 0,
-                    vendas: 0
-                };
-                admDados[l.adm].lojas.add(l.loja);
-                admDados[l.adm].fat += l.faturamento;
-                admDados[l.adm].meta += l.meta;
-                if (l.faturamento > 0) admDados[l.adm].vendas++;
-            });
-            
-            const admArray = Object.entries(admDados).map(([adm, d]) => {
-                const atingimento = d.meta > 0 ? (d.fat / d.meta * 100) : 0;
-                return {
-                    adm,
-                    lojas: d.lojas.size,
-                    fat: d.fat,
-                    meta: d.meta,
-                    atingimento,
-                    vendas: d.vendas
-                };
-            }).sort((a, b) => b.atingimento - a.atingimento);
-            
-            let html = '';
-            admArray.forEach((adm, index) => {
-                const posicao = index + 1;
-                let classePercentual = 'baixa';
-                if (adm.atingimento >= 100) classePercentual = 'alta';
-                else if (adm.atingimento >= 70) classePercentual = 'media';
-                
-                let medalha = '';
-                if (posicao === 1) medalha = '🥇';
-                else if (posicao === 2) medalha = '🥈';
-                else if (posicao === 3) medalha = '🥉';
-                
-                html += `
-                    <div class="adm-ranking-item" style="border-left-color: ${adm.atingimento >= 100 ? '#06d6a0' : (adm.atingimento >= 70 ? '#f97316' : '#ef476f')};">
-                        <div class="adm-ranking-posicao">${medalha || posicao}</div>
-                        <div class="adm-ranking-info">
-                            <div class="adm-ranking-nome">${adm.adm} ${medalha}</div>
-                            <div class="adm-ranking-detalhes">
-                                <span class="adm-ranking-faturamento">R$ ${formatMoney(adm.fat)}</span>
-                                <span class="adm-ranking-meta">Meta: R$ ${formatMoney(adm.meta)}</span>
-                                <span class="adm-ranking-percentual ${classePercentual}">${adm.atingimento.toFixed(1)}%</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            const admRankingList = document.getElementById('admRankingList');
-            if (admRankingList) {
-                admRankingList.innerHTML = html || '<div>Nenhum dado disponível</div>';
-            }
+            document.getElementById('listaFechadasCompleta').innerHTML = fechadasList || '<span>Nenhuma loja fechada no período</span>';
         }
 
         function atualizarGraficos(dados) {
+            // Gráfico de Pizza - Canais
             let auto = 0, delivery = 0, viagem = 0, balcao = 0;
             dados.forEach(l => {
                 auto += l.canais.auto;
@@ -2286,6 +2266,7 @@
                 canalPieChart.update();
             }
             
+            // Top 10 Faturamento
             const lojaAgg = {};
             dados.forEach(l => {
                 if (!lojaAgg[l.loja]) lojaAgg[l.loja] = { 
@@ -2305,7 +2286,7 @@
             const topLojas = Object.values(lojaAgg)
                 .filter(l => l.fat > 0)
                 .sort((a,b) => b.fat - a.fat)
-                .slice(0, 15);
+                .slice(0, 10);
             
             if (top10BarChart) {
                 top10BarChart.data.labels = topLojas.map(l => l.nome.substring(0,12));
@@ -2313,10 +2294,11 @@
                 top10BarChart.update();
             }
             
+            // Desempenho por Loja (% Meta)
             const desempenhoLojas = Object.values(lojaAgg)
                 .filter(l => l.fat > 0)
                 .sort((a,b) => b.atingimento - a.atingimento)
-                .slice(0, 12);
+                .slice(0, 10);
             
             if (desempenhoBarChart) {
                 desempenhoBarChart.data.labels = desempenhoLojas.map(l => l.nome.substring(0,12));
@@ -2327,6 +2309,7 @@
                 desempenhoBarChart.update();
             }
             
+            // Ranking por ADM (Faturamento)
             const admAgg = {};
             dados.forEach(l => {
                 if (!admAgg[l.adm]) admAgg[l.adm] = { fat: 0 };
@@ -2342,6 +2325,7 @@
                 admRankingChart.update();
             }
             
+            // Canais por ADM
             const admCanais = {};
             dados.forEach(l => {
                 if (!admCanais[l.adm]) admCanais[l.adm] = { auto:0, del:0, via:0, bal:0 };
@@ -2387,9 +2371,6 @@
                 } else if (coluna === 1) {
                     valA = parseInt(celA.split(' - ')[0]) || 0;
                     valB = parseInt(celB.split(' - ')[0]) || 0;
-                } else if (coluna === 2) {
-                    valA = celA;
-                    valB = celB;
                 } else if (coluna === 3 || coluna === 4) {
                     if (celA === '-') valA = -1;
                     else {
@@ -2432,50 +2413,7 @@
             if (th) th.className = ordemAtual.ascendente ? 'fas fa-sort-up' : 'fas fa-sort-down';
         }
 
-        function exportarExcel() {
-            const dados = getDadosPeriodo();
-            const statusSelect = document.getElementById('statusFilter');
-            const admSelect = document.getElementById('admFilter');
-            
-            const status = statusSelect ? statusSelect.value : '';
-            const admFiltro = admSelect ? admSelect.value : '';
-            
-            const filtrados = dados.filter(l => {
-                if (lojasSelecionadas.length && !lojasSelecionadas.includes(l.loja)) return false;
-                if (status && l.status !== status) return false;
-                if (admFiltro && l.adm !== admFiltro) return false;
-                return true;
-            });
-            
-            const wb = XLSX.utils.book_new();
-            
-            const det = [
-                ['REX - SETOR PATTY'],
-                [`Período: ${dataInicio} a ${dataFim}`],
-                [`Exportado: ${new Date().toLocaleString('pt-BR')}`],
-                [],
-                ['Data','Loja','ADM','Início','Fim','Cupons','Faturamento','Meta','Diferença','%','Status']
-            ];
-            filtrados.forEach(l => {
-                det.push([
-                    l.data, l.loja, l.adm, l.inicio, l.fim, l.cupons,
-                    l.faturamento, l.meta, l.dif,
-                    l.meta>0 ? l.difPercentual.toFixed(2) : '-', l.status
-                ]);
-            });
-            
-            XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(det), 'Detalhamento');
-            XLSX.writeFile(wb, `REX_${dataInicio.replace(/\//g,'-')}.xlsx`);
-        }
-
-        function destruirGraficos() {
-            if (canalPieChart) canalPieChart.destroy();
-            if (top10BarChart) top10BarChart.destroy();
-            if (desempenhoBarChart) desempenhoBarChart.destroy();
-            if (admRankingChart) admRankingChart.destroy();
-            if (canaisPorAdmChart) canaisPorAdmChart.destroy();
-        }
-
+        // Inicializar gráficos
         function inicializarGraficos() {
             Chart.defaults.font.family = 'Inter, sans-serif';
             Chart.defaults.font.size = 11;
@@ -2629,6 +2567,14 @@
                 });
             }
         }
+
+        // Inicializar ao carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarGraficos();
+            if (dadosCompletos.length > 0) {
+                processarDadosCarregados();
+            }
+        });
     </script>
 </body>
 </html>
