@@ -328,7 +328,7 @@
             padding: 4px;
         }
 
-        /* FILTRO DE LOJAS - DESTACADO */
+        /* FILTRO DE LOJAS */
         .filters {
             background: rgba(255,255,255,0.9);
             padding: clamp(16px, 2.5vw, 20px);
@@ -378,7 +378,6 @@
             min-width: 180px;
         }
 
-        /* Multi-select aprimorado */
         .multi-select {
             position: relative;
             width: 100%;
@@ -667,7 +666,9 @@
         }
 
         .kpi-icon.green { background: var(--primary-light); color: var(--primary); }
+        .kpi-icon.red { background: var(--danger-light); color: var(--danger); }
         .kpi-icon.blue { background: #e6f0ff; color: #2563eb; }
+        .kpi-icon.purple { background: #f0e7ff; color: #9b5de5; }
 
         .kpi-label {
             font-size: clamp(11px, 2vw, 13px);
@@ -707,6 +708,10 @@
             color: var(--gray);
             padding-top: clamp(8px, 1.5vw, 10px);
             border-top: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
         }
 
         .progress-bar {
@@ -884,7 +889,7 @@
             position: relative;
         }
 
-        /* RANKING DE PERFORMANCE POR ADM - NOVO LAYOUT PROFISSIONAL */
+        /* RANKINGS SIMPLIFICADOS */
         .rankings-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -949,6 +954,7 @@
             padding: 20px 10px;
             background: linear-gradient(180deg, var(--primary-light) 0%, transparent 100%);
             border-radius: 20px;
+            flex-wrap: wrap;
         }
 
         .podium-item {
@@ -957,6 +963,7 @@
             align-items: center;
             text-align: center;
             position: relative;
+            min-width: 100px;
         }
 
         .podium-1 {
@@ -1000,20 +1007,19 @@
         }
 
         .podium-nome {
-            font-weight: 700;
+            font-weight: 800;
             color: var(--dark);
-            font-size: 14px;
+            font-size: 16px;
             margin-bottom: 5px;
         }
 
         .podium-valor {
-            font-weight: 800;
-            font-size: 16px;
+            font-weight: 700;
+            font-size: 14px;
             color: var(--primary);
-        }
-
-        .podium-1 .podium-valor {
-            font-size: 18px;
+            background: rgba(255,255,255,0.7);
+            padding: 3px 10px;
+            border-radius: 20px;
         }
 
         .ranking-lista {
@@ -1028,7 +1034,7 @@
             padding: 12px 15px;
             background: var(--light);
             border-radius: 12px;
-            border-left: 4px solid;
+            border-left: 5px solid;
             transition: all 0.2s;
         }
 
@@ -1038,8 +1044,8 @@
         }
 
         .ranking-posicao {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             background: var(--gray-light);
             border-radius: 50%;
             display: flex;
@@ -1049,6 +1055,7 @@
             font-size: 14px;
             color: var(--gray);
             margin-right: 12px;
+            flex-shrink: 0;
         }
 
         .ranking-posicao.top-1 {
@@ -1073,36 +1080,62 @@
         .ranking-nome {
             font-weight: 700;
             color: var(--dark);
-            font-size: 14px;
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            margin-bottom: 5px;
         }
 
-        .ranking-detalhes {
+        .ranking-stats {
             display: flex;
             gap: 15px;
-            margin-top: 3px;
             font-size: 12px;
             color: var(--gray);
+            flex-wrap: wrap;
+        }
+
+        .ranking-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .ranking-stat i {
+            color: var(--primary);
+            font-size: 11px;
         }
 
         .ranking-valor {
-            font-weight: 700;
+            font-weight: 600;
             color: var(--primary);
         }
 
         .ranking-percentual {
             font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: white;
         }
 
-        .ranking-percentual.alta { color: var(--success); }
-        .ranking-percentual.media { color: #f97316; }
-        .ranking-percentual.baixa { color: var(--danger); }
+        .ranking-percentual.alta { 
+            color: var(--success);
+            background: var(--success-light);
+        }
+        
+        .ranking-percentual.media { 
+            color: #f97316;
+            background: #fff3e0;
+        }
+        
+        .ranking-percentual.baixa { 
+            color: var(--danger);
+            background: var(--danger-light);
+        }
 
-        .ranking-icone {
-            font-size: 20px;
-            margin-left: 10px;
+        .ranking-medalha-icon {
+            font-size: 16px;
+            margin-left: 5px;
         }
 
         /* Tabela Detalhamento */
@@ -1252,7 +1285,7 @@
             .loja-filter-container { min-width: 100%; }
             .filter-select { width: 100%; }
             .podium { flex-direction: column; align-items: center; }
-            .podium-item { transform: scale(1); }
+            .podium-item { transform: scale(1); width: 100%; }
             .podium-1 { order: 1; }
         }
 
@@ -1379,9 +1412,10 @@
             </div>
         </div>
 
-        <!-- KPIs -->
+        <!-- CARDS DE INDICADORES -->
         <div class="kpi-grid">
-            <div class="kpi-card">
+            <!-- Card 1: Total de Lojas -->
+            <div class="kpi-card" onclick="filtrarPorStatus('')">
                 <div class="kpi-header">
                     <div class="kpi-icon blue"><i class="fas fa-store"></i></div>
                     <span class="kpi-label">Total de Lojas</span>
@@ -1393,7 +1427,8 @@
                 <div class="kpi-comparison" id="lojasAtivas"></div>
             </div>
 
-            <div class="kpi-card">
+            <!-- Card 2: Faturamento -->
+            <div class="kpi-card" onclick="filtrarPorStatus('')">
                 <div class="kpi-header">
                     <div class="kpi-icon green"><i class="fas fa-dollar-sign"></i></div>
                     <span class="kpi-label">Faturamento</span>
@@ -1404,20 +1439,36 @@
                 <div class="kpi-comparison" id="percentualMeta">0% vs meta</div>
             </div>
 
-            <div class="kpi-card">
+            <!-- Card 3: Meta Total -->
+            <div class="kpi-card" onclick="filtrarPorStatus('')">
                 <div class="kpi-header">
                     <div class="kpi-icon green"><i class="fas fa-bullseye"></i></div>
                     <span class="kpi-label">Meta Total</span>
                 </div>
                 <div class="kpi-main">
                     <span class="kpi-value" id="totalMeta">R$ 0</span>
+                    <span class="kpi-sub" id="metasAtingidas">0/0</span>
                 </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressoMeta" style="width:0%"></div>
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <!-- Card 4: Diferença -->
+            <div class="kpi-card" onclick="filtrarPorStatus('')">
+                <div class="kpi-header">
+                    <div class="kpi-icon red"><i class="fas fa-balance-scale"></i></div>
+                    <span class="kpi-label">Diferença</span>
+                </div>
+                <div class="kpi-main">
+                    <span class="kpi-value" id="totalDiferenca">R$ 0</span>
+                    <span class="emoji-indicator" id="diferencaEmoji"></span>
+                </div>
+                <div class="kpi-comparison" id="diferencaText">0%</div>
+            </div>
+
+            <!-- Card 5: Ticket Médio -->
+            <div class="kpi-card" onclick="filtrarPorStatus('')">
                 <div class="kpi-header">
                     <div class="kpi-icon green"><i class="fas fa-ticket-alt"></i></div>
                     <span class="kpi-label">Ticket Médio</span>
@@ -1427,11 +1478,50 @@
                 </div>
                 <div class="kpi-comparison" id="ticketPeriodo">hoje</div>
             </div>
+
+            <!-- Card 6: Metas OK -->
+            <div class="kpi-card" onclick="filtrarPorStatus('SIM')">
+                <div class="kpi-header">
+                    <div class="kpi-icon green"><i class="fas fa-trophy"></i></div>
+                    <span class="kpi-label">Metas OK</span>
+                </div>
+                <div class="kpi-main">
+                    <span class="kpi-value success" id="metasAtingidasValor">0</span>
+                    <span class="kpi-sub" id="metasPercentual">0%</span>
+                </div>
+                <div class="kpi-comparison">das ativas</div>
+            </div>
+
+            <!-- Card 7: Abaixo -->
+            <div class="kpi-card" onclick="filtrarPorStatus('NÃO')">
+                <div class="kpi-header">
+                    <div class="kpi-icon red"><i class="fas fa-times-circle"></i></div>
+                    <span class="kpi-label">Abaixo</span>
+                </div>
+                <div class="kpi-main">
+                    <span class="kpi-value danger" id="metasNaoValor">0</span>
+                    <span class="kpi-sub" id="metasNaoPercentual">0%</span>
+                </div>
+                <div class="kpi-comparison">das ativas</div>
+            </div>
+
+            <!-- Card 8: Fechadas -->
+            <div class="kpi-card" onclick="filtrarPorStatus('FECHADA')">
+                <div class="kpi-header">
+                    <div class="kpi-icon red"><i class="fas fa-store-slash"></i></div>
+                    <span class="kpi-label">Fechadas</span>
+                </div>
+                <div class="kpi-main">
+                    <span class="kpi-value danger" id="lojasFechadas">0</span>
+                    <span class="kpi-sub" id="percentualFechadas">0%</span>
+                </div>
+                <div class="kpi-comparison">do total</div>
+            </div>
         </div>
 
         <!-- Status Cards -->
         <div class="lojas-status-grid">
-            <div class="status-card">
+            <div class="status-card" onclick="filtrarPorStatus('OPERACAO')">
                 <div class="status-titulo">
                     <i class="fas fa-store-alt" style="color: var(--success);"></i> Lojas em Operação
                 </div>
@@ -1439,7 +1529,7 @@
                 <div class="status-percentual success" id="lojasOperacaoPercentual">0%</div>
             </div>
 
-            <div class="status-card">
+            <div class="status-card" onclick="filtrarPorStatus('FECHADA')">
                 <div class="status-titulo">
                     <i class="fas fa-store-slash" style="color: var(--danger);"></i> Lojas Fechadas
                 </div>
@@ -1513,7 +1603,7 @@
             </div>
         </div>
 
-        <!-- RANKINGS PROFISSIONAIS - 2 COLUNAS -->
+        <!-- RANKINGS SIMPLIFICADOS -->
         <div class="rankings-container">
             <!-- Ranking por Faturamento -->
             <div class="ranking-card" id="rankingFaturamento">
@@ -1581,6 +1671,11 @@
         </div>
     </div>
 
+    <!-- DADOS EMBUTIDOS PARA PERSISTÊNCIA -->
+    <script id="dados-embedded" type="application/json">
+        // Os dados serão salvos aqui automaticamente
+    </script>
+
     <script>
         // MAPEAMENTO DAS LOJAS
         const lojaNomes = {
@@ -1640,20 +1735,38 @@
         let canalPieChart, top10BarChart, desempenhoBarChart, admRankingChart, canaisPorAdmChart;
         let ordemAtual = { coluna: -1, ascendente: true };
 
-        // Carregar dados salvos no HTML ao iniciar
-        (function() {
+        // ===== FUNÇÃO PARA CARREGAR DADOS SALVOS =====
+        function carregarDadosSalvos() {
             const dadosSalvos = document.getElementById('dados-embedded')?.textContent;
-            if (dadosSalvos) {
+            if (dadosSalvos && dadosSalvos.trim() !== '' && dadosSalvos !== '// Os dados serão salvos aqui automaticamente') {
                 try {
                     const parsed = JSON.parse(dadosSalvos);
                     if (parsed?.dadosCompletos?.length) {
                         dadosCompletos = parsed.dadosCompletos;
-                        processarDadosCarregados();
+                        document.getElementById('dataAtualizacao').innerText = parsed.dataAtualizacao || new Date().toLocaleString('pt-BR');
+                        return true;
                     }
-                } catch (e) {}
+                } catch (e) {
+                    console.error('Erro ao carregar dados salvos:', e);
+                }
             }
-        })();
+            return false;
+        }
 
+        // ===== FUNÇÃO PARA SALVAR DADOS NO HTML =====
+        function salvarDadosNoHTML() {
+            const embedded = document.getElementById('dados-embedded');
+            if (embedded) {
+                const dadosParaSalvar = {
+                    dadosCompletos: dadosCompletos,
+                    dataAtualizacao: new Date().toLocaleString('pt-BR')
+                };
+                embedded.textContent = JSON.stringify(dadosParaSalvar);
+                console.log('Dados salvos no HTML com sucesso!');
+            }
+        }
+
+        // ===== PROCESSAR DADOS CARREGADOS =====
         function processarDadosCarregados() {
             // Organizar dados por data
             for (let key in dadosPorData) delete dadosPorData[key];
@@ -1678,6 +1791,13 @@
             atualizarTextoSelecionadas();
             setPeriodo('hoje');
         }
+
+        // Inicializar
+        (function() {
+            if (!carregarDadosSalvos()) {
+                console.log('Nenhum dado salvo encontrado');
+            }
+        })();
 
         // FUNÇÕES DO FILTRO DE LOJAS
         window.toggleLojaDropdown = function() {
@@ -1801,6 +1921,19 @@
             }
         }
 
+        // Função para filtrar por status (chamada pelos cards)
+        window.filtrarPorStatus = function(status) {
+            const select = document.getElementById('statusFilter');
+            if (!select) return;
+            
+            if (status === 'OPERACAO') {
+                select.value = '';
+            } else {
+                select.value = status;
+            }
+            aplicarFiltros();
+        };
+
         // Aplicar filtros e atualizar tudo
         window.aplicarFiltros = function() {
             const dados = getDadosPeriodo();
@@ -1820,10 +1953,11 @@
             atualizarLojasIndicadores(dados);
             atualizarRankingsADM(filtrados);
             
+            // Salvar dados no HTML para persistência
             salvarDadosNoHTML();
         };
 
-        // NOVA FUNÇÃO: Atualizar Rankings de ADM
+        // ===== RANKINGS SIMPLIFICADOS =====
         function atualizarRankingsADM(dados) {
             const admDados = {};
             
@@ -1834,13 +1968,11 @@
                         nome: l.adm,
                         faturamento: 0,
                         meta: 0,
-                        vendas: 0,
                         lojas: new Set()
                     };
                 }
                 admDados[l.adm].faturamento += l.faturamento;
                 admDados[l.adm].meta += l.meta;
-                if (l.faturamento > 0) admDados[l.adm].vendas++;
                 admDados[l.adm].lojas.add(l.loja);
             });
 
@@ -1848,7 +1980,7 @@
             const adms = Object.values(admDados).map(adm => ({
                 ...adm,
                 percentual: adm.meta > 0 ? (adm.faturamento / adm.meta * 100) : 0,
-                lojasAtivas: adm.lojas.size
+                totalLojas: adm.lojas.size
             }));
 
             // Ranking por Faturamento
@@ -1881,7 +2013,7 @@
             let html = '';
             
             // Ajustar ordem do podium (2º, 1º, 3º)
-            const ordem = [1, 0, 2]; // índices para 2º, 1º, 3º
+            const ordem = [1, 0, 2];
             for (let i = 0; i < 3; i++) {
                 const idx = ordem[i];
                 if (idx >= top3.length) continue;
@@ -1889,7 +2021,8 @@
                 const adm = top3[idx];
                 const posicao = idx + 1;
                 const medalha = posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : '🥉';
-                const valor = tipo === 'Faturamento' 
+                
+                let valor = tipo === 'Faturamento' 
                     ? `R$ ${formatMoney(adm.faturamento)}`
                     : `${adm.percentual.toFixed(1)}%`;
                 
@@ -1917,13 +2050,19 @@
                 else if (posicao === 2) classePosicao = 'top-2';
                 else if (posicao === 3) classePosicao = 'top-3';
 
-                const valor = tipo === 'Faturamento'
+                const medalha = posicao <= 3 ? (posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : '🥉') : '';
+                
+                let classePercentual = 'baixa';
+                if (adm.percentual >= 100) classePercentual = 'alta';
+                else if (adm.percentual >= 70) classePercentual = 'media';
+
+                const valorPrincipal = tipo === 'Faturamento' 
                     ? `R$ ${formatMoney(adm.faturamento)}`
                     : `${adm.percentual.toFixed(1)}%`;
 
-                const detalheExtra = tipo === 'Faturamento'
-                    ? `<span class="ranking-percentual ${adm.percentual >= 100 ? 'alta' : adm.percentual >= 70 ? 'media' : 'baixa'}">${adm.percentual.toFixed(1)}% meta</span>`
-                    : `<span class="ranking-valor">R$ ${formatMoney(adm.faturamento)}</span>`;
+                const infoAdicional = tipo === 'Faturamento'
+                    ? `<span class="ranking-stat"><i class="fas fa-percent"></i> ${adm.percentual.toFixed(1)}% meta</span>`
+                    : `<span class="ranking-stat"><i class="fas fa-dollar-sign"></i> R$ ${formatMoney(adm.faturamento)}</span>`;
 
                 html += `
                     <div class="ranking-item" style="border-left-color: ${adm.percentual >= 100 ? '#06d6a0' : (adm.percentual >= 70 ? '#f97316' : '#ef476f')};">
@@ -1931,13 +2070,18 @@
                         <div class="ranking-info">
                             <div class="ranking-nome">
                                 ${adm.nome}
-                                <span class="ranking-icone">${posicao <= 3 ? (posicao === 1 ? '🥇' : posicao === 2 ? '🥈' : '🥉') : ''}</span>
+                                ${medalha ? `<span class="ranking-medalha-icon">${medalha}</span>` : ''}
                             </div>
-                            <div class="ranking-detalhes">
-                                <span class="ranking-valor">${valor}</span>
-                                <span>${adm.lojasAtivas} lojas</span>
-                                <span>${adm.vendas} vendas</span>
-                                ${detalheExtra}
+                            <div class="ranking-stats">
+                                <span class="ranking-stat">
+                                    <i class="fas fa-${tipo === 'Faturamento' ? 'dollar-sign' : 'percent'}"></i>
+                                    <span class="ranking-valor">${valorPrincipal}</span>
+                                </span>
+                                ${infoAdicional}
+                                <span class="ranking-stat">
+                                    <i class="fas fa-store"></i>
+                                    <span>${adm.totalLojas} lojas</span>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -1945,24 +2089,6 @@
             });
 
             listaDiv.innerHTML = html;
-        }
-
-        // Salvar dados no HTML
-        function salvarDadosNoHTML() {
-            let embedded = document.getElementById('dados-embedded');
-            if (!embedded) {
-                embedded = document.createElement('script');
-                embedded.id = 'dados-embedded';
-                embedded.type = 'application/json';
-                document.body.appendChild(embedded);
-            }
-            
-            const dadosParaSalvar = {
-                dadosCompletos: dadosCompletos,
-                dataAtualizacao: new Date().toLocaleString('pt-BR')
-            };
-            
-            embedded.textContent = JSON.stringify(dadosParaSalvar);
         }
 
         // Processar planilha importada
@@ -2033,7 +2159,7 @@
                     processarDadosCarregados();
                     
                     document.getElementById('dataAtualizacao').innerText = new Date().toLocaleString('pt-BR');
-                    alert('Dados importados com sucesso!');
+                    alert('Dados importados com sucesso! Os dados foram salvos permanentemente no arquivo.');
                     
                 } catch (error) { 
                     alert('Erro ao processar planilha: ' + error.message);
@@ -2085,8 +2211,11 @@
                 lojasSelecionadas = [];
                 
                 const embedded = document.getElementById('dados-embedded');
-                if (embedded) embedded.remove();
+                if (embedded) {
+                    embedded.textContent = '// Os dados serão salvos aqui automaticamente';
+                }
                 
+                // Recarregar página para reset completo
                 location.reload();
             }
         }
@@ -2188,22 +2317,62 @@
             let fat=0, meta=0, cupons=0;
             dados.forEach(l => { fat+=l.faturamento; meta+=l.meta; cupons+=l.cupons; });
             
-            const total = [...new Set(dados.map(l=>l.loja))].length;
+            const dif = fat - meta;
+            const pctDif = meta>0 ? (dif/meta*100) : 0;
             const ticket = cupons>0 ? fat/cupons : 0;
-            const dias = [...new Set(dados.map(l=>l.data))].length;
-            const ativas = dados.filter(l=>l.faturamento>0).length;
             
+            const lojasUnicas = [...new Set(dados.map(l=>l.loja))];
+            const total = lojasUnicas.length;
+            const dias = [...new Set(dados.map(l=>l.data))].length;
+            
+            const ativas = dados.filter(l=>l.faturamento>0).length;
+            const fechadas = dados.filter(l=>l.status==='FECHADA').length;
+            const metasSim = dados.filter(l=>l.status==='SIM').length;
+            const metasNao = dados.filter(l=>l.status==='NÃO').length;
+            
+            // Card 1: Total de Lojas
             document.getElementById('totalLojas').innerText = total;
-            document.getElementById('totalLojasPeriodo').innerText = dias + 'd';
+            document.getElementById('totalLojasPeriodo').innerText = `${dias}d`;
+            document.getElementById('lojasAtivas').innerHTML = `${ativas} ativas (${total>0?((ativas/total)*100).toFixed(1):0}%)`;
+            
+            // Card 2: Faturamento
             document.getElementById('totalFaturamento').innerText = `R$ ${formatMoney(fat)}`;
+            
+            // Card 3: Meta Total
             document.getElementById('totalMeta').innerText = `R$ ${formatMoney(meta)}`;
+            document.getElementById('metasAtingidas').innerHTML = `${metasSim}/${total}`;
+            
+            // Card 4: Diferença
+            const diferencaEl = document.getElementById('totalDiferenca');
+            if (diferencaEl) {
+                diferencaEl.innerText = `${dif >= 0 ? '+' : '-'} R$ ${formatMoney(Math.abs(dif))}`;
+                if (dif < 0) diferencaEl.classList.add('danger');
+                else diferencaEl.classList.remove('danger');
+            }
+            document.getElementById('diferencaEmoji').innerText = dif >= 0 ? '✅' : '❌';
+            document.getElementById('diferencaText').innerText = (dif>=0?'+':'')+pctDif.toFixed(1)+'%';
+            
+            // Card 5: Ticket Médio
             document.getElementById('ticketMedio').innerText = `R$ ${formatMoney(ticket)}`;
             document.getElementById('ticketPeriodo').innerText = dias===1?'hoje':`média ${dias}d`;
             
-            const pctMeta = meta>0 ? (fat/meta*100) : 0;
-            document.getElementById('progressoMeta').style.width = Math.min(100, pctMeta) + '%';
-            document.getElementById('percentualMeta').innerHTML = pctMeta.toFixed(1) + '% vs meta';
-            document.getElementById('lojasAtivas').innerHTML = `${ativas} ativas (${total>0?((ativas/total)*100).toFixed(1):0}%)`;
+            // Card 6: Metas OK
+            document.getElementById('metasAtingidasValor').innerText = metasSim;
+            document.getElementById('metasPercentual').innerText = ativas>0 ? ((metasSim/ativas)*100).toFixed(1)+'%' : '0%';
+            
+            // Card 7: Abaixo
+            document.getElementById('metasNaoValor').innerText = metasNao;
+            document.getElementById('metasNaoPercentual').innerText = ativas>0 ? ((metasNao/ativas)*100).toFixed(1)+'%' : '0%';
+            
+            // Card 8: Fechadas
+            document.getElementById('lojasFechadas').innerText = fechadas;
+            document.getElementById('percentualFechadas').innerText = total>0 ? ((fechadas/total)*100).toFixed(1)+'%' : '0%';
+            
+            // Progresso da Meta
+            document.getElementById('progressoMeta').style.width = meta>0 ? Math.min(100, (fat/meta*100))+'%' : '0%';
+            
+            // Percentual vs Meta (para o card de faturamento)
+            document.getElementById('percentualMeta').innerHTML = `<span class="${dif>=0?'valor-positivo':'valor-negativo'}">${dif>=0?'+':''}${pctDif.toFixed(1)}%</span> vs meta`;
         }
 
         function atualizarTabela(dados) {
@@ -2240,9 +2409,9 @@
             const fechadas = dados.filter(l=>l.status==='FECHADA').length;
             
             document.getElementById('lojasOperacaoValor').innerText = ativas;
-            document.getElementById('lojasOperacaoPercentual').innerText = total>0 ? ((ativas/total)*100).toFixed(1)+'%' : '0%';
+            document.getElementById('lojasOperacaoPercentual').innerText = total>0 ? `(${((ativas/total)*100).toFixed(1)}%)` : '(0%)';
             document.getElementById('lojasFechadasValor').innerText = fechadas;
-            document.getElementById('lojasFechadasPercentual').innerText = total>0 ? ((fechadas/total)*100).toFixed(1)+'%' : '0%';
+            document.getElementById('lojasFechadasPercentual').innerText = total>0 ? `(${((fechadas/total)*100).toFixed(1)}%)` : '(0%)';
             
             const fechadasList = dados.filter(l=>l.status==='FECHADA').map(l => 
                 `<span class="loja-fechada-item">${lojaNomes[l.loja]}</span>`
